@@ -1,0 +1,622 @@
+[
+  {
+    "id": 1,
+    "species": "Arabica",
+    "country": "Ethiopia",
+    "region": "guji-hambela",
+    "farm": "metad plc",
+    "producer": "METAD PLC",
+    "variety": "",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": 2075.0,
+    "harvest_year": "2014",
+    "color": "Green",
+    "scores": {
+      "aroma": 8.67,
+      "flavor": 8.83,
+      "aftertaste": 8.67,
+      "acidity": 8.75,
+      "body": 8.5,
+      "balance": 8.42,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.75,
+      "total": 90.58
+    },
+    "moisture": 0.12,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 0.0
+    }
+  },
+  {
+    "id": 2,
+    "species": "Arabica",
+    "country": "Ethiopia",
+    "region": "guji-hambela",
+    "farm": "metad plc",
+    "producer": "METAD PLC",
+    "variety": "Other",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": 2075.0,
+    "harvest_year": "2014",
+    "color": "Green",
+    "scores": {
+      "aroma": 8.75,
+      "flavor": 8.67,
+      "aftertaste": 8.5,
+      "acidity": 8.58,
+      "body": 8.42,
+      "balance": 8.42,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.58,
+      "total": 89.92
+    },
+    "moisture": 0.12,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 1.0
+    }
+  },
+  {
+    "id": 3,
+    "species": "Arabica",
+    "country": "Guatemala",
+    "region": "",
+    "farm": "san marcos barrancas \"san cristobal cuch",
+    "producer": "",
+    "variety": "Bourbon",
+    "processing_method": "",
+    "altitude_meters": 1700.0,
+    "harvest_year": "",
+    "color": "",
+    "scores": {
+      "aroma": 8.42,
+      "flavor": 8.5,
+      "aftertaste": 8.42,
+      "acidity": 8.42,
+      "body": 8.33,
+      "balance": 8.42,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 9.25,
+      "total": 89.75
+    },
+    "moisture": 0.0,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 0.0
+    }
+  },
+  {
+    "id": 4,
+    "species": "Arabica",
+    "country": "Brazil",
+    "region": "",
+    "farm": "",
+    "producer": "",
+    "variety": "",
+    "processing_method": "Natural / Dry",
+    "altitude_meters": null,
+    "harvest_year": "2013",
+    "color": "Bluish-Green",
+    "scores": {
+      "aroma": 8.58,
+      "flavor": 8.42,
+      "aftertaste": 8.42,
+      "acidity": 8.5,
+      "body": 8.25,
+      "balance": 8.33,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.33,
+      "total": 88.83
+    },
+    "moisture": 0.11,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 1.0
+    }
+  },
+  {
+    "id": 5,
+    "species": "Arabica",
+    "country": "Peru",
+    "region": "",
+    "farm": "",
+    "producer": "HVC",
+    "variety": "Other",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": null,
+    "harvest_year": "2012",
+    "color": "Bluish-Green",
+    "scores": {
+      "aroma": 8.42,
+      "flavor": 8.5,
+      "aftertaste": 8.33,
+      "acidity": 8.5,
+      "body": 8.25,
+      "balance": 8.25,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.5,
+      "total": 88.75
+    },
+    "moisture": 0.11,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 0.0
+    }
+  },
+  {
+    "id": 6,
+    "species": "Arabica",
+    "country": "United States",
+    "region": "antioquia",
+    "farm": "el filo",
+    "producer": "Alfredo De Jes\u00fas L\u00f3pez P\u00e9rez",
+    "variety": "Other",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": 1872.0,
+    "harvest_year": "2014",
+    "color": "",
+    "scores": {
+      "aroma": 8.25,
+      "flavor": 8.42,
+      "aftertaste": 8.17,
+      "acidity": 8.33,
+      "body": 8.08,
+      "balance": 8.17,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.5,
+      "total": 87.92
+    },
+    "moisture": 0.0,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 0.0
+    }
+  },
+  {
+    "id": 7,
+    "species": "Arabica",
+    "country": "United States (Hawaii)",
+    "region": "kona",
+    "farm": "arianna farms",
+    "producer": "Robert, Sharon, Arianna Wood",
+    "variety": "",
+    "processing_method": "",
+    "altitude_meters": 609.6,
+    "harvest_year": "Sept 2009 - April 2010",
+    "color": "",
+    "scores": {
+      "aroma": 8.33,
+      "flavor": 8.42,
+      "aftertaste": 8.08,
+      "acidity": 8.25,
+      "body": 8.25,
+      "balance": 8.0,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.58,
+      "total": 87.92
+    },
+    "moisture": 0.0,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 2.0
+    }
+  },
+  {
+    "id": 8,
+    "species": "Arabica",
+    "country": "Indonesia",
+    "region": "sulawesi",
+    "farm": "toarco jaya",
+    "producer": "P.T. Toarco Jaya",
+    "variety": "",
+    "processing_method": "",
+    "altitude_meters": 1500.0,
+    "harvest_year": "May-August",
+    "color": "",
+    "scores": {
+      "aroma": 8.33,
+      "flavor": 8.25,
+      "aftertaste": 7.83,
+      "acidity": 7.75,
+      "body": 8.5,
+      "balance": 8.42,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.33,
+      "total": 87.42
+    },
+    "moisture": 0.03,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 0.0
+    }
+  },
+  {
+    "id": 9,
+    "species": "Arabica",
+    "country": "China",
+    "region": "yunnan",
+    "farm": "echo coffee",
+    "producer": "Echo Coffee",
+    "variety": "Catimor",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": 1450.0,
+    "harvest_year": "2015",
+    "color": "Green",
+    "scores": {
+      "aroma": 8.42,
+      "flavor": 8.25,
+      "aftertaste": 8.08,
+      "acidity": 8.17,
+      "body": 7.92,
+      "balance": 8.0,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.42,
+      "total": 87.25
+    },
+    "moisture": 0.1,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 0.0
+    }
+  },
+  {
+    "id": 10,
+    "species": "Arabica",
+    "country": "Costa Rica",
+    "region": "san ramon",
+    "farm": "several",
+    "producer": "SEVERAL",
+    "variety": "Caturra",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": 1300.0,
+    "harvest_year": "2014",
+    "color": "Green",
+    "scores": {
+      "aroma": 8.08,
+      "flavor": 8.25,
+      "aftertaste": 8.0,
+      "acidity": 8.17,
+      "body": 8.0,
+      "balance": 8.33,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.33,
+      "total": 87.17
+    },
+    "moisture": 0.11,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 2.0
+    }
+  },
+  {
+    "id": 11,
+    "species": "Arabica",
+    "country": "Mexico",
+    "region": "xalapa",
+    "farm": "la herradura",
+    "producer": "ROBERTO LICONA FRANCO",
+    "variety": "Other",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": 1320.0,
+    "harvest_year": "2012",
+    "color": "Green",
+    "scores": {
+      "aroma": 8.17,
+      "flavor": 8.25,
+      "aftertaste": 8.17,
+      "acidity": 8.0,
+      "body": 7.83,
+      "balance": 8.17,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.58,
+      "total": 87.17
+    },
+    "moisture": 0.13,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 0.0
+    }
+  },
+  {
+    "id": 12,
+    "species": "Arabica",
+    "country": "Brazil",
+    "region": "south of minas",
+    "farm": "fazenda kaquend",
+    "producer": "Ralph Junqueira",
+    "variety": "Bourbon",
+    "processing_method": "Natural / Dry",
+    "altitude_meters": 1250.0,
+    "harvest_year": "2011",
+    "color": "Green",
+    "scores": {
+      "aroma": 8.5,
+      "flavor": 8.5,
+      "aftertaste": 8.0,
+      "acidity": 8.0,
+      "body": 8.0,
+      "balance": 8.0,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 7.92,
+      "total": 86.92
+    },
+    "moisture": 0.12,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 2.0
+    }
+  },
+  {
+    "id": 13,
+    "species": "Arabica",
+    "country": "Uganda",
+    "region": "kapchorwa eastern",
+    "farm": "chebonet (23) women coffee",
+    "producer": "Kabum trading company",
+    "variety": "SL14",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": 1950.0,
+    "harvest_year": "2013",
+    "color": "Green",
+    "scores": {
+      "aroma": 8.42,
+      "flavor": 8.17,
+      "aftertaste": 8.17,
+      "acidity": 8.17,
+      "body": 7.83,
+      "balance": 7.92,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.17,
+      "total": 86.83
+    },
+    "moisture": 0.12,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 1.0
+    }
+  },
+  {
+    "id": 14,
+    "species": "Arabica",
+    "country": "Honduras",
+    "region": "comayagua",
+    "farm": "los hicaques",
+    "producer": "Reinerio Zepeda",
+    "variety": "Caturra",
+    "processing_method": "",
+    "altitude_meters": 1400.0,
+    "harvest_year": "2016",
+    "color": "Green",
+    "scores": {
+      "aroma": 8.17,
+      "flavor": 8.08,
+      "aftertaste": 8.08,
+      "acidity": 8.0,
+      "body": 8.08,
+      "balance": 8.0,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.25,
+      "total": 86.67
+    },
+    "moisture": 0.1,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 3.0
+    }
+  },
+  {
+    "id": 15,
+    "species": "Arabica",
+    "country": "Taiwan",
+    "region": "leye, alishan township, chiayi county",
+    "farm": "tsoustructive garden \u9112\u7bc9\u5712",
+    "producer": "FANG,ZHENG-LUN \u65b9\u653f\u502b",
+    "variety": "Sumatra",
+    "processing_method": "Pulped natural / honey",
+    "altitude_meters": 1200.0,
+    "harvest_year": "2015",
+    "color": "Green",
+    "scores": {
+      "aroma": 8.0,
+      "flavor": 8.0,
+      "aftertaste": 8.0,
+      "acidity": 8.25,
+      "body": 8.0,
+      "balance": 8.17,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.17,
+      "total": 86.58
+    },
+    "moisture": 0.0,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 0.0
+    }
+  },
+  {
+    "id": 16,
+    "species": "Arabica",
+    "country": "Nicaragua",
+    "region": "",
+    "farm": "",
+    "producer": "",
+    "variety": "",
+    "processing_method": "",
+    "altitude_meters": null,
+    "harvest_year": "",
+    "color": "",
+    "scores": {
+      "aroma": 7.92,
+      "flavor": 8.25,
+      "aftertaste": 8.0,
+      "acidity": 8.33,
+      "body": 8.0,
+      "balance": 8.08,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.0,
+      "total": 86.58
+    },
+    "moisture": 0.08,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 2.0
+    }
+  },
+  {
+    "id": 17,
+    "species": "Arabica",
+    "country": "Tanzania, United Republic Of",
+    "region": "",
+    "farm": "",
+    "producer": "",
+    "variety": "",
+    "processing_method": "Natural / Dry",
+    "altitude_meters": null,
+    "harvest_year": "2012",
+    "color": "Bluish-Green",
+    "scores": {
+      "aroma": 8.42,
+      "flavor": 8.17,
+      "aftertaste": 8.17,
+      "acidity": 8.0,
+      "body": 7.58,
+      "balance": 8.0,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.17,
+      "total": 86.5
+    },
+    "moisture": 0.11,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 1.0
+    }
+  },
+  {
+    "id": 18,
+    "species": "Arabica",
+    "country": "Kenya",
+    "region": "muranga",
+    "farm": "kangunu",
+    "producer": "Kangunu",
+    "variety": "SL34",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": 1800.0,
+    "harvest_year": "2013",
+    "color": "Blue-Green",
+    "scores": {
+      "aroma": 8.08,
+      "flavor": 8.0,
+      "aftertaste": 8.0,
+      "acidity": 8.25,
+      "body": 7.92,
+      "balance": 7.92,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.08,
+      "total": 86.25
+    },
+    "moisture": 0.12,
+    "defects": {
+      "category_one": 0.0,
+      "category_two": 1.0
+    }
+  },
+  {
+    "id": 19,
+    "species": "Arabica",
+    "country": "United States (Hawaii)",
+    "region": "kona",
+    "farm": "",
+    "producer": "",
+    "variety": "Hawaiian Kona",
+    "processing_method": "Natural / Dry",
+    "altitude_meters": null,
+    "harvest_year": "2012",
+    "color": "",
+    "scores": {
+      "aroma": 8.08,
+      "flavor": 8.17,
+      "aftertaste": 8.0,
+      "acidity": 7.92,
+      "body": 7.92,
+      "balance": 7.83,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.33,
+      "total": 86.25
+    },
+    "moisture": 0.0,
+    "defects": {
+      "category_one": 1.0,
+      "category_two": 4.0
+    }
+  },
+  {
+    "id": 20,
+    "species": "Arabica",
+    "country": "Thailand",
+    "region": "chiang rai",
+    "farm": "co-op #12",
+    "producer": "ITDP",
+    "variety": "Caturra",
+    "processing_method": "Washed / Wet",
+    "altitude_meters": 1300.0,
+    "harvest_year": "2012",
+    "color": "Green",
+    "scores": {
+      "aroma": 7.83,
+      "flavor": 8.33,
+      "aftertaste": 7.83,
+      "acidity": 8.25,
+      "body": 7.58,
+      "balance": 7.92,
+      "uniformity": 10.0,
+      "clean_cup": 10.0,
+      "sweetness": 10.0,
+      "cupper_points": 8.42,
+      "total": 86.17
+    },
+    "moisture": 0.1,
+    "defects": {
+      "category_one": 1.0,
+      "category_two": 9.0
+    }
+  }
+]

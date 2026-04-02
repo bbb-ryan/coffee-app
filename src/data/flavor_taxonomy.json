@@ -1,0 +1,135 @@
+{
+  "version": "1.0",
+  "source": "Based on SCA Coffee Taster's Flavor Wheel / WCR Sensory Lexicon",
+  "categories": [
+    {
+      "name": "Fruity",
+      "subcategories": [
+        {
+          "name": "Berry",
+          "descriptors": ["blueberry", "raspberry", "blackberry", "strawberry"]
+        },
+        {
+          "name": "Dried Fruit",
+          "descriptors": ["raisin", "prune", "date", "fig"]
+        },
+        {
+          "name": "Citrus Fruit",
+          "descriptors": ["lemon", "lime", "orange", "grapefruit"]
+        },
+        {
+          "name": "Other Fruit",
+          "descriptors": ["apple", "pear", "peach", "grape", "cherry", "pomegranate", "pineapple", "mango", "coconut"]
+        }
+      ]
+    },
+    {
+      "name": "Floral",
+      "subcategories": [
+        {
+          "name": "Floral",
+          "descriptors": ["jasmine", "rose", "chamomile", "lavender", "honeysuckle", "orange blossom"]
+        }
+      ]
+    },
+    {
+      "name": "Sweet",
+      "subcategories": [
+        {
+          "name": "Brown Sugar",
+          "descriptors": ["molasses", "maple syrup", "caramelized", "honey", "brown sugar"]
+        },
+        {
+          "name": "Vanilla",
+          "descriptors": ["vanilla", "vanillin"]
+        },
+        {
+          "name": "Overall Sweet",
+          "descriptors": ["sweet", "sweet aromatics"]
+        }
+      ]
+    },
+    {
+      "name": "Nutty / Cocoa",
+      "subcategories": [
+        {
+          "name": "Nutty",
+          "descriptors": ["peanut", "hazelnut", "almond", "walnut", "pecan", "cashew"]
+        },
+        {
+          "name": "Cocoa",
+          "descriptors": ["chocolate", "dark chocolate", "milk chocolate", "cocoa"]
+        }
+      ]
+    },
+    {
+      "name": "Spices",
+      "subcategories": [
+        {
+          "name": "Brown Spice",
+          "descriptors": ["cinnamon", "clove", "nutmeg", "anise", "cardamom"]
+        },
+        {
+          "name": "Pepper",
+          "descriptors": ["black pepper", "pungent"]
+        }
+      ]
+    },
+    {
+      "name": "Roasted",
+      "subcategories": [
+        {
+          "name": "Cereal",
+          "descriptors": ["grain", "malt", "toast"]
+        },
+        {
+          "name": "Tobacco",
+          "descriptors": ["tobacco", "pipe tobacco"]
+        },
+        {
+          "name": "Burnt",
+          "descriptors": ["smoky", "ashy", "burnt", "charred"]
+        }
+      ]
+    },
+    {
+      "name": "Green / Vegetative",
+      "subcategories": [
+        {
+          "name": "Olive Oil",
+          "descriptors": ["olive", "raw"]
+        },
+        {
+          "name": "Vegetative",
+          "descriptors": ["green", "vegetal", "hay-like", "herb-like", "grassy", "beany"]
+        }
+      ]
+    },
+    {
+      "name": "Sour / Fermented",
+      "subcategories": [
+        {
+          "name": "Sour",
+          "descriptors": ["sour", "tart", "acetic", "citric", "malic"]
+        },
+        {
+          "name": "Fermented",
+          "descriptors": ["winey", "fermented", "overripe"]
+        }
+      ]
+    },
+    {
+      "name": "Other",
+      "subcategories": [
+        {
+          "name": "Papery / Musty",
+          "descriptors": ["stale", "cardboard", "papery", "woody", "musty", "earthy"]
+        },
+        {
+          "name": "Chemical",
+          "descriptors": ["bitter", "salty", "medicinal", "rubber", "petroleum"]
+        }
+      ]
+    }
+  ]
+}
