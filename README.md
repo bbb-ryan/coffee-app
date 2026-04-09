@@ -14,16 +14,28 @@ Coffee App helps people:
 
 This project is an example of **human + AI collaboration** — not siloed roles, but coworking. Designers, researchers, and Claude Code working together in the same repo, iterating in real time.
 
-## Status: Phase 1 — Foundation ✅
+## Status: Phase 2 — Personalization (in progress)
 
 We went with **Option B (Modern Web App)** from [Hassan's build proposal](docs/PROPOSAL.md) — Next.js + Tailwind + JSON data. Here's what's live:
 
+### Phase 1 — Foundation ✅
 - **Bean catalog** — Browse all 1,338 beans in a searchable, filterable grid
 - **Search** — Find beans by country, region, variety, farm, or processing method
-- **Filters** — Narrow by country, processing method, or minimum cupping score
+- **Filters** — Narrow by country, processing method, or minimum cupping score with removable filter pills
 - **Sorting** — By score (high/low), country A–Z, or altitude
-- **Bean detail pages** — Full info, radar chart of cupping scores, score breakdowns
+- **Bean detail pages** — Full info, radar chart, score breakdowns with hover tooltips, similar bean recommendations
 - **Design system** — Coffee-inspired palette, responsive layout, clean typography
+
+### Phase 2 — UX & Diary ✅
+- **Redesigned homepage** — Hero section with catalog stats, "Start Exploring" CTA, and an About section
+- **Editor's Picks** — Horizontally scrollable featured beans carousel from the curated dataset
+- **Coffee Diary** — Personal tasting journal at `/diary` to track beans as Tried, Loved, or Want to Try
+- **Diary controls on bean pages** — Mark any bean's status and add personal tasting notes
+- **Diary badge** — Navbar shows a live count of diary entries
+- **Active filter pills** — Removable tags showing which filters are applied, with a "Clear all" option
+- **Navbar search** — Expandable search input in the nav bar (desktop + mobile)
+- **Mobile navigation** — Hamburger menu with animated open/close transitions
+- **Skeleton loading states** — Placeholder UI while diary data hydrates from localStorage
 
 ### Why Option B?
 
@@ -78,33 +90,41 @@ coffee-app/
 │   └── First_Run_Guide.md  # How to collaborate with Claude Code
 ├── src/
 │   ├── app/                # Next.js pages (App Router)
-│   │   ├── layout.tsx      # Root layout — Navbar + Footer
-│   │   ├── page.tsx        # Homepage — bean catalog
-│   │   └── beans/[id]/     # Bean detail pages (1,338 routes)
+│   │   ├── layout.tsx      # Root layout — DiaryProvider + Navbar + Footer
+│   │   ├── page.tsx        # Homepage — hero, featured beans, catalog
+│   │   ├── beans/[id]/     # Bean detail pages (1,338 routes)
+│   │   └── diary/          # Personal coffee diary page
 │   ├── components/         # Reusable UI components
-│   │   ├── Navbar.tsx
+│   │   ├── Navbar.tsx      # Sticky nav with search, diary badge, mobile menu
 │   │   ├── Footer.tsx
 │   │   ├── BeanCard.tsx
 │   │   ├── BeanCatalog.tsx
 │   │   ├── SearchBar.tsx
 │   │   ├── Filters.tsx
-│   │   └── ScoreRadar.tsx
+│   │   ├── ActiveFilters.tsx   # Removable filter pills
+│   │   ├── FeaturedBeans.tsx   # Editor's Picks carousel
+│   │   ├── ScoreRadar.tsx
+│   │   ├── DiaryProvider.tsx   # React context for diary state
+│   │   ├── DiaryControls.tsx   # Tried/Loved/Want to Try buttons + notes
+│   │   └── DiaryView.tsx       # Diary page content with status filtering
 │   ├── data/               # Bean data and models
 │   │   ├── beans.json      # Full dataset (1,338 beans from CQI)
 │   │   ├── beans_curated.json  # 20 hand-picked standout beans
 │   │   ├── flavor_taxonomy.json # SCA Flavor Wheel vocabulary
 │   │   └── schema.md       # Documents the bean data model
 │   └── lib/                # Utility functions and types
-│       └── beans.ts        # Bean types, loading, filtering, scoring
+│       ├── beans.ts        # Bean types, loading, filtering, scoring
+│       ├── diary.ts        # Diary types (DiaryEntry, DiaryStatus, DiaryMap)
+│       └── useLocalStorage.ts  # SSR-safe localStorage hook with hydration
 ├── public/                 # Static assets (images, icons)
 └── tests/                  # Test files
 ```
 
 ## What's Next
 
-### Phase 2 — Personalization
+### Phase 2 — Personalization (remaining)
 - [ ] Taste profile quiz
-- [ ] Personal bean journal (tried / loved / want to try)
+- [x] Personal bean journal (tried / loved / want to try)
 - [ ] Recommendations based on preferences
 
 ### Phase 3 — Community

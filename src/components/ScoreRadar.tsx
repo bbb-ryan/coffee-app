@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { Bean } from "@/lib/beans";
 
 interface ScoreRadarProps {
@@ -16,9 +17,12 @@ const CUPPING_SCORES = [
 ] as const;
 
 export default function ScoreRadar({ scores }: ScoreRadarProps) {
-  const size = 280;
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
+  const size = 320;
   const center = size / 2;
-  const radius = 110;
+  const radius = 120;
 
   const angleStep = (2 * Math.PI) / CUPPING_SCORES.length;
 
@@ -39,7 +43,7 @@ export default function ScoreRadar({ scores }: ScoreRadarProps) {
   const rings = [2, 4, 6, 8, 10];
 
   return (
-    <svg viewBox={`0 0 ${size} ${size}`} className="w-full max-w-[280px] mx-auto">
+    <svg viewBox={`0 0 ${size} ${size}`} className="w-full max-w-[320px] mx-auto">
       {/* Grid rings */}
       {rings.map((ring) => {
         const ringPoints = CUPPING_SCORES.map((_, i) => getPoint(i, ring));
@@ -50,7 +54,7 @@ export default function ScoreRadar({ scores }: ScoreRadarProps) {
             d={ringPath}
             fill="none"
             stroke="#E8E0D8"
-            strokeWidth={ring === 10 ? 1.5 : 0.5}
+            strokeWidth={ring === 10 ? 1.5 : 0.3}
           />
         );
       })}
@@ -66,22 +70,38 @@ export default function ScoreRadar({ scores }: ScoreRadarProps) {
             x2={x}
             y2={y}
             stroke="#E8E0D8"
-            strokeWidth={0.5}
+            strokeWidth={0.3}
           />
         );
       })}
 
-      {/* Data polygon */}
-      <path d={dataPath} fill="rgba(122, 139, 111, 0.25)" stroke="#7A8B6F" strokeWidth={2} />
+      {/* Data polygon with draw animation */}
+      <path
+        d={dataPath}
+        fill="rgba(122, 139, 111, 0.2)"
+        stroke="#7A8B6F"
+        strokeWidth={2.5}
+        className={mounted ? "radar-polygon" : "opacity-0"}
+      />
 
-      {/* Data points */}
+      {/* Data points with delayed fade-in */}
       {dataPoints.map((p, i) => (
-        <circle key={i} cx={p[0]} cy={p[1]} r={3.5} fill="#7A8B6F" stroke="white" strokeWidth={1.5} />
+        <circle
+          key={i}
+          cx={p[0]}
+          cy={p[1]}
+          r={4}
+          fill="#7A8B6F"
+          stroke="white"
+          strokeWidth={2}
+          className={mounted ? "radar-point" : "opacity-0"}
+          style={{ animationDelay: `${0.9 + i * 0.05}s` }}
+        />
       ))}
 
       {/* Labels */}
       {CUPPING_SCORES.map((s, i) => {
-        const [x, y] = getPoint(i, 12);
+        const [x, y] = getPoint(i, 12.5);
         const val = scores[s.key as keyof typeof scores] as number;
         return (
           <text
@@ -90,7 +110,7 @@ export default function ScoreRadar({ scores }: ScoreRadarProps) {
             y={y}
             textAnchor="middle"
             dominantBaseline="central"
-            className="text-[10px] fill-espresso-light font-medium"
+            className="text-[11px] fill-espresso-light font-medium"
           >
             {s.label} ({val.toFixed(1)})
           </text>

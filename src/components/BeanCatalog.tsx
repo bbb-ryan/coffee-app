@@ -5,6 +5,7 @@ import { Bean, filterBeans, FilterOptions } from "@/lib/beans";
 import BeanCard from "./BeanCard";
 import SearchBar from "./SearchBar";
 import Filters from "./Filters";
+import ActiveFilters from "./ActiveFilters";
 
 interface BeanCatalogProps {
   beans: Bean[];
@@ -40,9 +41,23 @@ export default function BeanCatalog({
   const visible = filtered.slice(0, visibleCount);
   const hasMore = visibleCount < filtered.length;
 
-  const hasActiveFilters = search || country || processing || minScore;
+  // Build active filter list for chips
+  const activeFilters = [
+    ...(search ? [{ label: "Search", key: "search", value: search }] : []),
+    ...(country ? [{ label: "Country", key: "country", value: country }] : []),
+    ...(processing ? [{ label: "Processing", key: "processing", value: processing }] : []),
+    ...(minScore ? [{ label: "Min Score", key: "minScore", value: `${minScore}+` }] : []),
+  ];
 
-  function clearFilters() {
+  function clearFilter(key: string) {
+    if (key === "search") setSearch("");
+    if (key === "country") setCountry("");
+    if (key === "processing") setProcessing("");
+    if (key === "minScore") setMinScore("");
+    setVisibleCount(PAGE_SIZE);
+  }
+
+  function clearAllFilters() {
     setSearch("");
     setCountry("");
     setProcessing("");
@@ -50,48 +65,56 @@ export default function BeanCatalog({
     setVisibleCount(PAGE_SIZE);
   }
 
+  function resetAndSet(setter: (v: string) => void, value: string) {
+    setter(value);
+    setVisibleCount(PAGE_SIZE);
+  }
+
   return (
     <div>
-      {/* Search & Filters */}
-      <div className="space-y-3 mb-8">
-        <SearchBar value={search} onChange={(v) => { setSearch(v); setVisibleCount(PAGE_SIZE); }} />
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <Filters
-            countries={countries}
-            processingMethods={processingMethods}
-            selectedCountry={country}
-            selectedProcessing={processing}
-            selectedSort={sort}
-            minScore={minScore}
-            onCountryChange={(v) => { setCountry(v); setVisibleCount(PAGE_SIZE); }}
-            onProcessingChange={(v) => { setProcessing(v); setVisibleCount(PAGE_SIZE); }}
-            onSortChange={setSort}
-            onMinScoreChange={(v) => { setMinScore(v); setVisibleCount(PAGE_SIZE); }}
-          />
-          <p className="text-sm text-roast-light">
-            {filtered.length} bean{filtered.length !== 1 ? "s" : ""}
-            {hasActiveFilters && (
-              <button
-                onClick={clearFilters}
-                className="ml-2 text-caramel hover:text-roast underline text-sm"
-              >
-                Clear filters
-              </button>
-            )}
-          </p>
-        </div>
+      {/* Section header */}
+      <div className="flex items-center gap-3 mb-6">
+        <h2 className="font-serif text-2xl font-bold text-espresso">All Beans</h2>
+        <div className="flex-1 h-px bg-cream-dark" />
+        <p className="text-sm text-roast-light">
+          {filtered.length.toLocaleString()} bean{filtered.length !== 1 ? "s" : ""}
+        </p>
       </div>
 
-      {/* Results Grid */}
+      {/* Search & Filters */}
+      <div className="space-y-4 mb-6">
+        <SearchBar value={search} onChange={(v) => resetAndSet(setSearch, v)} />
+        <Filters
+          countries={countries}
+          processingMethods={processingMethods}
+          selectedCountry={country}
+          selectedProcessing={processing}
+          selectedSort={sort}
+          minScore={minScore}
+          onCountryChange={(v) => resetAndSet(setCountry, v)}
+          onProcessingChange={(v) => resetAndSet(setProcessing, v)}
+          onSortChange={setSort}
+          onMinScoreChange={(v) => resetAndSet(setMinScore, v)}
+        />
+        <ActiveFilters
+          filters={activeFilters}
+          onRemove={clearFilter}
+          onClearAll={clearAllFilters}
+        />
+      </div>
+
+      {/* Results */}
       {filtered.length === 0 ? (
-        <div className="text-center py-16">
-          <p className="text-xl text-roast-light mb-2">No beans found</p>
-          <p className="text-sm text-roast-light/70">
-            Try adjusting your search or filters
+        <div className="text-center py-20 animate-fade-in">
+          <div className="text-5xl mb-4">☕</div>
+          <p className="text-xl font-serif text-espresso mb-2">No beans found</p>
+          <p className="text-sm text-roast-light/70 max-w-md mx-auto mb-6">
+            Try searching for a country like &ldquo;Ethiopia&rdquo; or a variety
+            like &ldquo;Bourbon&rdquo;, or adjust your filters.
           </p>
           <button
-            onClick={clearFilters}
-            className="mt-4 px-4 py-2 bg-caramel text-white rounded-lg hover:bg-roast-light transition-colors text-sm"
+            onClick={clearAllFilters}
+            className="px-5 py-2.5 bg-espresso text-cream rounded-full hover:bg-espresso-light transition-colors text-sm font-medium"
           >
             Clear all filters
           </button>
@@ -99,18 +122,32 @@ export default function BeanCatalog({
       ) : (
         <>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {visible.map((bean) => (
-              <BeanCard key={bean.id} bean={bean} />
+            {visible.map((bean, i) => (
+              <div key={bean.id} className={`animate-fade-in-up stagger-${(i % 6) + 1}`}>
+                <BeanCard bean={bean} />
+              </div>
             ))}
           </div>
 
           {hasMore && (
-            <div className="text-center mt-10">
+            <div className="text-center mt-12">
+              {/* Progress bar */}
+              <div className="max-w-xs mx-auto mb-3">
+                <div className="h-1 bg-cream-dark rounded-full overflow-hidden">
+                  <div
+                    className="h-full bg-caramel rounded-full transition-all duration-500"
+                    style={{ width: `${(visibleCount / filtered.length) * 100}%` }}
+                  />
+                </div>
+                <p className="text-xs text-roast-light/60 mt-1.5">
+                  Showing {Math.min(visibleCount, filtered.length).toLocaleString()} of {filtered.length.toLocaleString()}
+                </p>
+              </div>
               <button
                 onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                className="px-6 py-2.5 bg-espresso text-cream rounded-lg hover:bg-espresso-light transition-colors text-sm font-medium"
+                className="px-8 py-3 bg-white border-2 border-espresso text-espresso rounded-full hover:bg-espresso hover:text-cream transition-all text-sm font-medium"
               >
-                Load more ({filtered.length - visibleCount} remaining)
+                Load more
               </button>
             </div>
           )}

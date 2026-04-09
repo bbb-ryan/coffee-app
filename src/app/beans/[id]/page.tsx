@@ -1,13 +1,37 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getAllBeans, getBeanById, getScoreLabel, getScoreClass } from "@/lib/beans";
+import {
+  getAllBeans,
+  getBeanById,
+  getScoreLabel,
+  getScoreClass,
+  getCountryFlag,
+  getFlavorHint,
+  getSimilarBeans,
+  scoreExplanations,
+} from "@/lib/beans";
 import ScoreRadar from "@/components/ScoreRadar";
+import BeanCard from "@/components/BeanCard";
+import DiaryControls from "@/components/DiaryControls";
 
 export function generateStaticParams() {
   return getAllBeans().map((bean) => ({
     id: String(bean.id),
   }));
 }
+
+const SCORE_FIELDS = [
+  { key: "aroma", label: "Aroma" },
+  { key: "flavor", label: "Flavor" },
+  { key: "aftertaste", label: "Aftertaste" },
+  { key: "acidity", label: "Acidity" },
+  { key: "body", label: "Body" },
+  { key: "balance", label: "Balance" },
+  { key: "uniformity", label: "Uniformity" },
+  { key: "clean_cup", label: "Clean Cup" },
+  { key: "sweetness", label: "Sweetness" },
+  { key: "cupper_points", label: "Cupper Points" },
+] as const;
 
 export default async function BeanDetailPage({
   params,
@@ -23,6 +47,9 @@ export default async function BeanDetailPage({
 
   const scoreLabel = getScoreLabel(bean.scores.total);
   const scoreClass = getScoreClass(bean.scores.total);
+  const flag = getCountryFlag(bean.country);
+  const flavorHint = getFlavorHint(bean.scores);
+  const similarBeans = getSimilarBeans(bean, 3);
 
   const details = [
     { label: "Species", value: bean.species },
@@ -37,47 +64,60 @@ export default async function BeanDetailPage({
   ].filter((d) => d.value);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
-      {/* Back link */}
-      <Link
-        href="/"
-        className="inline-flex items-center gap-1 text-sm text-roast-light hover:text-espresso transition-colors mb-8"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        Back to all beans
-      </Link>
+    <div className="max-w-5xl mx-auto px-4 py-12">
+      {/* Breadcrumbs */}
+      <nav className="flex items-center gap-2 text-sm text-roast-light mb-8">
+        <Link href="/" className="hover:text-espresso transition-colors">Home</Link>
+        <span className="text-roast-light/40">/</span>
+        <Link
+          href={`/?country=${encodeURIComponent(bean.country)}`}
+          className="hover:text-espresso transition-colors"
+        >
+          {bean.country}
+        </Link>
+        {bean.region && (
+          <>
+            <span className="text-roast-light/40">/</span>
+            <span className="text-espresso capitalize">{bean.region}</span>
+          </>
+        )}
+      </nav>
 
-      {/* Header */}
-      <div className="flex flex-wrap items-start justify-between gap-4 mb-8">
-        <div>
-          <h1 className="font-serif text-3xl md:text-4xl font-bold text-espresso">
-            {bean.country}
-          </h1>
-          {bean.region && (
-            <p className="text-lg text-roast-light mt-1 capitalize">{bean.region}</p>
-          )}
-        </div>
-        <div className="text-right">
-          <span className={`${scoreClass} text-lg font-bold px-4 py-2 rounded-full inline-block`}>
-            {bean.scores.total.toFixed(1)}
-          </span>
-          <p className="text-sm text-roast-light mt-1">{scoreLabel}</p>
+      {/* Header banner */}
+      <div className="bg-gradient-to-r from-espresso/5 via-caramel/10 to-espresso/5 rounded-2xl p-8 mb-10 animate-fade-in">
+        <div className="flex flex-wrap items-start justify-between gap-4">
+          <div>
+            <div className="text-3xl mb-2">{flag}</div>
+            <h1 className="font-serif text-3xl md:text-4xl font-bold text-espresso">
+              {bean.country}
+            </h1>
+            {bean.region && (
+              <p className="text-lg text-roast-light mt-1 capitalize">{bean.region}</p>
+            )}
+            <p className="text-sm italic text-caramel mt-2">{flavorHint}</p>
+          </div>
+          <div className="text-center">
+            <div className={`${scoreClass} w-18 h-18 rounded-full flex items-center justify-center text-xl font-bold shadow-md`}
+              style={{ width: '4.5rem', height: '4.5rem' }}
+            >
+              {bean.scores.total.toFixed(1)}
+            </div>
+            <p className="text-sm text-roast-light mt-2 font-medium">{scoreLabel}</p>
+          </div>
         </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-8">
         {/* Left: Details */}
-        <div className="bg-white rounded-xl border border-cream-dark p-6">
-          <h2 className="font-serif text-xl font-bold text-espresso mb-4">
+        <div className="bg-white rounded-xl border border-cream-dark p-8 animate-fade-in-up">
+          <h2 className="font-serif text-xl font-bold text-espresso mb-5">
             Bean Details
           </h2>
           <dl className="space-y-3">
             {details.map((d) => (
-              <div key={d.label} className="flex justify-between items-baseline">
+              <div key={d.label} className="flex justify-between items-baseline gap-4">
                 <dt className="text-sm text-roast-light">{d.label}</dt>
-                <dd className="text-sm font-medium text-espresso capitalize">
+                <dd className="text-sm font-medium text-espresso capitalize text-right">
                   {d.value}
                 </dd>
               </div>
@@ -85,28 +125,28 @@ export default async function BeanDetailPage({
           </dl>
 
           {/* Defects */}
-          <div className="mt-6 pt-4 border-t border-cream-dark">
-            <h3 className="text-sm font-medium text-roast-light mb-2">Defects</h3>
-            <div className="flex gap-6">
+          <div className="mt-8 pt-6 border-t border-cream-dark">
+            <h3 className="text-sm font-medium text-roast-light mb-3">Defects</h3>
+            <div className="flex gap-8">
               <div>
                 <p className="text-2xl font-bold text-espresso">
                   {bean.defects.category_one}
                 </p>
-                <p className="text-xs text-roast-light">Category One</p>
+                <p className="text-xs text-roast-light mt-0.5">Category One</p>
               </div>
               <div>
                 <p className="text-2xl font-bold text-espresso">
                   {bean.defects.category_two}
                 </p>
-                <p className="text-xs text-roast-light">Category Two</p>
+                <p className="text-xs text-roast-light mt-0.5">Category Two</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Right: Cupping Scores */}
-        <div className="bg-white rounded-xl border border-cream-dark p-6">
-          <h2 className="font-serif text-xl font-bold text-espresso mb-4">
+        <div className="bg-white rounded-xl border border-cream-dark p-8 animate-fade-in-up stagger-2">
+          <h2 className="font-serif text-xl font-bold text-espresso mb-5">
             Cupping Scores
           </h2>
 
@@ -114,37 +154,59 @@ export default async function BeanDetailPage({
           <ScoreRadar scores={bean.scores} />
 
           {/* Full score breakdown */}
-          <div className="mt-6 space-y-2">
-            {[
-              { label: "Aroma", value: bean.scores.aroma },
-              { label: "Flavor", value: bean.scores.flavor },
-              { label: "Aftertaste", value: bean.scores.aftertaste },
-              { label: "Acidity", value: bean.scores.acidity },
-              { label: "Body", value: bean.scores.body },
-              { label: "Balance", value: bean.scores.balance },
-              { label: "Uniformity", value: bean.scores.uniformity },
-              { label: "Clean Cup", value: bean.scores.clean_cup },
-              { label: "Sweetness", value: bean.scores.sweetness },
-              { label: "Cupper Points", value: bean.scores.cupper_points },
-            ].map((s) => (
-              <div key={s.label} className="flex items-center gap-3">
-                <span className="text-xs text-roast-light w-24 shrink-0">
-                  {s.label}
-                </span>
-                <div className="flex-1 h-2 bg-cream-dark rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-sage rounded-full transition-all"
-                    style={{ width: `${(s.value / 10) * 100}%` }}
-                  />
+          <div className="mt-8 space-y-3">
+            {SCORE_FIELDS.map((s, i) => {
+              const value = bean.scores[s.key];
+              const explanation = scoreExplanations[s.key];
+              return (
+                <div key={s.key} className="flex items-center gap-3 group/score">
+                  <span className="text-xs text-roast-light w-24 shrink-0 cursor-help underline decoration-dotted decoration-roast-light/40 relative">
+                    {s.label}
+                    {/* CSS tooltip */}
+                    {explanation && (
+                      <span className="invisible group-hover/score:visible absolute bottom-full left-0 mb-2 w-52 p-2.5 bg-espresso text-cream text-xs rounded-lg shadow-lg z-10 leading-relaxed font-normal no-underline">
+                        {explanation}
+                      </span>
+                    )}
+                  </span>
+                  <div className="flex-1 h-2 bg-cream-dark rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-sage rounded-full score-bar-fill"
+                      style={{
+                        width: `${(value / 10) * 100}%`,
+                        animationDelay: `${i * 80}ms`,
+                      }}
+                    />
+                  </div>
+                  <span className="text-xs font-medium text-espresso w-8 text-right">
+                    {value.toFixed(1)}
+                  </span>
                 </div>
-                <span className="text-xs font-medium text-espresso w-8 text-right">
-                  {s.value.toFixed(1)}
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </div>
+
+      {/* Diary */}
+      <DiaryControls beanId={bean.id} />
+
+      {/* Similar Beans */}
+      {similarBeans.length > 0 && (
+        <section className="mt-14">
+          <div className="flex items-center gap-3 mb-6">
+            <h2 className="font-serif text-xl font-bold text-espresso">You Might Also Like</h2>
+            <div className="flex-1 h-px bg-cream-dark" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {similarBeans.map((similar, i) => (
+              <div key={similar.id} className={`animate-fade-in-up stagger-${i + 1}`}>
+                <BeanCard bean={similar} />
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }

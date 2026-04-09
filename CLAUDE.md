@@ -14,9 +14,10 @@ A coffee discovery web app built with Next.js 15, Tailwind CSS v4, and TypeScrip
 ```
 src/
 ├── app/              # Next.js pages (App Router)
-│   ├── layout.tsx    # Root layout with Navbar + Footer
-│   ├── page.tsx      # Homepage / bean catalog
-│   └── beans/[id]/   # Bean detail pages
+│   ├── layout.tsx    # Root layout with DiaryProvider + Navbar + Footer
+│   ├── page.tsx      # Homepage — hero, featured beans, catalog
+│   ├── beans/[id]/   # Bean detail pages
+│   └── diary/        # Personal coffee diary page
 ├── components/       # Reusable UI components
 ├── data/             # JSON data files (beans, flavors)
 └── lib/              # Utility functions and types
@@ -24,8 +25,11 @@ src/
 
 ## Key Files
 - `src/lib/beans.ts` — Bean type definitions, data loading, filtering logic
+- `src/lib/diary.ts` — Diary types (DiaryEntry, DiaryStatus, DiaryMap)
+- `src/lib/useLocalStorage.ts` — SSR-safe localStorage hook with hydration flag
+- `src/components/DiaryProvider.tsx` — React context providing diary state to the whole app
 - `src/data/beans.json` — Full dataset (1,338 beans from CQI)
-- `src/data/beans_curated.json` — 20 hand-picked beans for demos
+- `src/data/beans_curated.json` — 20 hand-picked beans for featured carousel
 - `src/data/flavor_taxonomy.json` — SCA Flavor Wheel vocabulary
 - `src/data/schema.md` — Documents the bean data model
 
@@ -46,6 +50,9 @@ src/
 - Use `@/` path alias for imports (e.g., `@/lib/beans`)
 - Tailwind utility classes for all styling — no separate CSS files per component
 - Bean data is loaded server-side where possible; filtering happens client-side
+- Diary state is managed via React context (`DiaryProvider`) and persisted to localStorage
+- Use the `useLocalStorage` hook for any client-side persisted state — it handles SSR hydration safely
+- Show skeleton loading states while waiting for localStorage hydration (`hydrated` flag)
 
 ## Common Tasks
 - **Add a new page:** Create `src/app/your-page/page.tsx`
