@@ -4,14 +4,18 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useDiary } from "@/components/DiaryProvider";
+import { useCart } from "@/components/CartProvider";
+import CartDrawer from "@/components/CartDrawer";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [cartOpen, setCartOpen] = useState(false);
   const router = useRouter();
   const { entries, hydrated } = useDiary();
   const diaryCount = hydrated ? Object.keys(entries).length : 0;
+  const { cartCount, hydrated: cartHydrated } = useCart();
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -37,22 +41,25 @@ export default function Navbar() {
         {/* Desktop nav */}
         <div className="hidden md:flex items-center gap-6 text-sm">
           <Link href="/" className="hover:text-caramel-light transition-colors">
-            Browse Beans
+            Beans
+          </Link>
+          <Link href="/shops" className="hover:text-caramel-light transition-colors">
+            Shops
           </Link>
           <Link href="/quiz" className="hover:text-caramel-light transition-colors flex items-center gap-1">
             <span className="text-xs">✨</span>
-            Flavor Quiz
+            Quiz
           </Link>
           <Link href="/diary" className="hover:text-caramel-light transition-colors flex items-center gap-1.5">
-            My Diary
+            Diary
             {diaryCount > 0 && (
               <span className="bg-caramel text-espresso text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center animate-scale-in">
                 {diaryCount}
               </span>
             )}
           </Link>
-          <Link href="/#about" className="hover:text-caramel-light transition-colors">
-            About
+          <Link href="/social" className="hover:text-caramel-light transition-colors">
+            Social
           </Link>
 
           {/* Desktop search toggle */}
@@ -90,27 +97,59 @@ export default function Navbar() {
               </button>
             )}
           </div>
+
+          {/* Cart icon */}
+          <button
+            onClick={() => setCartOpen(true)}
+            className="relative p-1.5 rounded-full hover:bg-espresso-light/50 transition-colors"
+            aria-label="Open cart"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
+            </svg>
+            {cartHydrated && cartCount > 0 && (
+              <span className="absolute -top-1 -right-1 bg-caramel text-espresso text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center animate-scale-in">
+                {cartCount > 9 ? "9+" : cartCount}
+              </span>
+            )}
+          </button>
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden p-2 rounded-lg hover:bg-espresso-light/50 transition-colors"
-          aria-label="Toggle menu"
-          aria-expanded={menuOpen}
-        >
-          <div className="w-5 h-4 relative flex flex-col justify-between">
-            <span className={`block h-0.5 w-full bg-cream rounded-full transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
-            <span className={`block h-0.5 w-full bg-cream rounded-full transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`} />
-            <span className={`block h-0.5 w-full bg-cream rounded-full transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
-          </div>
-        </button>
+        {/* Mobile: cart + hamburger */}
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={() => setCartOpen(true)}
+            className="relative p-2 rounded-lg hover:bg-espresso-light/50 transition-colors"
+            aria-label="Open cart"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100-4 2 2 0 000-4z" />
+            </svg>
+            {cartHydrated && cartCount > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 bg-caramel text-espresso text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center animate-scale-in">
+                {cartCount > 9 ? "9+" : cartCount}
+              </span>
+            )}
+          </button>
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="p-2 rounded-lg hover:bg-espresso-light/50 transition-colors"
+            aria-label="Toggle menu"
+            aria-expanded={menuOpen}
+          >
+            <div className="w-5 h-4 relative flex flex-col justify-between">
+              <span className={`block h-0.5 w-full bg-cream rounded-full transition-all duration-300 ${menuOpen ? "rotate-45 translate-y-[7px]" : ""}`} />
+              <span className={`block h-0.5 w-full bg-cream rounded-full transition-opacity duration-200 ${menuOpen ? "opacity-0" : ""}`} />
+              <span className={`block h-0.5 w-full bg-cream rounded-full transition-all duration-300 ${menuOpen ? "-rotate-45 -translate-y-[7px]" : ""}`} />
+            </div>
+          </button>
+        </div>
       </div>
 
       {/* Mobile menu */}
       <div
         className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${
-          menuOpen ? "max-h-64 border-t border-cream/10" : "max-h-0"
+          menuOpen ? "max-h-96 border-t border-cream/10" : "max-h-0"
         }`}
       >
         <div className="px-4 py-4 space-y-1">
@@ -125,26 +164,17 @@ export default function Navbar() {
             />
           </form>
 
-          <Link
-            href="/"
-            onClick={() => setMenuOpen(false)}
-            className="block py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors"
-          >
+          <Link href="/" onClick={() => setMenuOpen(false)} className="block py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors">
             Browse Beans
           </Link>
-          <Link
-            href="/quiz"
-            onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-2 py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors"
-          >
+          <Link href="/shops" onClick={() => setMenuOpen(false)} className="block py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors">
+            Coffee Shops
+          </Link>
+          <Link href="/quiz" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors">
             <span className="text-xs">✨</span>
             Flavor Quiz
           </Link>
-          <Link
-            href="/diary"
-            onClick={() => setMenuOpen(false)}
-            className="flex items-center gap-2 py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors"
-          >
+          <Link href="/diary" onClick={() => setMenuOpen(false)} className="flex items-center gap-2 py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors">
             My Diary
             {diaryCount > 0 && (
               <span className="bg-caramel text-espresso text-xs font-bold w-5 h-5 rounded-full flex items-center justify-center">
@@ -152,15 +182,17 @@ export default function Navbar() {
               </span>
             )}
           </Link>
-          <Link
-            href="/#about"
-            onClick={() => setMenuOpen(false)}
-            className="block py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors"
-          >
-            About
+          <Link href="/social" onClick={() => setMenuOpen(false)} className="block py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors">
+            Community
+          </Link>
+          <Link href="/profile" onClick={() => setMenuOpen(false)} className="block py-3 px-3 rounded-lg text-cream hover:bg-espresso-light/50 transition-colors">
+            Profile
           </Link>
         </div>
       </div>
+
+      {/* Cart Drawer */}
+      <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
     </nav>
   );
 }

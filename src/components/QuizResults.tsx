@@ -1,9 +1,10 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import Link from "next/link";
 import { getBeanById } from "@/lib/beans";
 import type { QuizResult } from "@/lib/quiz";
+import { useCart } from "@/components/CartProvider";
 import BeanCard from "./BeanCard";
 
 interface QuizResultsProps {
@@ -13,6 +14,8 @@ interface QuizResultsProps {
 
 export default function QuizResults({ result, onRetake }: QuizResultsProps) {
   const { profile, recommendedBeanIds } = result;
+  const { addItem } = useCart();
+  const [bundleAdded, setBundleAdded] = useState(false);
 
   const beans = useMemo(
     () =>
@@ -21,6 +24,18 @@ export default function QuizResults({ result, onRetake }: QuizResultsProps) {
         .filter((b): b is NonNullable<typeof b> => b !== undefined),
     [recommendedBeanIds]
   );
+
+  const bundleTotal = beans.reduce((sum, b) => sum + b.price, 0);
+
+  function handleBuyBundle() {
+    for (const bean of beans) {
+      if (bean.in_stock) {
+        addItem(bean.id, "whole", "12oz", bean.price);
+      }
+    }
+    setBundleAdded(true);
+    setTimeout(() => setBundleAdded(false), 2500);
+  }
 
   return (
     <div className="animate-fade-in-up">
@@ -66,6 +81,25 @@ export default function QuizResults({ result, onRetake }: QuizResultsProps) {
                 <BeanCard bean={bean} />
               </div>
             ))}
+          </div>
+
+          {/* Buy bundle */}
+          <div className="mt-6 text-center">
+            <button
+              onClick={handleBuyBundle}
+              className={`px-6 py-3 rounded-full font-medium transition-all ${
+                bundleAdded
+                  ? "bg-sage text-white"
+                  : "bg-espresso text-cream hover:bg-espresso-light shadow-md hover:shadow-lg"
+              }`}
+            >
+              {bundleAdded
+                ? "Bundle Added to Cart!"
+                : `Buy Your ${profile.name} Bundle — $${bundleTotal.toFixed(2)}`}
+            </button>
+            <p className="text-xs text-roast-light/60 mt-2">
+              All {beans.length} recommended beans, 12oz whole bean
+            </p>
           </div>
         </section>
       )}

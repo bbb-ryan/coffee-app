@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Fraunces } from "next/font/google";
 import { DiaryProvider } from "@/components/DiaryProvider";
+import { CartProvider } from "@/components/CartProvider";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import "./globals.css";
@@ -32,9 +33,11 @@ export default function RootLayout({
     <html lang="en" className={`${inter.variable} ${fraunces.variable}`}>
       <body className="min-h-screen flex flex-col font-sans antialiased">
         <DiaryProvider>
-          <Navbar />
-          <main className="flex-1">{children}</main>
-          <Footer />
+          <CartProvider>
+            <Navbar />
+            <main className="flex-1">{children}</main>
+            <Footer />
+          </CartProvider>
         </DiaryProvider>
       </body>
     </html>

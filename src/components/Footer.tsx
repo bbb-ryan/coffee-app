@@ -19,30 +19,35 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Explore Links */}
           <div>
             <p className="font-medium text-cream text-sm uppercase tracking-wide mb-4">Explore</p>
             <div className="space-y-2">
               <Link href="/" className="block text-sm text-caramel-light/80 hover:text-cream transition-colors">
-                Browse All Beans
+                Browse Beans
+              </Link>
+              <Link href="/shops" className="block text-sm text-caramel-light/80 hover:text-cream transition-colors">
+                Coffee Shops
               </Link>
               <Link href="/quiz" className="block text-sm text-caramel-light/80 hover:text-cream transition-colors">
                 Flavor Quiz
               </Link>
-              <Link href="/?minScore=90" className="block text-sm text-caramel-light/80 hover:text-cream transition-colors">
-                Top Rated (90+)
+              <Link href="/social" className="block text-sm text-caramel-light/80 hover:text-cream transition-colors">
+                Community
               </Link>
-              <Link href="/#about" className="block text-sm text-caramel-light/80 hover:text-cream transition-colors">
-                About This Project
+            </div>
+
+            <p className="font-medium text-cream text-sm uppercase tracking-wide mb-4 mt-6">Account</p>
+            <div className="space-y-2">
+              <Link href="/diary" className="block text-sm text-caramel-light/80 hover:text-cream transition-colors">
+                My Diary
               </Link>
-              <a
-                href="https://github.com/jldbc/coffee-quality-database"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-sm text-caramel-light/80 hover:text-cream transition-colors"
-              >
-                Data Sources ↗
-              </a>
+              <Link href="/profile" className="block text-sm text-caramel-light/80 hover:text-cream transition-colors">
+                Profile & Badges
+              </Link>
+              <Link href="/orders" className="block text-sm text-caramel-light/80 hover:text-cream transition-colors">
+                Order History
+              </Link>
             </div>
           </div>
 

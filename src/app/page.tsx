@@ -5,9 +5,11 @@ import {
   getUniqueCountries,
   getUniqueProcessingMethods,
 } from "@/lib/beans";
+import { getAllShops } from "@/lib/shops";
 import Link from "next/link";
 import BeanCatalog from "@/components/BeanCatalog";
 import FeaturedBeans from "@/components/FeaturedBeans";
+import ShopCard from "@/components/ShopCard";
 
 export default function HomePage() {
   const beans = getAllBeans();
@@ -15,6 +17,7 @@ export default function HomePage() {
   const stats = getCatalogStats();
   const countries = getUniqueCountries();
   const processingMethods = getUniqueProcessingMethods();
+  const featuredShops = getAllShops().slice(0, 3);
 
   return (
     <div>
@@ -75,6 +78,26 @@ export default function HomePage() {
       <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Featured beans */}
         <FeaturedBeans beans={curated} />
+
+        {/* Find a Shop */}
+        <section className="mb-14 animate-fade-in-up">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <h2 className="font-serif text-xl font-bold text-espresso">Coffee Shops</h2>
+              <div className="flex-1 h-px bg-cream-dark" />
+            </div>
+            <Link href="/shops" className="text-sm text-caramel hover:text-roast transition-colors font-medium">
+              View all shops →
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+            {featuredShops.map((shop, i) => (
+              <div key={shop.id} className={`animate-fade-in-up stagger-${i + 1}`}>
+                <ShopCard shop={shop} />
+              </div>
+            ))}
+          </div>
+        </section>
 
         {/* Catalog */}
         <div id="catalog">

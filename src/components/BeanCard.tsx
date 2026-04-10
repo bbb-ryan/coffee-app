@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { Bean, getScoreLabel, getScoreClass, getCountryFlag, getFlavorHint } from "@/lib/beans";
 import { useDiary } from "@/components/DiaryProvider";
+import { useCart } from "@/components/CartProvider";
 
 const DIARY_BADGES: Record<string, { icon: React.ReactNode; className: string }> = {
   tried: {
@@ -33,6 +35,8 @@ const DIARY_BADGES: Record<string, { icon: React.ReactNode; className: string }>
 
 export default function BeanCard({ bean }: { bean: Bean }) {
   const { getEntry, hydrated } = useDiary();
+  const { addItem } = useCart();
+  const [justAdded, setJustAdded] = useState(false);
   const entry = hydrated ? getEntry(bean.id) : undefined;
 
   const scoreClass = getScoreClass(bean.scores.total);
@@ -93,8 +97,11 @@ export default function BeanCard({ bean }: { bean: Bean }) {
           <p className="text-sm text-roast-light capitalize">{bean.region}</p>
         )}
 
-        {/* Flavor hint */}
-        <p className="text-xs italic text-caramel mt-1">{flavorHint}</p>
+        {/* Price + Flavor hint */}
+        <div className="flex items-center justify-between mt-1">
+          <p className="text-xs italic text-caramel">{flavorHint}</p>
+          <span className="font-serif text-sm font-bold text-espresso">${bean.price.toFixed(2)}</span>
+        </div>
 
         {/* Detail pills */}
         <div className="flex flex-wrap gap-1.5 mt-3">
@@ -115,7 +122,7 @@ export default function BeanCard({ bean }: { bean: Bean }) {
           )}
         </div>
 
-        {/* Score bar */}
+        {/* Score bar + Quick add */}
         <div className="mt-4 flex items-center gap-2">
           <div className="flex-1 h-1.5 bg-cream-dark rounded-full overflow-hidden">
             <div
@@ -124,6 +131,24 @@ export default function BeanCard({ bean }: { bean: Bean }) {
             />
           </div>
           <span className="text-xs text-roast-light font-medium">{scoreLabel}</span>
+          {bean.in_stock && (
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                addItem(bean.id, "whole", "12oz", bean.price);
+                setJustAdded(true);
+                setTimeout(() => setJustAdded(false), 1500);
+              }}
+              className={`shrink-0 px-3 py-1 rounded-full text-xs font-medium transition-all ${
+                justAdded
+                  ? "bg-sage text-white"
+                  : "bg-caramel/10 text-caramel hover:bg-caramel hover:text-white opacity-0 group-hover:opacity-100"
+              }`}
+            >
+              {justAdded ? "Added!" : "Add"}
+            </button>
+          )}
         </div>
       </div>
     </Link>

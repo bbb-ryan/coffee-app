@@ -13,6 +13,8 @@ import {
 import ScoreRadar from "@/components/ScoreRadar";
 import BeanCard from "@/components/BeanCard";
 import DiaryControls from "@/components/DiaryControls";
+import AddToCartControls from "@/components/AddToCartControls";
+import { getShopsForBean } from "@/lib/shops";
 
 export function generateStaticParams() {
   return getAllBeans().map((bean) => ({
@@ -50,6 +52,7 @@ export default async function BeanDetailPage({
   const flag = getCountryFlag(bean.country);
   const flavorHint = getFlavorHint(bean.scores);
   const similarBeans = getSimilarBeans(bean, 3);
+  const nearbyShops = getShopsForBean(bean.id).slice(0, 3);
 
   const details = [
     { label: "Species", value: bean.species },
@@ -190,6 +193,50 @@ export default async function BeanDetailPage({
 
       {/* Diary */}
       <DiaryControls beanId={bean.id} />
+
+      {/* Purchase */}
+      <AddToCartControls
+        beanId={bean.id}
+        basePrice={bean.price}
+        roaster={bean.roaster}
+        roastLevel={bean.roast_level}
+        inStock={bean.in_stock}
+      />
+
+      {/* Find Near You */}
+      {nearbyShops.length > 0 && (
+        <section className="mt-10 animate-fade-in-up stagger-4">
+          <div className="flex items-center gap-3 mb-5">
+            <h2 className="font-serif text-lg font-bold text-espresso">Find This Bean Near You</h2>
+            <div className="flex-1 h-px bg-cream-dark" />
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {nearbyShops.map((shop) => (
+              <Link
+                key={shop.id}
+                href={`/shops/${shop.id}`}
+                className="bg-white rounded-xl border border-cream-dark p-4 hover:border-caramel/40 hover:shadow-sm transition-all group"
+              >
+                <div className="flex items-center gap-3 mb-2">
+                  <span className="text-2xl">{shop.image}</span>
+                  <div>
+                    <p className="font-medium text-sm text-espresso group-hover:text-caramel transition-colors">{shop.name}</p>
+                    <p className="text-xs text-roast-light">{shop.city}, {shop.state}</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1.5 text-xs text-roast-light/70">
+                  <svg className="w-3 h-3 text-honey" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                  <span>{shop.rating}</span>
+                  <span className="mx-1">·</span>
+                  <span>{shop.hours}</span>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* Similar Beans */}
       {similarBeans.length > 0 && (

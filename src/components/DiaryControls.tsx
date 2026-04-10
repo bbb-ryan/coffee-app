@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { useDiary } from "@/components/DiaryProvider";
-import type { DiaryStatus } from "@/lib/diary";
+import type { DiaryStatus, BrewMethod } from "@/lib/diary";
+import { BREW_METHODS } from "@/lib/diary";
+import StarRating from "@/components/StarRating";
 
 const STATUS_OPTIONS: {
   value: DiaryStatus;
@@ -43,7 +45,7 @@ const STATUS_OPTIONS: {
 ];
 
 export default function DiaryControls({ beanId }: { beanId: number }) {
-  const { getEntry, setEntry, updateNotes, removeEntry, hydrated } = useDiary();
+  const { getEntry, setEntry, updateNotes, updateEntry, removeEntry, hydrated } = useDiary();
   const entry = getEntry(beanId);
   const [notes, setNotes] = useState("");
 
@@ -106,9 +108,39 @@ export default function DiaryControls({ beanId }: { beanId: number }) {
         ))}
       </div>
 
-      {/* Notes textarea */}
+      {/* Extended controls when entry exists */}
       {entry ? (
-        <div className="animate-fade-in">
+        <div className="animate-fade-in space-y-4">
+          {/* Star Rating */}
+          <div>
+            <label className="text-sm font-medium text-espresso block mb-2">Your Rating</label>
+            <StarRating
+              value={entry.rating ?? 0}
+              onChange={(rating) => updateEntry(beanId, { rating: rating || undefined })}
+            />
+          </div>
+
+          {/* Brew Method */}
+          <div>
+            <label className="text-sm font-medium text-espresso block mb-2">Brew Method</label>
+            <div className="flex flex-wrap gap-2">
+              {BREW_METHODS.map((method) => (
+                <button
+                  key={method}
+                  onClick={() => updateEntry(beanId, { brewMethod: entry.brewMethod === method ? undefined : method })}
+                  className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
+                    entry.brewMethod === method
+                      ? "bg-espresso text-cream border-espresso"
+                      : "bg-white text-roast border-cream-dark hover:border-caramel"
+                  }`}
+                >
+                  {method}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Notes textarea */}
           <textarea
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
@@ -117,10 +149,22 @@ export default function DiaryControls({ beanId }: { beanId: number }) {
             rows={3}
             className="w-full rounded-lg border border-cream-dark px-4 py-3 text-sm text-espresso placeholder:text-roast-light/40 focus:outline-none focus:ring-2 focus:ring-caramel/30 focus:border-caramel resize-none"
           />
-          <div className="flex items-center justify-between mt-2">
-            <p className="text-xs text-roast-light/60">
-              Added {entry.date}
-            </p>
+
+          {/* Share toggle + meta */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <p className="text-xs text-roast-light/60">Added {entry.date}</p>
+              <label className="flex items-center gap-1.5 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={entry.isPublic ?? false}
+                  onChange={(e) => updateEntry(beanId, { isPublic: e.target.checked })}
+                  className="sr-only peer"
+                />
+                <div className="w-8 h-4.5 bg-cream-dark rounded-full peer peer-checked:bg-caramel transition-colors relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-3.5 after:h-3.5 after:bg-white after:rounded-full after:transition-transform peer-checked:after:translate-x-3.5" />
+                <span className="text-xs text-roast-light/60">Share</span>
+              </label>
+            </div>
             <button
               onClick={() => {
                 removeEntry(beanId);
