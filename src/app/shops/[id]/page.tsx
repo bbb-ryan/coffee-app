@@ -36,7 +36,7 @@ export default async function ShopDetailPage({
       </nav>
 
       {/* Header */}
-      <div className="bg-gradient-to-r from-espresso/5 via-caramel/10 to-espresso/5 rounded-2xl p-8 mb-10 animate-fade-in">
+      <div className="bg-gradient-to-r from-[#141414] via-[#1A1A1A] to-[#141414] rounded-2xl p-8 mb-10 animate-fade-in">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <span className="text-4xl mb-3 block">{shop.image}</span>
@@ -63,7 +63,7 @@ export default async function ShopDetailPage({
 
       <div className="grid md:grid-cols-2 gap-8 mb-10">
         {/* Details */}
-        <div className="bg-white rounded-xl border border-cream-dark p-6 animate-fade-in-up">
+        <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-6 animate-fade-in-up">
           <h2 className="font-serif text-xl font-bold text-espresso mb-5">Details</h2>
           <dl className="space-y-3">
             <div className="flex justify-between items-baseline">
@@ -97,13 +97,13 @@ export default async function ShopDetailPage({
         </div>
 
         {/* Features */}
-        <div className="bg-white rounded-xl border border-cream-dark p-6 animate-fade-in-up stagger-2">
+        <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-6 animate-fade-in-up stagger-2">
           <h2 className="font-serif text-xl font-bold text-espresso mb-5">Features</h2>
           <div className="flex flex-wrap gap-2">
             {shop.features.map((feature) => (
               <span
                 key={feature}
-                className="px-4 py-2 bg-cream-dark rounded-xl text-sm text-espresso capitalize"
+                className="px-4 py-2 bg-white/[0.06] rounded-xl text-sm text-espresso capitalize"
               >
                 {feature}
               </span>
@@ -119,7 +119,7 @@ export default async function ShopDetailPage({
             <h2 className="font-serif text-xl font-bold text-espresso">
               Beans Available Here
             </h2>
-            <div className="flex-1 h-px bg-cream-dark" />
+            <div className="flex-1 h-px bg-white/[0.06]" />
             <span className="text-sm text-roast-light">{beans.length} beans</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">

@@ -40,10 +40,10 @@ export default function OrderHistory() {
           {orders.map((order) => (
             <div
               key={order.id}
-              className="bg-white rounded-xl border border-cream-dark overflow-hidden animate-fade-in-up"
+              className="bg-[#141414] rounded-xl border border-white/[0.06] overflow-hidden animate-fade-in-up"
             >
               {/* Order header */}
-              <div className="flex flex-wrap items-center justify-between gap-3 p-5 border-b border-cream-dark bg-cream-dark/20">
+              <div className="flex flex-wrap items-center justify-between gap-3 p-5 border-b border-white/[0.06] bg-white/[0.06]/20">
                 <div>
                   <p className="font-mono text-sm font-bold text-espresso">{order.id}</p>
                   <p className="text-xs text-roast-light mt-0.5">

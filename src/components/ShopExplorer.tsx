@@ -52,13 +52,13 @@ export default function ShopExplorer() {
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search shops by name or city..."
-            className="w-full pl-10 pr-4 py-2.5 border border-cream-dark rounded-xl text-sm text-espresso focus:outline-none focus:border-caramel"
+            className="w-full pl-10 pr-4 py-2.5 border border-white/[0.06] rounded-xl text-sm text-espresso focus:outline-none focus:border-caramel"
           />
         </div>
         <select
           value={selectedCity}
           onChange={(e) => setSelectedCity(e.target.value)}
-          className="border border-cream-dark rounded-xl px-4 py-2.5 text-sm text-espresso bg-white focus:outline-none focus:border-caramel"
+          className="border border-white/[0.06] rounded-xl px-4 py-2.5 text-sm text-espresso bg-[#141414] focus:outline-none focus:border-caramel"
         >
           <option value="">All Cities</option>
           {cities.map((c) => (
@@ -68,7 +68,7 @@ export default function ShopExplorer() {
         <select
           value={selectedFeature}
           onChange={(e) => setSelectedFeature(e.target.value)}
-          className="border border-cream-dark rounded-xl px-4 py-2.5 text-sm text-espresso bg-white focus:outline-none focus:border-caramel capitalize"
+          className="border border-white/[0.06] rounded-xl px-4 py-2.5 text-sm text-espresso bg-[#141414] focus:outline-none focus:border-caramel capitalize"
         >
           <option value="">All Features</option>
           {features.map((f) => (

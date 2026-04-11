@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  /* Coffee-inspired color palette */
-  --color-cream: #FFF8F0;
-  --color-cream-dark: #F5EDE3;
-  --color-espresso: #2C1810;
-  --color-espresso-light: #4A3228;
-  --color-roast: #6B3A2A;
-  --color-roast-light: #8B5E3C;
-  --color-caramel: #C4813D;
-  --color-caramel-light: #D4A574;
-  --color-honey: #E8B960;
-  --color-sage: #7A8B6F;
-  --color-sage-light: #A3B299;
+  /* Dark moody color palette */
+  --color-cream: #0F0F0F;
+  --color-cream-dark: #1A1A1A;
+  --color-espresso: #E8E4E0;
+  --color-espresso-light: #B8B0A8;
+  --color-roast: #A09890;
+  --color-roast-light: #706860;
+  --color-caramel: #C8956C;
+  --color-caramel-light: #D4A87A;
+  --color-honey: #D4A03C;
+  --color-sage: #6B9E78;
+  --color-sage-light: #7EB88A;
 
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -147,7 +147,7 @@ a, button, input, select {
 /* ── Skeleton Loading ── */
 
 .skeleton {
-  background: linear-gradient(90deg, var(--color-cream-dark) 25%, var(--color-cream) 50%, var(--color-cream-dark) 75%);
+  background: linear-gradient(90deg, var(--color-cream-dark) 25%, rgba(255,255,255,0.06) 50%, var(--color-cream-dark) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 0.5rem;

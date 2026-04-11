@@ -42,7 +42,7 @@ export default function QuizInterstitial() {
       </p>
 
       {/* Progress bar */}
-      <div className="w-48 h-1.5 bg-cream-dark rounded-full overflow-hidden">
+      <div className="w-48 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
         <div
           className="h-full bg-caramel rounded-full transition-none"
           style={{ width: `${progress}%` }}

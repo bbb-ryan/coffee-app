@@ -39,12 +39,13 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
     <>
       {/* Backdrop */}
       <div
-        className={`fixed inset-0 z-50 bg-espresso/40 backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 z-50 bg-black/60 backdrop-blur-sm transition-opacity duration-300 ${
           open ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
         onClick={onClose}
         aria-hidden="true"
       />
+
 
       {/* Drawer */}
       <div
@@ -52,12 +53,12 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
         role="dialog"
         aria-label="Shopping cart"
         aria-modal="true"
-        className={`fixed top-0 right-0 z-50 h-full w-full max-w-md bg-cream shadow-2xl flex flex-col transition-transform duration-300 ease-out ${
+        className={`fixed top-0 right-0 z-50 h-full w-full max-w-md bg-[#0F0F0F] shadow-[-8px_0_32px_rgba(0,0,0,0.6)] flex flex-col transition-transform duration-300 ease-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-cream-dark">
+        <div className="flex items-center justify-between p-5 border-b border-white/[0.06]">
           <h2 className="font-serif text-xl font-bold text-espresso flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
@@ -69,7 +70,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
           </h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-lg hover:bg-cream-dark transition-colors"
+            className="p-2 rounded-lg hover:bg-white/[0.06] transition-colors"
             aria-label="Close cart"
           >
             <svg className="w-5 h-5 text-espresso" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,7 +110,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                 return (
                   <div
                     key={key}
-                    className="bg-white rounded-xl border border-cream-dark p-4 animate-fade-in"
+                    className="bg-[#141414] rounded-xl border border-white/[0.06] p-4 animate-fade-in"
                   >
                     <div className="flex items-start gap-3">
                       {/* Bean info */}
@@ -125,15 +126,15 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                           {bean.roaster}
                         </p>
                         <div className="flex items-center gap-2 mt-1.5 text-xs text-roast-light/70">
-                          <span className="px-2 py-0.5 bg-cream-dark rounded-full capitalize">{item.grind}</span>
-                          <span className="px-2 py-0.5 bg-cream-dark rounded-full">{item.size}</span>
+                          <span className="px-2 py-0.5 bg-white/[0.06] rounded-full capitalize">{item.grind}</span>
+                          <span className="px-2 py-0.5 bg-white/[0.06] rounded-full">{item.size}</span>
                         </div>
                       </div>
 
                       {/* Remove button */}
                       <button
                         onClick={() => removeItem(key)}
-                        className="p-1 rounded hover:bg-cream-dark text-roast-light/50 hover:text-roast transition-colors shrink-0"
+                        className="p-1 rounded hover:bg-white/[0.06] text-roast-light/50 hover:text-roast transition-colors shrink-0"
                         aria-label="Remove item"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -143,11 +144,11 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                     </div>
 
                     {/* Quantity + price */}
-                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-cream-dark">
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.06]">
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => updateQuantity(key, item.quantity - 1)}
-                          className="w-7 h-7 rounded-full border border-cream-dark flex items-center justify-center text-sm hover:border-caramel hover:text-caramel transition-colors"
+                          className="w-7 h-7 rounded-full border border-white/[0.06] flex items-center justify-center text-sm hover:border-caramel hover:text-caramel transition-colors"
                           aria-label="Decrease quantity"
                         >
                           -
@@ -157,7 +158,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                         </span>
                         <button
                           onClick={() => updateQuantity(key, item.quantity + 1)}
-                          className="w-7 h-7 rounded-full border border-cream-dark flex items-center justify-center text-sm hover:border-caramel hover:text-caramel transition-colors"
+                          className="w-7 h-7 rounded-full border border-white/[0.06] flex items-center justify-center text-sm hover:border-caramel hover:text-caramel transition-colors"
                           aria-label="Increase quantity"
                         >
                           +
@@ -184,7 +185,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
 
         {/* Footer with totals */}
         {hydrated && itemEntries.length > 0 && (
-          <div className="border-t border-cream-dark p-5 bg-white/50">
+          <div className="border-t border-white/[0.06] p-5 bg-[#141414]/50">
             <div className="space-y-2 mb-4">
               <div className="flex justify-between text-sm text-roast">
                 <span>Subtotal</span>
@@ -199,7 +200,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                   Free shipping on orders over $40
                 </p>
               )}
-              <div className="flex justify-between text-base font-bold text-espresso pt-2 border-t border-cream-dark">
+              <div className="flex justify-between text-base font-bold text-espresso pt-2 border-t border-white/[0.06]">
                 <span>Total</span>
                 <span>${(cartTotal + shippingCost).toFixed(2)}</span>
               </div>

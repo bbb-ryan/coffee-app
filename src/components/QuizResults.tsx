@@ -40,17 +40,17 @@ export default function QuizResults({ result, onRetake }: QuizResultsProps) {
   return (
     <div className="animate-fade-in-up">
       {/* Profile header */}
-      <div className="bg-gradient-to-br from-espresso via-roast to-espresso-light rounded-2xl p-8 md:p-10 text-center mb-10 relative overflow-hidden">
+      <div className="bg-gradient-to-br from-[#0A0A0A] via-[#141414] to-[#0F0F0F] rounded-2xl p-8 md:p-10 text-center mb-10 relative overflow-hidden">
         {/* Subtle radial accents */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,_var(--color-caramel-light)_0%,_transparent_50%)] opacity-15" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_70%_80%,_var(--color-sage)_0%,_transparent_40%)] opacity-10" />
 
         <div className="relative">
           <div className="text-5xl mb-3 animate-scale-in">{profile.icon}</div>
-          <p className="text-sm text-cream/50 uppercase tracking-widest mb-2 animate-fade-in stagger-1">
+          <p className="text-sm text-[#E8E4E0]/50 uppercase tracking-widest mb-2 animate-fade-in stagger-1">
             Your Coffee Personality
           </p>
-          <h1 className="font-serif text-3xl md:text-4xl font-bold text-cream mb-2 animate-fade-in-up stagger-2">
+          <h1 className="font-serif text-3xl md:text-4xl font-bold text-[#E8E4E0] mb-2 animate-fade-in-up stagger-2">
             {profile.name}
           </h1>
           <p className="text-lg text-caramel-light font-medium animate-fade-in stagger-3">
@@ -60,7 +60,7 @@ export default function QuizResults({ result, onRetake }: QuizResultsProps) {
       </div>
 
       {/* Description */}
-      <div className="bg-white rounded-xl border border-cream-dark p-6 md:p-8 mb-10 animate-fade-in-up stagger-2">
+      <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-6 md:p-8 mb-10 animate-fade-in-up stagger-2">
         <p className="text-roast leading-relaxed text-base">
           {profile.description}
         </p>
@@ -73,7 +73,7 @@ export default function QuizResults({ result, onRetake }: QuizResultsProps) {
             <h2 className="font-serif text-xl font-bold text-espresso">
               Beans We Think You&apos;ll Love
             </h2>
-            <div className="flex-1 h-px bg-cream-dark" />
+            <div className="flex-1 h-px bg-white/[0.06]" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {beans.map((bean, i) => (
@@ -90,7 +90,7 @@ export default function QuizResults({ result, onRetake }: QuizResultsProps) {
               className={`px-6 py-3 rounded-full font-medium transition-all ${
                 bundleAdded
                   ? "bg-sage text-white"
-                  : "bg-espresso text-cream hover:bg-espresso-light shadow-md hover:shadow-lg"
+                  : "bg-[#E8E4E0] text-[#0F0F0F] hover:bg-white/80 shadow-md hover:shadow-lg"
               }`}
             >
               {bundleAdded
@@ -108,7 +108,7 @@ export default function QuizResults({ result, onRetake }: QuizResultsProps) {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up stagger-4">
         <button
           onClick={onRetake}
-          className="px-6 py-2.5 rounded-full text-sm font-medium border-2 border-cream-dark text-espresso hover:border-caramel hover:text-caramel transition-all"
+          className="px-6 py-2.5 rounded-full text-sm font-medium border-2 border-white/[0.06] text-espresso hover:border-caramel hover:text-caramel transition-all"
         >
           Retake Quiz
         </button>

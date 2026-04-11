@@ -18,7 +18,7 @@ export default function QuizProgress({ current, total }: QuizProgressProps) {
           {Math.round(pct)}%
         </span>
       </div>
-      <div className="h-2 bg-cream-dark rounded-full overflow-hidden">
+      <div className="h-2 bg-white/[0.06] rounded-full overflow-hidden">
         <div
           className="h-full bg-caramel rounded-full transition-all duration-500 ease-out"
           style={{ width: `${pct}%` }}

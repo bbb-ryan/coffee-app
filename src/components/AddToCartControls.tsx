@@ -47,7 +47,7 @@ export default function AddToCartControls({
   }
 
   return (
-    <div className="bg-white rounded-xl border border-cream-dark p-6 md:p-8 mt-8 animate-fade-in-up stagger-3">
+    <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-6 md:p-8 mt-8 animate-fade-in-up stagger-3">
       <div className="flex items-start justify-between gap-4 mb-6">
         <div>
           <h2 className="font-serif text-xl font-bold text-espresso">Purchase</h2>
@@ -56,7 +56,7 @@ export default function AddToCartControls({
         <div className="text-right">
           <p className="font-serif text-2xl font-bold text-espresso">${currentPrice.toFixed(2)}</p>
           <div className="flex items-center gap-2 mt-1">
-            <span className="text-xs px-2 py-0.5 bg-cream-dark text-roast-light rounded-full">
+            <span className="text-xs px-2 py-0.5 bg-white/[0.06] text-roast-light rounded-full">
               {roastLevel} Roast
             </span>
             {inStock ? (
@@ -64,7 +64,7 @@ export default function AddToCartControls({
                 In Stock
               </span>
             ) : (
-              <span className="text-xs px-2 py-0.5 bg-rose-50 text-rose-600 rounded-full font-medium">
+              <span className="text-xs px-2 py-0.5 bg-rose-500/10 text-rose-400 rounded-full font-medium">
                 Out of Stock
               </span>
             )}
@@ -82,8 +82,8 @@ export default function AddToCartControls({
               onClick={() => setGrind(g.value)}
               className={`px-4 py-2 rounded-full text-sm transition-all ${
                 grind === g.value
-                  ? "bg-espresso text-cream shadow-sm"
-                  : "bg-cream-dark text-roast hover:bg-cream-dark/80"
+                  ? "bg-[#E8E4E0] text-[#0F0F0F] shadow-sm"
+                  : "bg-white/[0.06] text-roast hover:bg-white/[0.06]/80"
               }`}
             >
               {g.label}
@@ -105,7 +105,7 @@ export default function AddToCartControls({
                 className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all border-2 ${
                   size === s.value
                     ? "border-caramel bg-caramel/5 text-espresso shadow-sm"
-                    : "border-cream-dark text-roast hover:border-caramel/40"
+                    : "border-white/[0.06] text-roast hover:border-caramel/40"
                 }`}
               >
                 <span className="block">{s.label}</span>
@@ -125,7 +125,7 @@ export default function AddToCartControls({
             ? "bg-sage text-white"
             : inStock
               ? "bg-caramel text-white hover:bg-caramel-light shadow-sm hover:shadow-md active:scale-[0.98]"
-              : "bg-cream-dark text-roast-light/50 cursor-not-allowed"
+              : "bg-white/[0.06] text-roast-light/50 cursor-not-allowed"
         }`}
       >
         {added ? "Added to Cart!" : inStock ? "Add to Cart" : "Out of Stock"}

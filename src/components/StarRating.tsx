@@ -28,7 +28,7 @@ export default function StarRating({ value, onChange, size = "md" }: StarRatingP
             className={`${starSize} transition-colors ${
               star <= (hover || value)
                 ? "text-honey"
-                : "text-cream-dark"
+                : "text-white/10"
             }`}
             fill="currentColor"
             viewBox="0 0 24 24"

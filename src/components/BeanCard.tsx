@@ -63,7 +63,7 @@ export default function BeanCard({ bean }: { bean: Bean }) {
   return (
     <Link
       href={`/beans/${bean.id}`}
-      className="group block bg-white rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-cream-dark hover:border-caramel/40"
+      className="group block bg-[#141414] rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-white/[0.06] hover:border-caramel/40"
     >
       {/* Gradient accent bar */}
       <div className={`h-1.5 ${gradientBar}`} />
@@ -106,17 +106,17 @@ export default function BeanCard({ bean }: { bean: Bean }) {
         {/* Detail pills */}
         <div className="flex flex-wrap gap-1.5 mt-3">
           {bean.variety && (
-            <span className="text-xs bg-cream-dark text-espresso-light px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-white/[0.06] text-espresso-light px-2 py-0.5 rounded-full">
               {bean.variety}
             </span>
           )}
           {bean.processing_method && (
-            <span className="text-xs bg-cream-dark text-espresso-light px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-white/[0.06] text-espresso-light px-2 py-0.5 rounded-full">
               {bean.processing_method}
             </span>
           )}
           {bean.altitude_meters && (
-            <span className="text-xs bg-cream-dark text-espresso-light px-2 py-0.5 rounded-full">
+            <span className="text-xs bg-white/[0.06] text-espresso-light px-2 py-0.5 rounded-full">
               {bean.altitude_meters.toLocaleString()}m
             </span>
           )}
@@ -124,7 +124,7 @@ export default function BeanCard({ bean }: { bean: Bean }) {
 
         {/* Score bar + Quick add */}
         <div className="mt-4 flex items-center gap-2">
-          <div className="flex-1 h-1.5 bg-cream-dark rounded-full overflow-hidden">
+          <div className="flex-1 h-1.5 bg-white/[0.06] rounded-full overflow-hidden">
             <div
               className={`h-full rounded-full ${barColor} score-bar-fill`}
               style={{ width: `${bean.scores.total}%` }}
