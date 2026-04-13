@@ -35,3 +35,7 @@ next-env.d.ts
 
 # Testing
 coverage/
+
+# Claude Code memory (may contain private account/machine info)
+.claude/projects/
+memory/
