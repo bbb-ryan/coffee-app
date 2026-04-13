@@ -25,9 +25,17 @@ coffee-app/
 │   ├── app/            # Main application code
 │   ├── components/     # Shared UI components
 │   └── data/           # Bean data and models
+├── hassan-design/      # Design explorations and HTML mockups
+├── unleash-skill/      # Unleash thinking skill for Claude Code
 ├── public/             # Static assets
 └── tests/              # Test files
 ```
+
+## Unleash Skill
+
+The `unleash-skill/` folder contains a Claude Code skill called **Unleash** — a cognitive amplifier that applies visionary thinking patterns to break past conventional solutions. Use it when brainstorming features, challenging assumptions, or exploring radical simplifications.
+
+To use it, type `/unleash` followed by your prompt in Claude Code. It includes modes like first-principles, inversion, constraint-removal, adversarial thinking, and more. See `unleash-skill/SKILL.md` for full details.
 
 ## Getting Started
 

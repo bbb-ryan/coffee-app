@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Tasting Flight — The Field Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #1a1714;
+    --bg-card: #242019;
+    --bg-elevated: #2e2a23;
+    --text: #e8e0d4;
+    --text-muted: #9c9182;
+    --text-dim: #6b6358;
+    --accent: #c8a97e;
+    --accent-warm: #d4956a;
+    --accent-green: #7a9e7e;
+    --accent-plum: #a87e9e;
+    --score-acidity: #c8a97e;
+    --score-body: #8b7355;
+    --score-sweetness: #d4956a;
+    --score-track: #2e2a23;
+    --tag-bg: rgba(200,169,126,0.1);
+    --tag-border: rgba(200,169,126,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Nav */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.5rem 3rem;
+    background: rgba(26,23,20,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(200,169,126,0.08);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── Archetype Reveal ── */
+  .archetype-reveal {
+    padding: 8rem 3rem 3rem;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 1s 0.2s forwards;
+  }
+  .archetype-eyebrow {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+  .archetype-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+  }
+  .archetype-name em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .archetype-desc {
+    color: var(--text-muted);
+    font-size: 1.05rem;
+    line-height: 1.8;
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+  }
+
+  /* Archetype illustration */
+  .archetype-illustration {
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+
+  /* Priority pills */
+  .priorities {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.6s forwards;
+  }
+  .priority-pill {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--tag-border);
+    background: var(--tag-bg);
+    color: var(--accent);
+    cursor: default;
+  }
+  .priority-pill .rank {
+    font-size: 0.6rem;
+    font-weight: 600;
+    color: var(--bg);
+    background: var(--accent);
+    width: 16px;
+    height: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .priority-pill.dimmed {
+    border-color: rgba(200,169,126,0.1);
+    color: var(--text-dim);
+    background: transparent;
+  }
+  .priority-pill.dimmed .rank {
+    background: var(--text-dim);
+  }
+
+  .priorities-hint {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-style: italic;
+    margin-bottom: 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+
+  /* ── Section Divider ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 3rem;
+    margin: 2rem 0 3rem;
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,169,126,0.1);
+  }
+  .section-divider span {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  /* ── Flight Intro ── */
+  .flight-intro {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 3rem 2rem;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+  .flight-intro h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+  }
+  .flight-intro p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* ── Flight Progress ── */
+  .flight-progress {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    max-width: 400px;
+    margin: 0 auto 3rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .progress-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+  }
+  .progress-dot {
+    width: 10px;
+    height: 10px;
+    border: 1.5px solid var(--text-dim);
+    background: transparent;
+    transition: all 0.3s;
+  }
+  .progress-dot.active {
+    border-color: var(--accent);
+    background: var(--accent);
+    box-shadow: 0 0 12px rgba(200,169,126,0.3);
+  }
+  .progress-dot.comfort { border-color: var(--accent-green); }
+  .progress-dot.comfort.active { background: var(--accent-green); box-shadow: 0 0 12px rgba(122,158,126,0.3); }
+  .progress-dot.match { border-color: var(--accent); }
+  .progress-dot.match.active { background: var(--accent); }
+  .progress-dot.stretch { border-color: var(--accent-plum); }
+  .progress-dot.stretch.active { background: var(--accent-plum); box-shadow: 0 0 12px rgba(168,126,158,0.3); }
+
+  .progress-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+  .progress-line {
+    width: 80px;
+    height: 1px;
+    background: rgba(200,169,126,0.15);
+    margin: 0 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── Flight Cards ── */
+  .flight-cards {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .flight-card {
+    display: grid;
+    grid-template-columns: 180px 1fr;
+    background: var(--bg-card);
+    border: 1px solid rgba(200,169,126,0.08);
+    overflow: hidden;
+    opacity: 0;
+    transition: border-color 0.4s;
+  }
+  .flight-card:nth-child(1) { animation: fadeUp 0.8s 1.0s forwards; }
+  .flight-card:nth-child(2) { animation: fadeUp 0.8s 1.2s forwards; }
+  .flight-card:nth-child(3) { animation: fadeUp 0.8s 1.4s forwards; }
+
+  .flight-card:hover {
+    border-color: rgba(200,169,126,0.2);
+  }
+
+  /* Card illustration area */
+  .card-illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+  }
+  .card-illustration.comfort { background: rgba(122,158,126,0.06); }
+  .card-illustration.match { background: rgba(200,169,126,0.06); }
+  .card-illustration.stretch { background: rgba(168,126,158,0.06); }
+
+  .card-illustration svg {
+    width: 120px;
+    height: 120px;
+  }
+
+  /* Card content */
+  .card-content {
+    padding: 2rem 2.5rem;
+  }
+
+  .card-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-type {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.6rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
+  .card-type.comfort { color: var(--accent-green); border: 1px solid rgba(122,158,126,0.3); background: rgba(122,158,126,0.08); }
+  .card-type.match { color: var(--accent); border: 1px solid rgba(200,169,126,0.3); background: rgba(200,169,126,0.08); }
+  .card-type.stretch { color: var(--accent-plum); border: 1px solid rgba(168,126,158,0.3); background: rgba(168,126,158,0.08); }
+
+  .card-bean-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.3;
+    margin-bottom: 0.25rem;
+  }
+  .card-meta {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+  .card-meta span { color: var(--accent); }
+
+  .card-order {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: rgba(200,169,126,0.12);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  /* Why this bean */
+  .card-why {
+    background: rgba(200,169,126,0.04);
+    border-left: 2px solid;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.5rem;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+  .card-why.comfort { border-color: var(--accent-green); }
+  .card-why.match { border-color: var(--accent); }
+  .card-why.stretch { border-color: var(--accent-plum); }
+
+  .card-why strong {
+    font-weight: 500;
+    color: var(--text);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.25rem;
+  }
+
+  /* Scores */
+  .card-scores {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 1.25rem;
+  }
+  .score-item {
+    flex: 1;
+  }
+  .score-row {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.6rem;
+  }
+  .score-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    width: 70px;
+    flex-shrink: 0;
+  }
+  .score-track {
+    flex: 1;
+    height: 3px;
+    background: var(--score-track);
+    position: relative;
+    overflow: hidden;
+  }
+  .score-fill {
+    height: 100%;
+    position: absolute;
+    left: 0; top: 0;
+    transition: width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .score-fill.acidity { background: var(--score-acidity); }
+  .score-fill.body { background: var(--score-body); }
+  .score-fill.sweetness { background: var(--score-sweetness); }
+
+  .score-plain {
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  /* Tags */
+  .card-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--tag-border);
+    background: var(--tag-bg);
+    color: var(--accent);
+  }
+
+  /* Brew tip */
+  .brew-tip {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(200,169,126,0.06);
+  }
+  .brew-tip svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .brew-tip-text {
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .brew-tip-text strong {
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* ── After the Flight ── */
+  .after-flight {
+    max-width: 800px;
+    margin: 4rem auto 0;
+    padding: 0 3rem 3rem;
+    text-align: center;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.6s forwards;
+  }
+  .after-flight h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+  }
+  .after-flight p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .after-flight-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover {
+    background: var(--accent-warm);
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-muted);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 2rem;
+    border: 1px solid rgba(200,169,126,0.15);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── Footer ── */
+  footer {
+    padding: 3rem;
+    border-top: 1px solid rgba(200,169,126,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1100px;
+    margin: 2rem auto 0;
+  }
+  footer p {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+  }
+  footer span {
+    font-family: 'Playfair Display', serif;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .archetype-reveal { padding: 7rem 1.5rem 2rem; }
+    .archetype-name { font-size: 2.2rem; }
+    .flight-cards { padding: 0 1.5rem; }
+    .flight-card {
+      grid-template-columns: 1fr;
+    }
+    .card-illustration {
+      padding: 1.5rem;
+      min-height: 120px;
+    }
+    .card-content { padding: 1.5rem; }
+    .card-scores { flex-direction: column; gap: 0; }
+    .section-divider { padding: 0 1.5rem; }
+    .flight-intro { padding: 0 1.5rem 2rem; }
+    .after-flight { padding: 0 1.5rem 3rem; }
+    footer { padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">The Field Guide</div>
+  <div class="nav-links">
+    <a href="#">Beans</a>
+    <a href="#">Origins</a>
+    <a href="#">My Flight</a>
+    <a href="#">Journal</a>
+  </div>
+</nav>
+
+<!-- ═══════ Archetype Reveal ═══════ -->
+<section class="archetype-reveal">
+  <p class="archetype-eyebrow">Quiz Complete — Your Coffee Profile</p>
+
+  <!-- Archetype illustration: a Chemex with steam, light roast color palette -->
+  <div class="archetype-illustration">
+    <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Steam wisps -->
+      <path d="M85 60 Q80 45 88 30" stroke="rgba(200,169,126,0.25)" stroke-width="1.5" fill="none" stroke-linecap="round">
+        <animate attributeName="d" dur="3s" repeatCount="indefinite" values="M85 60 Q80 45 88 30;M85 60 Q78 42 85 25;M85 60 Q80 45 88 30"/>
+      </path>
+      <path d="M100 55 Q98 38 105 22" stroke="rgba(200,169,126,0.2)" stroke-width="1.5" fill="none" stroke-linecap="round">
+        <animate attributeName="d" dur="4s" repeatCount="indefinite" values="M100 55 Q98 38 105 22;M100 55 Q102 35 98 18;M100 55 Q98 38 105 22"/>
+      </path>
+      <path d="M115 58 Q118 42 112 28" stroke="rgba(200,169,126,0.15)" stroke-width="1.5" fill="none" stroke-linecap="round">
+        <animate attributeName="d" dur="3.5s" repeatCount="indefinite" values="M115 58 Q118 42 112 28;M115 58 Q120 40 115 24;M115 58 Q118 42 112 28"/>
+      </path>
+      <!-- Chemex body - top cone -->
+      <path d="M72 65 L100 120 L128 65" stroke="var(--accent)" stroke-width="1.5" fill="rgba(200,169,126,0.04)"/>
+      <!-- Chemex waist / wood collar -->
+      <rect x="90" y="108" width="20" height="18" rx="2" fill="rgba(139,115,85,0.3)" stroke="var(--score-body)" stroke-width="1"/>
+      <!-- Leather tie -->
+      <path d="M90 117 Q85 117 83 120 Q85 123 90 123" stroke="var(--accent-warm)" stroke-width="1" fill="none"/>
+      <path d="M110 117 Q115 117 117 120 Q115 123 110 123" stroke="var(--accent-warm)" stroke-width="1" fill="none"/>
+      <!-- Chemex body - bottom -->
+      <path d="M90 126 L78 170 Q78 178 100 178 Q122 178 122 170 L110 126" stroke="var(--accent)" stroke-width="1.5" fill="rgba(200,169,126,0.04)"/>
+      <!-- Coffee inside bottom -->
+      <path d="M84 155 Q84 175 100 175 Q116 175 116 155 Z" fill="rgba(200,169,126,0.1)"/>
+      <!-- Light roast color indicator - small circle -->
+      <circle cx="100" cy="165" r="5" fill="rgba(200,169,126,0.2)" stroke="var(--accent)" stroke-width="0.75"/>
+      <!-- Freshness sparkle -->
+      <circle cx="60" cy="80" r="1.5" fill="var(--accent-green)" opacity="0.6">
+        <animate attributeName="opacity" dur="2s" repeatCount="indefinite" values="0.6;0.2;0.6"/>
+      </circle>
+      <circle cx="140" cy="75" r="1" fill="var(--accent-green)" opacity="0.4">
+        <animate attributeName="opacity" dur="2.5s" repeatCount="indefinite" values="0.4;0.1;0.4"/>
+      </circle>
+      <circle cx="55" cy="100" r="1" fill="var(--accent)" opacity="0.3">
+        <animate attributeName="opacity" dur="3s" repeatCount="indefinite" values="0.3;0.1;0.3"/>
+      </circle>
+    </svg>
+  </div>
+
+  <h1 class="archetype-name">The <em>Freshness Chaser</em></h1>
+  <p class="archetype-desc">
+    You care more about when it was roasted than where it was grown. You'd rather drink a great blend roasted yesterday than a legendary single origin that's been sitting on a shelf. You gravitate toward light roasts, you brew with intention, and you know that organic matters — not as a trend, but as a standard.
+  </p>
+
+  <div class="priorities">
+    <div class="priority-pill"><span class="rank">1</span> Freshness</div>
+    <div class="priority-pill"><span class="rank">2</span> Roast Level</div>
+    <div class="priority-pill"><span class="rank">3</span> Organic</div>
+    <div class="priority-pill"><span class="rank">4</span> Brew Method</div>
+    <div class="priority-pill dimmed"><span class="rank">5</span> Price</div>
+    <div class="priority-pill dimmed"><span class="rank">6</span> Origin</div>
+  </div>
+  <p class="priorities-hint">These are what we'll optimize for. You can reorder them anytime.</p>
+</section>
+
+<!-- ═══════ Flight Intro ═══════ -->
+<div class="section-divider"><span>Your First Tasting Flight</span></div>
+
+<section class="flight-intro">
+  <h2>Three beans. Try them in this order.</h2>
+  <p>We curated a flight based on your profile — starting in your comfort zone, then expanding outward. Each bean is here for a reason.</p>
+</section>
+
+<div class="flight-progress">
+  <div class="progress-step">
+    <div class="progress-dot comfort active"></div>
+    <span class="progress-label">Comfort</span>
+  </div>
+  <div class="progress-line"></div>
+  <div class="progress-step">
+    <div class="progress-dot match active"></div>
+    <span class="progress-label">Discovery</span>
+  </div>
+  <div class="progress-line"></div>
+  <div class="progress-step">
+    <div class="progress-dot stretch active"></div>
+    <span class="progress-label">Stretch</span>
+  </div>
+</div>
+
+<!-- ═══════ Flight Cards ═══════ -->
+<div class="flight-cards">
+
+  <!-- ── Card 1: Comfort Zone ── -->
+  <div class="flight-card">
+    <div class="card-illustration comfort">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Coffee plant branch with cherries -->
+        <path d="M30 100 Q40 70 60 55 Q75 45 80 30" stroke="var(--accent-green)" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- Leaves -->
+        <path d="M45 78 Q35 72 38 62 Q48 65 50 75 Z" fill="rgba(122,158,126,0.2)" stroke="var(--accent-green)" stroke-width="0.75"/>
+        <path d="M58 60 Q50 52 55 42 Q65 48 62 58 Z" fill="rgba(122,158,126,0.15)" stroke="var(--accent-green)" stroke-width="0.75"/>
+        <path d="M72 44 Q64 38 68 28 Q76 32 74 42 Z" fill="rgba(122,158,126,0.12)" stroke="var(--accent-green)" stroke-width="0.75"/>
+        <!-- Coffee cherries -->
+        <circle cx="52" cy="70" r="4" fill="rgba(212,149,106,0.3)" stroke="var(--accent-warm)" stroke-width="0.75"/>
+        <circle cx="65" cy="50" r="3.5" fill="rgba(212,149,106,0.25)" stroke="var(--accent-warm)" stroke-width="0.75"/>
+        <circle cx="76" cy="36" r="3" fill="rgba(212,149,106,0.2)" stroke="var(--accent-warm)" stroke-width="0.75"/>
+        <!-- Organic leaf symbol -->
+        <path d="M85 85 Q95 80 100 70 Q95 82 85 85 Z" fill="rgba(122,158,126,0.25)" stroke="var(--accent-green)" stroke-width="0.75"/>
+        <path d="M88 83 Q93 79 95 74" stroke="var(--accent-green)" stroke-width="0.5" fill="none"/>
+      </svg>
+    </div>
+    <div class="card-content">
+      <div class="card-header">
+        <div>
+          <span class="card-type comfort">Your Comfort Zone</span>
+          <h3 class="card-bean-name">Yirgacheffe Natural</h3>
+          <p class="card-meta">Ethiopia · <span>Onyx Coffee Lab</span> · Light Roast</p>
+        </div>
+        <span class="card-order">01</span>
+      </div>
+
+      <div class="card-why comfort">
+        <strong>Why this bean</strong>
+        Onyx roasts to order and ships same-day — this will arrive at peak freshness. It's a certified organic light roast with the bright, fruit-forward profile Chemex brewers love. This is your lane.
+      </div>
+
+      <div class="card-scores">
+        <div class="score-item">
+          <div class="score-row">
+            <span class="score-label">Acidity</span>
+            <div class="score-track"><div class="score-fill acidity" style="width:90%"></div></div>
+            <span class="score-plain">Bright, like lemon zest</span>
+          </div>
+          <div class="score-row">
+            <span class="score-label">Body</span>
+            <div class="score-track"><div class="score-fill body" style="width:55%"></div></div>
+            <span class="score-plain">Light and tea-like</span>
+          </div>
+          <div class="score-row">
+            <span class="score-label">Sweetness</span>
+            <div class="score-track"><div class="score-fill sweetness" style="width:82%"></div></div>
+            <span class="score-plain">Ripe berry sweetness</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-tags">
+        <span class="tag">blueberry</span>
+        <span class="tag">jasmine</span>
+        <span class="tag">bergamot</span>
+        <span class="tag">honey</span>
+        <span class="tag">organic</span>
+      </div>
+
+      <div class="brew-tip">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2 L6 6 L2 6 L5.5 9 L4 14 L8 11 L12 14 L10.5 9 L14 6 L10 6 Z" stroke="var(--accent-green)" stroke-width="1" fill="rgba(122,158,126,0.15)"/>
+        </svg>
+        <p class="brew-tip-text"><strong>Chemex tip:</strong> Use a 1:16 ratio, 205°F water. Pour slowly in concentric circles. This bean opens up beautifully around minute 3 — don't rush it.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Card 2: Confident Match ── -->
+  <div class="flight-card">
+    <div class="card-illustration match">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Mountain landscape: Kenyan highlands -->
+        <path d="M0 90 L25 50 L45 70 L70 35 L95 60 L120 45 L120 90 Z" fill="rgba(200,169,126,0.06)" stroke="rgba(200,169,126,0.15)" stroke-width="0.75"/>
+        <path d="M0 90 L30 65 L55 80 L85 55 L120 75 L120 90 Z" fill="rgba(200,169,126,0.04)" stroke="rgba(200,169,126,0.1)" stroke-width="0.75"/>
+        <!-- Sun -->
+        <circle cx="90" cy="28" r="8" fill="rgba(200,169,126,0.12)" stroke="var(--accent)" stroke-width="0.75"/>
+        <line x1="90" y1="16" x2="90" y2="13" stroke="var(--accent)" stroke-width="0.5" opacity="0.5"/>
+        <line x1="100" y1="22" x2="102" y2="20" stroke="var(--accent)" stroke-width="0.5" opacity="0.5"/>
+        <line x1="102" y1="28" x2="105" y2="28" stroke="var(--accent)" stroke-width="0.5" opacity="0.5"/>
+        <line x1="80" y1="22" x2="78" y2="20" stroke="var(--accent)" stroke-width="0.5" opacity="0.5"/>
+        <line x1="78" y1="28" x2="75" y2="28" stroke="var(--accent)" stroke-width="0.5" opacity="0.5"/>
+        <!-- Coffee plant rows -->
+        <circle cx="35" cy="82" r="2" fill="rgba(122,158,126,0.2)" stroke="var(--accent-green)" stroke-width="0.5"/>
+        <circle cx="45" cy="80" r="2" fill="rgba(122,158,126,0.2)" stroke="var(--accent-green)" stroke-width="0.5"/>
+        <circle cx="55" cy="83" r="2" fill="rgba(122,158,126,0.2)" stroke="var(--accent-green)" stroke-width="0.5"/>
+        <circle cx="65" cy="78" r="2" fill="rgba(122,158,126,0.2)" stroke="var(--accent-green)" stroke-width="0.5"/>
+        <circle cx="75" cy="81" r="2" fill="rgba(122,158,126,0.2)" stroke="var(--accent-green)" stroke-width="0.5"/>
+        <!-- Altitude marker -->
+        <text x="15" y="48" font-family="DM Sans" font-size="6" fill="var(--text-dim)" letter-spacing="0.5">1,850m</text>
+      </svg>
+    </div>
+    <div class="card-content">
+      <div class="card-header">
+        <div>
+          <span class="card-type match">Confident Match</span>
+          <h3 class="card-bean-name">Nyeri AA</h3>
+          <p class="card-meta">Kenya · <span>Heart Coffee</span> · Light Roast</p>
+        </div>
+        <span class="card-order">02</span>
+      </div>
+
+      <div class="card-why match">
+        <strong>Why this bean</strong>
+        You haven't tried this one, but you should. Heart sources from small Kenyan lots and roasts light to preserve origin character. The acidity here is more savory than the Ethiopian — blackcurrant and grapefruit instead of blueberry. Same freshness standards, new territory.
+      </div>
+
+      <div class="card-scores">
+        <div class="score-item">
+          <div class="score-row">
+            <span class="score-label">Acidity</span>
+            <div class="score-track"><div class="score-fill acidity" style="width:92%"></div></div>
+            <span class="score-plain">Electric, grapefruit-like</span>
+          </div>
+          <div class="score-row">
+            <span class="score-label">Body</span>
+            <div class="score-track"><div class="score-fill body" style="width:65%"></div></div>
+            <span class="score-plain">Juicy, medium weight</span>
+          </div>
+          <div class="score-row">
+            <span class="score-label">Sweetness</span>
+            <div class="score-track"><div class="score-fill sweetness" style="width:70%"></div></div>
+            <span class="score-plain">Tart berry sweetness</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-tags">
+        <span class="tag">blackcurrant</span>
+        <span class="tag">grapefruit</span>
+        <span class="tag">tomato</span>
+        <span class="tag">brown sugar</span>
+      </div>
+
+      <div class="brew-tip">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2 L6 6 L2 6 L5.5 9 L4 14 L8 11 L12 14 L10.5 9 L14 6 L10 6 Z" stroke="var(--accent)" stroke-width="1" fill="rgba(200,169,126,0.15)"/>
+        </svg>
+        <p class="brew-tip-text"><strong>Chemex tip:</strong> Try a slightly coarser grind than your Ethiopian — Kenyan AAs can over-extract and turn astringent. If it's too sharp, back off the temp to 200°F.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Card 3: The Stretch ── -->
+  <div class="flight-card">
+    <div class="card-illustration stretch">
+      <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Dark roast bean, large, with glow -->
+        <ellipse cx="60" cy="60" rx="30" ry="38" fill="rgba(168,126,158,0.08)" stroke="var(--accent-plum)" stroke-width="1"/>
+        <!-- Bean crease -->
+        <path d="M60 25 Q55 45 60 60 Q65 75 60 95" stroke="var(--accent-plum)" stroke-width="1" fill="none" stroke-linecap="round"/>
+        <!-- Oil sheen dots -->
+        <circle cx="50" cy="50" r="1.5" fill="rgba(168,126,158,0.2)"/>
+        <circle cx="68" cy="45" r="1" fill="rgba(168,126,158,0.15)"/>
+        <circle cx="55" cy="70" r="1.2" fill="rgba(168,126,158,0.18)"/>
+        <circle cx="70" cy="65" r="0.8" fill="rgba(168,126,158,0.12)"/>
+        <!-- Freshness sparkles around the dark bean -->
+        <circle cx="25" cy="40" r="1.5" fill="var(--accent-green)" opacity="0.5">
+          <animate attributeName="opacity" dur="2s" repeatCount="indefinite" values="0.5;0.15;0.5"/>
+        </circle>
+        <circle cx="95" cy="50" r="1" fill="var(--accent-green)" opacity="0.4">
+          <animate attributeName="opacity" dur="2.5s" repeatCount="indefinite" values="0.4;0.1;0.4"/>
+        </circle>
+        <circle cx="30" cy="80" r="1" fill="var(--accent-green)" opacity="0.3">
+          <animate attributeName="opacity" dur="3s" repeatCount="indefinite" values="0.3;0.05;0.3"/>
+        </circle>
+        <!-- "Unicorn" subtle indicator -->
+        <text x="60" y="110" font-family="DM Sans" font-size="5.5" fill="var(--accent-plum)" text-anchor="middle" letter-spacing="1.5" opacity="0.6">RARE FIND</text>
+      </svg>
+    </div>
+    <div class="card-content">
+      <div class="card-header">
+        <div>
+          <span class="card-type stretch">The Stretch</span>
+          <h3 class="card-bean-name">Antigua Pastores</h3>
+          <p class="card-meta">Guatemala · <span>Stumptown</span> · Dark Roast</p>
+        </div>
+        <span class="card-order">03</span>
+      </div>
+
+      <div class="card-why stretch">
+        <strong>Why this bean</strong>
+        This is outside your usual zone — but hear us out. Stumptown's Antigua is roasted dark and ships fast from their Portland roastery. Freshness Chasers who've tried it rated it 4.3/5. The body is rich without being ashy, and the chocolate-almond profile is a different kind of beautiful through a Chemex.
+      </div>
+
+      <div class="card-scores">
+        <div class="score-item">
+          <div class="score-row">
+            <span class="score-label">Acidity</span>
+            <div class="score-track"><div class="score-fill acidity" style="width:60%"></div></div>
+            <span class="score-plain">Soft, rounded</span>
+          </div>
+          <div class="score-row">
+            <span class="score-label">Body</span>
+            <div class="score-track"><div class="score-fill body" style="width:85%"></div></div>
+            <span class="score-plain">Rich and velvety</span>
+          </div>
+          <div class="score-row">
+            <span class="score-label">Sweetness</span>
+            <div class="score-track"><div class="score-fill sweetness" style="width:75%"></div></div>
+            <span class="score-plain">Dark chocolate, molasses</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-tags">
+        <span class="tag">chocolate</span>
+        <span class="tag">almond</span>
+        <span class="tag">brown sugar</span>
+        <span class="tag">cedar</span>
+      </div>
+
+      <div class="brew-tip">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2 L6 6 L2 6 L5.5 9 L4 14 L8 11 L12 14 L10.5 9 L14 6 L10 6 Z" stroke="var(--accent-plum)" stroke-width="1" fill="rgba(168,126,158,0.15)"/>
+        </svg>
+        <p class="brew-tip-text"><strong>Chemex tip:</strong> Drop your water temp to 198°F — dark roasts extract faster and you don't want bitterness. Slightly coarser grind. The Chemex paper filter will keep it clean even with the heavier body.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════ After the Flight ═══════ -->
+<section class="after-flight">
+  <h3>After you've tasted them</h3>
+  <p>Come back and tell us what landed. Your ratings shape future flights — and help other Freshness Chasers find their next favorite bean.</p>
+  <div class="after-flight-actions">
+    <button class="btn-primary">Start My Bean Journal</button>
+    <button class="btn-secondary">Browse All Beans</button>
+    <button class="btn-secondary">Retake the Quiz</button>
+  </div>
+</section>
+
+<footer>
+  <p>Your Tasting Flight · Freshness Chaser Profile</p>
+  <span>The Field Guide</span>
+</footer>
+
+</body>
+</html>

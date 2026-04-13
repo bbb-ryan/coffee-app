@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Choose Your Flight — The Field Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /*
+    WCAG AA Contrast Ratios (against --bg #1a1714, luminance ~0.02):
+    --text:        #ede6dc  → ~14.5:1 ✓
+    --text-muted:  #b5a999  → ~7.1:1  ✓ (AA normal text)
+    --text-dim:    #9a8e80  → ~4.8:1  ✓ (AA normal text — was #6b6358 at ~2.1:1)
+    --accent:      #c8a97e  → ~6.8:1  ✓
+    --accent-warm: #d4956a  → ~5.5:1  ✓
+    --accent-green:#8cb390  → ~6.5:1  ✓ (was #7a9e7e at ~4.2:1)
+    --accent-plum: #be96b4  → ~5.8:1  ✓ (was #a87e9e at ~4.1:1)
+
+    Minimum font: 0.875rem (14px). Standard body text: 1rem+.
+  */
+  :root {
+    --bg: #1a1714;
+    --bg-card: #242019;
+    --bg-elevated: #2e2a23;
+    --text: #ede6dc;
+    --text-muted: #b5a999;
+    --text-dim: #9a8e80;
+    --accent: #c8a97e;
+    --accent-warm: #d4956a;
+    --accent-green: #8cb390;
+    --accent-plum: #be96b4;
+    --score-acidity: #c8a97e;
+    --score-body: #a89070;
+    --score-sweetness: #d4956a;
+    --score-track: #2e2a23;
+    --tag-bg: rgba(200,169,126,0.1);
+    --tag-border: rgba(200,169,126,0.25);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    font-size: 1rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.25rem 2rem;
+    background: rgba(26,23,20,0.9);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(200,169,126,0.08);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    letter-spacing: 0.02em;
+    color: var(--accent);
+  }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ── Archetype Banner ── */
+  .archetype-banner {
+    padding: 6.5rem 2rem 2rem;
+    max-width: 880px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .archetype-badge {
+    width: 64px;
+    height: 64px;
+    flex-shrink: 0;
+  }
+  .archetype-banner-text {
+    flex: 1;
+    min-width: 200px;
+  }
+  .archetype-banner-text h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+  .archetype-banner-text h2 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .archetype-banner-text p {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    margin-top: 0.15rem;
+  }
+  .archetype-priorities {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .mini-priority {
+    font-size: 0.875rem;
+    letter-spacing: 0.03em;
+    padding: 0.35rem 0.75rem;
+    border: 1px solid rgba(200,169,126,0.15);
+    color: var(--text-dim);
+  }
+  .mini-priority.top {
+    border-color: var(--tag-border);
+    color: var(--accent);
+    background: var(--tag-bg);
+  }
+
+  /* ── Section Divider ── */
+  .section-divider {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 0 2rem;
+    margin: 1.5rem auto 2.5rem;
+    max-width: 880px;
+  }
+  .section-divider::before,
+  .section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(200,169,126,0.1);
+  }
+  .section-divider span {
+    font-size: 0.875rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+  }
+
+  /* ── Flight Header ── */
+  .flight-header {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 2rem 2.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.4s forwards;
+  }
+  .flight-header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 0.75rem;
+  }
+  .flight-header h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .flight-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+    max-width: 600px;
+  }
+
+  /* ── Stacked Flight Cards ── */
+  .flight-stack {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .flight-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(200,169,126,0.08);
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    opacity: 0;
+    transition: border-color 0.4s;
+    position: relative;
+  }
+  .flight-card:nth-child(1) { animation: fadeUp 0.8s 0.5s forwards; }
+  .flight-card:nth-child(2) { animation: fadeUp 0.8s 0.65s forwards; }
+  .flight-card:nth-child(3) { animation: fadeUp 0.8s 0.8s forwards; }
+  .flight-card:hover {
+    border-color: rgba(200,169,126,0.2);
+  }
+
+  .flight-card.popular {
+    border-color: rgba(200,169,126,0.18);
+  }
+  .popular-badge {
+    position: absolute;
+    top: -0.65rem;
+    left: 2rem;
+    background: var(--accent);
+    color: var(--bg);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.75rem;
+    text-transform: uppercase;
+  }
+
+  /* Card illustration column */
+  .card-illustration {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2.5rem 1.5rem;
+    position: relative;
+  }
+  .card-illustration.comfort { background: rgba(140,179,144,0.05); }
+  .card-illustration.discovery { background: rgba(200,169,126,0.05); }
+  .card-illustration.adventure { background: rgba(190,150,180,0.05); }
+  .card-illustration svg { width: 160px; height: 160px; }
+
+  /* Card content column */
+  .card-content {
+    padding: 2rem 2.5rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+  .card-top-text { flex: 1; }
+
+  .flight-theme {
+    display: inline-block;
+    font-size: 0.875rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.25rem 0.65rem;
+    margin-bottom: 0.5rem;
+  }
+  .flight-theme.comfort { color: var(--accent-green); border: 1px solid rgba(140,179,144,0.35); background: rgba(140,179,144,0.08); }
+  .flight-theme.discovery { color: var(--accent); border: 1px solid rgba(200,169,126,0.35); background: rgba(200,169,126,0.08); }
+  .flight-theme.adventure { color: var(--accent-plum); border: 1px solid rgba(190,150,180,0.35); background: rgba(190,150,180,0.08); }
+
+  .flight-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    margin-bottom: 0.35rem;
+  }
+  .flight-subtitle {
+    font-size: 1rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+  }
+
+  /* Price block (top-right) */
+  .card-price-block {
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .price-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--text);
+    line-height: 1;
+  }
+  .price-detail {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    display: block;
+    margin-top: 0.2rem;
+  }
+  .price-per-cup {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    margin-top: 0.1rem;
+  }
+
+  /* Bean list */
+  .card-beans {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .card-bean {
+    padding: 1rem;
+    background: rgba(200,169,126,0.03);
+    border: 1px solid rgba(200,169,126,0.05);
+  }
+  .card-bean-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: rgba(200,169,126,0.25);
+    margin-bottom: 0.4rem;
+  }
+  .card-bean-name {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.15rem;
+  }
+  .card-bean-meta {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    margin-bottom: 0.15rem;
+  }
+  .card-bean-meta span { color: var(--text-muted); }
+  .card-bean-roast {
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+  .card-bean-roast.light { color: var(--accent); }
+  .card-bean-roast.medium { color: var(--accent-warm); }
+  .card-bean-roast.dark { color: var(--accent-plum); }
+
+  .card-bean-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .mini-tag {
+    font-size: 0.875rem;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid rgba(200,169,126,0.15);
+    color: var(--text-dim);
+  }
+
+  .card-bean-sample {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    margin-top: 0.5rem;
+  }
+
+  /* Card footer: why + CTA */
+  .card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(200,169,126,0.06);
+    margin-top: auto;
+  }
+  .card-why {
+    font-size: 1rem;
+    color: var(--text-dim);
+    font-style: italic;
+    line-height: 1.6;
+    flex: 1;
+    border-left: 2px solid rgba(200,169,126,0.15);
+    padding-left: 1rem;
+  }
+  .card-why.comfort { border-color: var(--accent-green); }
+  .card-why.discovery { border-color: var(--accent); }
+  .card-why.adventure { border-color: var(--accent-plum); }
+
+  .btn-select {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    padding: 0.75rem 2rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .btn-select.primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .btn-select.primary:hover { background: var(--accent-warm); }
+  .btn-select.secondary {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid rgba(200,169,126,0.2);
+  }
+  .btn-select.secondary:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* ── How It Works ── */
+  .how-it-works {
+    max-width: 880px;
+    margin: 4rem auto 0;
+    padding: 0 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.0s forwards;
+  }
+  .how-it-works h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 2.5rem;
+  }
+  .steps-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+  }
+  .step { text-align: center; }
+  .step-icon {
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1rem;
+  }
+  .step-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: rgba(200,169,126,0.3);
+    margin-bottom: 0.35rem;
+  }
+  .step-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 0.35rem;
+  }
+  .step-desc {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  /* ── Roaster Trust Strip ── */
+  .roaster-strip {
+    max-width: 880px;
+    margin: 3.5rem auto 0;
+    padding: 0 2rem;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.1s forwards;
+  }
+  .roaster-strip-inner {
+    border: 1px solid rgba(200,169,126,0.06);
+    background: var(--bg-card);
+    padding: 1.5rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .roaster-strip-label {
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .roaster-logos {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex: 1;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .roaster-logo {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-dim);
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: color 0.3s;
+  }
+  .roaster-logo:hover { color: var(--text-muted); }
+  .roaster-trust-badge {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    flex-shrink: 0;
+  }
+  .roaster-trust-badge span {
+    font-size: 0.875rem;
+    color: var(--accent-green);
+  }
+
+  /* ── Footer ── */
+  footer {
+    padding: 2.5rem 2rem;
+    border-top: 1px solid rgba(200,169,126,0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 880px;
+    margin: 3rem auto 0;
+  }
+  footer p {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+  }
+  footer span {
+    font-family: 'Playfair Display', serif;
+    color: var(--text-muted);
+    font-size: 1rem;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { gap: 1.25rem; }
+
+    .archetype-banner { padding: 6rem 1.25rem 1.5rem; gap: 1rem; }
+    .archetype-badge { width: 48px; height: 48px; }
+    .archetype-priorities { width: 100%; }
+
+    .section-divider { padding: 0 1.25rem; }
+    .flight-header { padding: 0 1.25rem 2rem; }
+    .flight-header h1 { font-size: 1.8rem; }
+    .flight-header p { font-size: 1rem; }
+
+    .flight-stack { padding: 0 1.25rem; }
+
+    .flight-card {
+      grid-template-columns: 1fr;
+    }
+    .card-illustration {
+      padding: 2rem;
+      min-height: 140px;
+    }
+    .card-illustration svg { width: 140px; height: 140px; }
+    .card-content { padding: 1.5rem; }
+
+    .card-top { flex-direction: column; gap: 0.75rem; }
+    .card-price-block { text-align: left; display: flex; align-items: baseline; gap: 0.75rem; }
+    .price-detail { display: inline; margin-top: 0; }
+
+    .card-beans {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    .card-footer {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 1rem;
+    }
+    .btn-select { text-align: center; }
+
+    .steps-row { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+
+    .how-it-works { padding: 0 1.25rem; }
+    .roaster-strip { padding: 0 1.25rem; }
+    .roaster-strip-inner { flex-direction: column; gap: 1rem; text-align: center; }
+    .roaster-logos { justify-content: center; }
+    footer { padding: 2rem 1.25rem; }
+  }
+
+  @media (max-width: 480px) {
+    .nav-links { gap: 1rem; }
+    .nav-links a { font-size: 0.875rem; letter-spacing: 0.03em; }
+
+    .archetype-banner-text h2 { font-size: 1.05rem; }
+
+    .flight-header h1 { font-size: 1.5rem; }
+
+    .steps-row { grid-template-columns: 1fr; }
+
+    .roaster-logos { gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">The Field Guide</div>
+  <div class="nav-links">
+    <a href="#">Beans</a>
+    <a href="#">Origins</a>
+    <a href="#">Flights</a>
+    <a href="#">Journal</a>
+  </div>
+</nav>
+
+<!-- ═══════ Archetype Banner ═══════ -->
+<div class="archetype-banner">
+  <svg class="archetype-badge" viewBox="0 0 64 64" fill="none">
+    <path d="M24 16 L32 32 L40 16" stroke="var(--accent)" stroke-width="1.2" fill="rgba(200,169,126,0.04)"/>
+    <rect x="28" y="29" width="8" height="5" rx="1" fill="rgba(160,144,112,0.3)" stroke="var(--score-body)" stroke-width="0.75"/>
+    <path d="M28 34 L25 46 Q25 50 32 50 Q39 50 39 46 L36 34" stroke="var(--accent)" stroke-width="1.2" fill="rgba(200,169,126,0.04)"/>
+    <path d="M27 42 Q27 48 32 48 Q37 48 37 42 Z" fill="rgba(200,169,126,0.08)"/>
+    <path d="M30 13 Q29 9 31 5" stroke="rgba(200,169,126,0.25)" stroke-width="1" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="3s" repeatCount="indefinite" values="M30 13 Q29 9 31 5;M30 13 Q28 8 30 3;M30 13 Q29 9 31 5"/>
+    </path>
+    <path d="M35 12 Q36 8 34 4" stroke="rgba(200,169,126,0.18)" stroke-width="1" fill="none" stroke-linecap="round">
+      <animate attributeName="d" dur="3.5s" repeatCount="indefinite" values="M35 12 Q36 8 34 4;M35 12 Q37 7 35 2;M35 12 Q36 8 34 4"/>
+    </path>
+  </svg>
+  <div class="archetype-banner-text">
+    <h2>Your profile: The <em>Freshness Chaser</em></h2>
+    <p>Light roasts · Organic · Chemex brewer · Freshness-first</p>
+  </div>
+  <div class="archetype-priorities">
+    <span class="mini-priority top">Freshness</span>
+    <span class="mini-priority top">Light Roast</span>
+    <span class="mini-priority top">Organic</span>
+    <span class="mini-priority">Chemex</span>
+  </div>
+</div>
+
+<div class="section-divider"><span>Choose Your Tasting Flight</span></div>
+
+<!-- ═══════ Flight Header ═══════ -->
+<section class="flight-header">
+  <h1>Three flights, curated <em>for you.</em></h1>
+  <p>Each flight is three 4 oz samples from roasters we trust — enough for 2–3 brews per sample. Pick the one that matches your mood, and tell us what you think when you're done.</p>
+</section>
+
+<!-- ═══════ Stacked Flight Cards ═══════ -->
+<div class="flight-stack">
+
+  <!-- ── Flight 1: The Comfort Flight ── -->
+  <div class="flight-card">
+    <div class="card-illustration comfort">
+      <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Three sample bags, cozy arrangement -->
+        <rect x="18" y="48" width="38" height="52" rx="2" fill="rgba(140,179,144,0.06)" stroke="var(--accent-green)" stroke-width="0.75"/>
+        <rect x="25" y="52" width="22" height="5" rx="1" fill="rgba(140,179,144,0.12)"/>
+        <circle cx="37" cy="78" r="9" fill="rgba(140,179,144,0.08)" stroke="rgba(140,179,144,0.25)" stroke-width="0.5"/>
+        <text x="37" y="82" font-family="DM Sans" font-size="6" fill="var(--accent-green)" text-anchor="middle">4oz</text>
+        <text x="37" y="108" font-family="DM Sans" font-size="5.5" fill="var(--text-dim)" text-anchor="middle">ETH</text>
+
+        <rect x="62" y="42" width="38" height="52" rx="2" fill="rgba(140,179,144,0.06)" stroke="var(--accent-green)" stroke-width="0.75"/>
+        <rect x="69" y="46" width="22" height="5" rx="1" fill="rgba(140,179,144,0.12)"/>
+        <circle cx="81" cy="72" r="9" fill="rgba(140,179,144,0.08)" stroke="rgba(140,179,144,0.25)" stroke-width="0.5"/>
+        <text x="81" y="76" font-family="DM Sans" font-size="6" fill="var(--accent-green)" text-anchor="middle">4oz</text>
+        <text x="81" y="102" font-family="DM Sans" font-size="5.5" fill="var(--text-dim)" text-anchor="middle">COL</text>
+
+        <rect x="106" y="48" width="38" height="52" rx="2" fill="rgba(140,179,144,0.06)" stroke="var(--accent-green)" stroke-width="0.75"/>
+        <rect x="113" y="52" width="22" height="5" rx="1" fill="rgba(140,179,144,0.12)"/>
+        <circle cx="125" cy="78" r="9" fill="rgba(140,179,144,0.08)" stroke="rgba(140,179,144,0.25)" stroke-width="0.5"/>
+        <text x="125" y="82" font-family="DM Sans" font-size="6" fill="var(--accent-green)" text-anchor="middle">4oz</text>
+        <text x="125" y="108" font-family="DM Sans" font-size="5.5" fill="var(--text-dim)" text-anchor="middle">CRC</text>
+
+        <!-- Organic leaf -->
+        <path d="M75 125 Q88 117 95 106 Q88 122 75 125 Z" fill="rgba(140,179,144,0.15)" stroke="var(--accent-green)" stroke-width="0.5"/>
+        <path d="M79 122 Q85 117 89 111" stroke="var(--accent-green)" stroke-width="0.35" fill="none"/>
+      </svg>
+    </div>
+
+    <div class="card-content">
+      <div class="card-top">
+        <div class="card-top-text">
+          <span class="flight-theme comfort">Stay in Your Lane</span>
+          <h3 class="flight-name">The Comfort Flight</h3>
+          <p class="flight-subtitle">Three light roasts from roasters you can trust with freshness. All organic. All Chemex-friendly. Zero risk, pure pleasure.</p>
+        </div>
+        <div class="card-price-block">
+          <span class="price-amount">$24</span>
+          <span class="price-detail">3 samples</span>
+          <p class="price-per-cup">~$2.65 / cup</p>
+        </div>
+      </div>
+
+      <div class="card-beans">
+        <div class="card-bean">
+          <p class="card-bean-number">01</p>
+          <p class="card-bean-name">Yirgacheffe Natural</p>
+          <p class="card-bean-meta">Ethiopia · <span>Onyx Coffee Lab</span></p>
+          <p class="card-bean-roast light">Light · Organic</p>
+          <div class="card-bean-tags">
+            <span class="mini-tag">blueberry</span>
+            <span class="mini-tag">jasmine</span>
+            <span class="mini-tag">honey</span>
+          </div>
+          <p class="card-bean-sample">4 oz sample</p>
+        </div>
+        <div class="card-bean">
+          <p class="card-bean-number">02</p>
+          <p class="card-bean-name">Huila Supremo</p>
+          <p class="card-bean-meta">Colombia · <span>Counter Culture</span></p>
+          <p class="card-bean-roast light">Light · Organic</p>
+          <div class="card-bean-tags">
+            <span class="mini-tag">caramel</span>
+            <span class="mini-tag">red apple</span>
+            <span class="mini-tag">cocoa</span>
+          </div>
+          <p class="card-bean-sample">4 oz sample</p>
+        </div>
+        <div class="card-bean">
+          <p class="card-bean-number">03</p>
+          <p class="card-bean-name">Tarrazú Honey</p>
+          <p class="card-bean-meta">Costa Rica · <span>George Howell</span></p>
+          <p class="card-bean-roast light">Light · Organic</p>
+          <div class="card-bean-tags">
+            <span class="mini-tag">plum</span>
+            <span class="mini-tag">molasses</span>
+            <span class="mini-tag">orange peel</span>
+          </div>
+          <p class="card-bean-sample">4 oz sample</p>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <p class="card-why comfort">All three roasters ship within 48 hours of roasting. Every bean is certified organic and light-roasted — your exact lane.</p>
+        <button class="btn-select secondary">Select Flight</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Flight 2: The Explorer Flight ── -->
+  <div class="flight-card popular">
+    <span class="popular-badge">Most Popular</span>
+    <div class="card-illustration discovery">
+      <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Journey path connecting three bags -->
+        <path d="M25 110 Q55 70 80 78 Q105 86 140 55" stroke="rgba(200,169,126,0.15)" stroke-width="1" fill="none" stroke-dasharray="4 4"/>
+
+        <!-- Bag 1: comfort -->
+        <rect x="10" y="65" width="34" height="46" rx="2" fill="rgba(140,179,144,0.06)" stroke="var(--accent-green)" stroke-width="0.75"/>
+        <circle cx="27" cy="85" r="7" fill="rgba(140,179,144,0.1)" stroke="rgba(140,179,144,0.3)" stroke-width="0.5"/>
+        <text x="27" y="89" font-family="DM Sans" font-size="5.5" fill="var(--accent-green)" text-anchor="middle">4oz</text>
+        <text x="27" y="120" font-family="DM Sans" font-size="5.5" fill="var(--accent-green)" text-anchor="middle">comfort</text>
+
+        <!-- Bag 2: discovery -->
+        <rect x="63" y="52" width="34" height="46" rx="2" fill="rgba(200,169,126,0.06)" stroke="var(--accent)" stroke-width="0.75"/>
+        <circle cx="80" cy="72" r="7" fill="rgba(200,169,126,0.1)" stroke="rgba(200,169,126,0.3)" stroke-width="0.5"/>
+        <text x="80" y="76" font-family="DM Sans" font-size="5.5" fill="var(--accent)" text-anchor="middle">4oz</text>
+        <text x="80" y="108" font-family="DM Sans" font-size="5.5" fill="var(--accent)" text-anchor="middle">discovery</text>
+
+        <!-- Bag 3: stretch -->
+        <rect x="116" y="40" width="34" height="46" rx="2" fill="rgba(190,150,180,0.06)" stroke="var(--accent-plum)" stroke-width="0.75"/>
+        <circle cx="133" cy="60" r="7" fill="rgba(190,150,180,0.1)" stroke="rgba(190,150,180,0.3)" stroke-width="0.5"/>
+        <text x="133" y="64" font-family="DM Sans" font-size="5.5" fill="var(--accent-plum)" text-anchor="middle">4oz</text>
+        <text x="133" y="96" font-family="DM Sans" font-size="5.5" fill="var(--accent-plum)" text-anchor="middle">stretch</text>
+
+        <!-- Arrow dots -->
+        <circle cx="48" cy="82" r="2.5" fill="var(--accent)" opacity="0.25"/>
+        <circle cx="102" cy="72" r="2.5" fill="var(--accent)" opacity="0.25"/>
+      </svg>
+    </div>
+
+    <div class="card-content">
+      <div class="card-top">
+        <div class="card-top-text">
+          <span class="flight-theme discovery">Comfort → Discovery → Stretch</span>
+          <h3 class="flight-name">The Explorer Flight</h3>
+          <p class="flight-subtitle">One you'll love, one you'll discover, one that'll surprise you. The full tasting arc — designed to expand your palate in one box.</p>
+        </div>
+        <div class="card-price-block">
+          <span class="price-amount">$29</span>
+          <span class="price-detail">3 samples</span>
+          <p class="price-per-cup">~$3.20 / cup</p>
+        </div>
+      </div>
+
+      <div class="card-beans">
+        <div class="card-bean">
+          <p class="card-bean-number">01</p>
+          <p class="card-bean-name">Guji Hambela</p>
+          <p class="card-bean-meta">Ethiopia · <span>Sey Coffee</span></p>
+          <p class="card-bean-roast light">Light · Organic</p>
+          <div class="card-bean-tags">
+            <span class="mini-tag">peach</span>
+            <span class="mini-tag">floral</span>
+            <span class="mini-tag">vanilla</span>
+          </div>
+          <p class="card-bean-sample">4 oz sample</p>
+        </div>
+        <div class="card-bean">
+          <p class="card-bean-number">02</p>
+          <p class="card-bean-name">Nyeri AA</p>
+          <p class="card-bean-meta">Kenya · <span>Heart Coffee</span></p>
+          <p class="card-bean-roast light">Light</p>
+          <div class="card-bean-tags">
+            <span class="mini-tag">blackcurrant</span>
+            <span class="mini-tag">grapefruit</span>
+            <span class="mini-tag">tomato</span>
+          </div>
+          <p class="card-bean-sample">4 oz sample</p>
+        </div>
+        <div class="card-bean">
+          <p class="card-bean-number">03</p>
+          <p class="card-bean-name">Antigua Pastores</p>
+          <p class="card-bean-meta">Guatemala · <span>Stumptown</span></p>
+          <p class="card-bean-roast dark">Dark · Fresh Roast</p>
+          <div class="card-bean-tags">
+            <span class="mini-tag">chocolate</span>
+            <span class="mini-tag">almond</span>
+            <span class="mini-tag">brown sugar</span>
+          </div>
+          <p class="card-bean-sample">4 oz sample</p>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <p class="card-why discovery">The most popular flight for Freshness Chasers. The stretch pick — a fresh dark roast — is rated 4.3/5 by people with your profile.</p>
+        <button class="btn-select primary">Select Flight</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Flight 3: The Deep End ── -->
+  <div class="flight-card">
+    <div class="card-illustration adventure">
+      <svg viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Premium / rare feel -->
+        <path d="M80 30 L98 65 L80 100 L62 65 Z" stroke="rgba(200,169,126,0.12)" stroke-width="0.75" fill="rgba(200,169,126,0.02)"/>
+
+        <g transform="rotate(-8, 35, 75)">
+          <rect x="16" y="52" width="38" height="50" rx="2" fill="rgba(190,150,180,0.04)" stroke="var(--accent-plum)" stroke-width="0.75"/>
+          <rect x="22" y="56" width="26" height="4" rx="1" fill="rgba(190,150,180,0.12)"/>
+          <text x="35" y="84" font-family="Playfair Display" font-size="8" fill="var(--accent-plum)" text-anchor="middle" font-style="italic">rare</text>
+        </g>
+
+        <rect x="56" y="42" width="42" height="55" rx="2" fill="rgba(200,169,126,0.04)" stroke="var(--accent)" stroke-width="1"/>
+        <rect x="63" y="46" width="28" height="5" rx="1" fill="rgba(200,169,126,0.15)"/>
+        <text x="77" y="78" font-family="Playfair Display" font-size="9" fill="var(--accent)" text-anchor="middle" font-style="italic">gesha</text>
+        <path d="M90 48 L91.5 52 L95 52 L92.5 54.5 L93.5 58 L90 56 L86.5 58 L87.5 54.5 L85 52 L88.5 52 Z" fill="var(--accent)" opacity="0.3"/>
+
+        <g transform="rotate(6, 130, 75)">
+          <rect x="110" y="55" width="38" height="50" rx="2" fill="rgba(190,150,180,0.04)" stroke="var(--accent-plum)" stroke-width="0.75"/>
+          <rect x="116" y="59" width="26" height="4" rx="1" fill="rgba(190,150,180,0.12)"/>
+          <text x="129" y="87" font-family="Playfair Display" font-size="8" fill="var(--accent-plum)" text-anchor="middle" font-style="italic">micro</text>
+        </g>
+
+        <text x="80" y="128" font-family="DM Sans" font-size="6" fill="var(--text-dim)" text-anchor="middle" letter-spacing="2">LIMITED LOTS</text>
+      </svg>
+    </div>
+
+    <div class="card-content">
+      <div class="card-top">
+        <div class="card-top-text">
+          <span class="flight-theme adventure">Treat Yourself</span>
+          <h3 class="flight-name">The Deep End</h3>
+          <p class="flight-subtitle">Micro-lots, rare varietals, and competition-grade beans you won't find on shelves. This is the treat flight — for when coffee is the event.</p>
+        </div>
+        <div class="card-price-block">
+          <span class="price-amount">$42</span>
+          <span class="price-detail">3 samples</span>
+          <p class="price-per-cup">~$4.65 / cup</p>
+        </div>
+      </div>
+
+      <div class="card-beans">
+        <div class="card-bean">
+          <p class="card-bean-number">01</p>
+          <p class="card-bean-name">Nariño Gesha</p>
+          <p class="card-bean-meta">Colombia · <span>Passenger Coffee</span></p>
+          <p class="card-bean-roast light">Light · Competition Grade</p>
+          <div class="card-bean-tags">
+            <span class="mini-tag">tropical fruit</span>
+            <span class="mini-tag">jasmine</span>
+            <span class="mini-tag">lime</span>
+          </div>
+          <p class="card-bean-sample">4 oz sample</p>
+        </div>
+        <div class="card-bean">
+          <p class="card-bean-number">02</p>
+          <p class="card-bean-name">Kirinyaga Peaberry</p>
+          <p class="card-bean-meta">Kenya · <span>Brandywine Coffee</span></p>
+          <p class="card-bean-roast light">Light · Micro-Lot</p>
+          <div class="card-bean-tags">
+            <span class="mini-tag">raspberry</span>
+            <span class="mini-tag">black tea</span>
+            <span class="mini-tag">raw honey</span>
+          </div>
+          <p class="card-bean-sample">4 oz sample</p>
+        </div>
+        <div class="card-bean">
+          <p class="card-bean-number">03</p>
+          <p class="card-bean-name">Sidamo Anaerobic</p>
+          <p class="card-bean-meta">Ethiopia · <span>Onyx Coffee Lab</span></p>
+          <p class="card-bean-roast medium">Medium-Light · Experimental</p>
+          <div class="card-bean-tags">
+            <span class="mini-tag">strawberry wine</span>
+            <span class="mini-tag">cinnamon</span>
+            <span class="mini-tag">mango</span>
+          </div>
+          <p class="card-bean-sample">4 oz sample</p>
+        </div>
+      </div>
+
+      <div class="card-footer">
+        <p class="card-why adventure">For the weekend pour-over when you want to taste something extraordinary. These lots rotate monthly — once they're gone, they're gone.</p>
+        <button class="btn-select secondary">Select Flight</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════ How It Works ═══════ -->
+<section class="how-it-works">
+  <h3>How it works</h3>
+  <div class="steps-row">
+    <div class="step">
+      <svg class="step-icon" viewBox="0 0 56 56" fill="none">
+        <circle cx="28" cy="28" r="22" stroke="rgba(200,169,126,0.15)" stroke-width="0.75"/>
+        <path d="M20 28 L26 22 L32 28 L26 34 Z" stroke="var(--accent)" stroke-width="1" fill="rgba(200,169,126,0.08)"/>
+        <path d="M26 22 L32 16 L38 22 L32 28 Z" stroke="var(--accent)" stroke-width="0.75" fill="rgba(200,169,126,0.04)" opacity="0.6"/>
+        <path d="M26 34 L32 28 L38 34 L32 40 Z" stroke="var(--accent)" stroke-width="0.75" fill="rgba(200,169,126,0.04)" opacity="0.6"/>
+      </svg>
+      <p class="step-number">01</p>
+      <p class="step-title">Pick your flight</p>
+      <p class="step-desc">Choose based on your mood — comfort, exploration, or treat.</p>
+    </div>
+    <div class="step">
+      <svg class="step-icon" viewBox="0 0 56 56" fill="none">
+        <circle cx="28" cy="28" r="22" stroke="rgba(200,169,126,0.15)" stroke-width="0.75"/>
+        <rect x="18" y="20" width="20" height="24" rx="2" stroke="var(--accent)" stroke-width="1" fill="rgba(200,169,126,0.04)"/>
+        <path d="M22 15 L22 20 M28 15 L28 20 M34 15 L34 20" stroke="var(--accent)" stroke-width="0.75"/>
+        <path d="M18 28 L38 28" stroke="rgba(200,169,126,0.15)" stroke-width="0.5"/>
+        <circle cx="28" cy="35" r="3" stroke="var(--accent-green)" stroke-width="0.75" fill="rgba(140,179,144,0.1)"/>
+      </svg>
+      <p class="step-number">02</p>
+      <p class="step-title">Roasted & shipped fresh</p>
+      <p class="step-desc">Each roaster roasts your sample to order. Arrives within days.</p>
+    </div>
+    <div class="step">
+      <svg class="step-icon" viewBox="0 0 56 56" fill="none">
+        <circle cx="28" cy="28" r="22" stroke="rgba(200,169,126,0.15)" stroke-width="0.75"/>
+        <path d="M24 20 L28 30 L32 20" stroke="var(--accent)" stroke-width="1" fill="none"/>
+        <path d="M26 30 L24 40 Q24 42 28 42 Q32 42 32 40 L30 30" stroke="var(--accent)" stroke-width="1" fill="none"/>
+        <path d="M27 18 Q26 14 28 11" stroke="rgba(200,169,126,0.3)" stroke-width="0.75" fill="none">
+          <animate attributeName="d" dur="2.5s" repeatCount="indefinite" values="M27 18 Q26 14 28 11;M27 18 Q25 13 27 9;M27 18 Q26 14 28 11"/>
+        </path>
+      </svg>
+      <p class="step-number">03</p>
+      <p class="step-title">Brew & taste</p>
+      <p class="step-desc">Try each one in order. Chemex tips included for every bean.</p>
+    </div>
+    <div class="step">
+      <svg class="step-icon" viewBox="0 0 56 56" fill="none">
+        <circle cx="28" cy="28" r="22" stroke="rgba(200,169,126,0.15)" stroke-width="0.75"/>
+        <rect x="20" y="18" width="16" height="22" rx="1.5" stroke="var(--accent)" stroke-width="1" fill="rgba(200,169,126,0.04)"/>
+        <path d="M24 24 L32 24 M24 28 L30 28 M24 32 L28 32" stroke="rgba(200,169,126,0.3)" stroke-width="0.75"/>
+        <path d="M37 33 L38 36 L41 36 L39 38 L40 41 L37 39 L34 41 L35 38 L33 36 L36 36 Z" fill="var(--accent)" opacity="0.4"/>
+      </svg>
+      <p class="step-number">04</p>
+      <p class="step-title">Rate & refine</p>
+      <p class="step-desc">Log each bean in your journal. Your next flight gets smarter.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════ Roaster Trust Strip ═══════ -->
+<div class="roaster-strip">
+  <div class="roaster-strip-inner">
+    <span class="roaster-strip-label">Roaster Partners</span>
+    <div class="roaster-logos">
+      <span class="roaster-logo">Onyx Coffee Lab</span>
+      <span class="roaster-logo">Counter Culture</span>
+      <span class="roaster-logo">Heart Coffee</span>
+      <span class="roaster-logo">George Howell</span>
+      <span class="roaster-logo">Sey Coffee</span>
+      <span class="roaster-logo">Stumptown</span>
+      <span class="roaster-logo">Passenger</span>
+      <span class="roaster-logo">Brandywine</span>
+    </div>
+    <div class="roaster-trust-badge">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="7" stroke="var(--accent-green)" stroke-width="0.75" fill="rgba(140,179,144,0.1)"/>
+        <path d="M5 8 L7 10 L11 6" stroke="var(--accent-green)" stroke-width="1" fill="none"/>
+      </svg>
+      <span>All roast-to-order</span>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>Tasting Flights · Curated for Freshness Chasers</p>
+  <span>The Field Guide</span>
+</footer>
+
+</body>
+</html>
