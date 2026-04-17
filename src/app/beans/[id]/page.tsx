@@ -13,6 +13,7 @@ import {
 import ScoreRadar from "@/components/ScoreRadar";
 import BeanCard from "@/components/BeanCard";
 import DiaryControls from "@/components/DiaryControls";
+import BrewingCarousel from "@/components/BrewingCarousel";
 
 export function generateStaticParams() {
   return getAllBeans().map((bean) => ({
@@ -187,6 +188,9 @@ export default async function BeanDetailPage({
           </div>
         </div>
       </div>
+
+      {/* Brewing Guide */}
+      <BrewingCarousel processingMethod={bean.processing_method} />
 
       {/* Diary */}
       <DiaryControls beanId={bean.id} />
