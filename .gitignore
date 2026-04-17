@@ -41,4 +41,5 @@ coverage/
 
 # Claude Code memory (may contain private account/machine info)
 .claude/projects/
+.claude/scheduled_tasks.lock
 memory/

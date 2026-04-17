@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Noor — Cafés</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --cream: #FFF8F0;
+    --cream-dark: #F5EDE3;
+    --espresso: #2C1810;
+    --espresso-light: #4A3228;
+    --roast: #6B3A2A;
+    --roast-light: #8B5E3C;
+    --caramel: #C4813D;
+    --caramel-light: #D4A574;
+    --honey: #E8B960;
+    --sage: #7A8B6F;
+    --water: #93C5FD;
+    --line: rgba(139, 94, 60, 0.14);
+    --line-strong: rgba(139, 94, 60, 0.3);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; font-size: 16px; }
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--espresso);
+    font-size: 1rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  .topbar {
+    background: white;
+    border-bottom: 1px solid var(--line);
+    position: sticky; top: 0; z-index: 10;
+    backdrop-filter: saturate(140%) blur(8px);
+  }
+  .topbar-inner {
+    max-width: 1080px; margin: 0 auto;
+    padding: 18px 32px;
+    display: flex; align-items: center; justify-content: space-between; gap: 24px;
+  }
+  .brand {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 600; font-size: 1.25rem;
+    color: var(--espresso);
+    letter-spacing: -0.01em;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .brand-mark { width: 32px; height: 32px; display: block; flex-shrink: 0; }
+  nav.top-nav { display: flex; gap: 28px; font-size: 1rem; font-weight: 500; color: var(--roast); }
+  nav.top-nav a {
+    text-decoration: none; color: inherit;
+    padding: 6px 2px;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s ease, border-color 0.2s ease;
+  }
+  nav.top-nav a:hover { color: var(--caramel); }
+  nav.top-nav a.active { color: var(--espresso); border-bottom-color: var(--caramel); }
+  .user-chip { display: flex; align-items: center; gap: 10px; font-size: 1rem; color: var(--espresso); }
+  .user-avatar {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--caramel); color: white;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-family: "Fraunces", serif; font-weight: 600; font-size: 1rem;
+  }
+
+  main { max-width: 860px; margin: 0 auto; padding: 72px 32px 96px; }
+
+  .hero {
+    text-align: center;
+    margin-bottom: 48px;
+  }
+  .hero-art {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 32px;
+  }
+  .hero-art svg { width: 100%; height: 100%; display: block; }
+
+  h1 {
+    font-family: "Fraunces", Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(2rem, 4vw, 2.75rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    color: var(--espresso);
+  }
+  h1 em { font-style: italic; color: var(--caramel); font-weight: 500; }
+  .lede {
+    font-size: 1.125rem;
+    color: var(--roast);
+    margin: 0 auto 12px;
+    max-width: 560px;
+    line-height: 1.55;
+  }
+  .small {
+    font-size: 1rem;
+    color: var(--roast-light);
+    margin: 0 auto;
+    max-width: 560px;
+  }
+
+  .preview {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 28px;
+    margin-bottom: 32px;
+  }
+  .preview-eyebrow {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--roast-light);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin: 0 0 18px;
+  }
+  .preview-card {
+    display: grid;
+    grid-template-columns: 120px 1fr;
+    gap: 24px;
+    align-items: center;
+  }
+  @media (max-width: 620px) {
+    .preview-card { grid-template-columns: 1fr; gap: 16px; }
+    .preview-icon { margin: 0 auto; }
+  }
+  .preview-icon {
+    width: 120px; height: 120px;
+    background: var(--cream-dark);
+    border-radius: 14px;
+    padding: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .preview-icon svg { width: 100%; height: 100%; }
+  .preview-name {
+    font-family: "Fraunces", serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--espresso);
+    margin: 0 0 10px;
+    line-height: 1.15;
+  }
+  .preview-sub {
+    font-size: 1rem;
+    color: var(--roast);
+    margin: 0 0 6px;
+    line-height: 1.5;
+  }
+  .preview-sub strong { color: var(--espresso); font-weight: 600; }
+
+  .cta {
+    text-align: center;
+  }
+  .cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 24px;
+    background: var(--espresso);
+    color: var(--cream);
+    border-radius: 999px;
+    border: none;
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .cta-btn:hover { background: #1C0E06; transform: translateY(-1px); }
+  .cta-meta {
+    font-size: 1rem;
+    color: var(--roast-light);
+    margin: 14px 0 0;
+  }
+
+  footer.foot {
+    margin-top: 72px;
+    text-align: center;
+    font-size: 1rem;
+    color: var(--roast-light);
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M6 13 L22 13 L20 25 L8 25 Z" fill="#C4813D" stroke="#6B3A2A" stroke-width="1.5" stroke-linejoin="round"/>
+        <ellipse cx="14" cy="13" rx="8" ry="1.5" fill="#D4A574"/>
+        <path d="M22 16 Q27 17 27 20 Q27 23 22 22" stroke="#6B3A2A" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <circle cx="23" cy="10" r="5" fill="white" stroke="#2C1810" stroke-width="1.5"/>
+        <line x1="26.5" y1="13.5" x2="29.5" y2="16.5" stroke="#2C1810" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Coffee Decoder
+    </div>
+    <nav class="top-nav">
+      <a href="noor-decode.html">Decode</a>
+      <a href="noor-purchase.html">Recommend</a>
+      <a href="noor-diary.html">My Diary</a>
+      <a href="#" class="active">Cafés</a>
+    </nav>
+    <div class="user-chip">
+      <span class="user-avatar">N</span>
+      Noor
+    </div>
+  </div>
+</div>
+
+<main>
+
+  <!-- Hero with café storefront illustration -->
+  <section class="hero">
+    <div class="hero-art">
+      <svg viewBox="0 0 220 220" fill="none" aria-hidden="true">
+        <!-- sky / background -->
+        <rect x="14" y="14" width="192" height="192" rx="12" fill="#FFF8F0"/>
+        <!-- sidewalk -->
+        <rect x="14" y="184" width="192" height="22" fill="#F5EDE3"/>
+        <!-- building facade -->
+        <rect x="32" y="52" width="156" height="132" fill="#F5EDE3" stroke="#8B5E3C" stroke-width="2"/>
+        <!-- awning -->
+        <path d="M22 62 L198 62 L188 86 L32 86 Z" fill="#C4813D" stroke="#6B3A2A" stroke-width="2"/>
+        <!-- awning stripes -->
+        <line x1="56" y1="62" x2="46" y2="86" stroke="#E8B960" stroke-width="1.5"/>
+        <line x1="80" y1="62" x2="72" y2="86" stroke="#E8B960" stroke-width="1.5"/>
+        <line x1="104" y1="62" x2="100" y2="86" stroke="#E8B960" stroke-width="1.5"/>
+        <line x1="130" y1="62" x2="128" y2="86" stroke="#E8B960" stroke-width="1.5"/>
+        <line x1="156" y1="62" x2="158" y2="86" stroke="#E8B960" stroke-width="1.5"/>
+        <line x1="180" y1="62" x2="184" y2="86" stroke="#E8B960" stroke-width="1.5"/>
+        <!-- sign above awning -->
+        <rect x="70" y="36" width="80" height="18" rx="3" fill="#2C1810" stroke="#2C1810" stroke-width="2"/>
+        <text x="110" y="50" text-anchor="middle" font-family="Fraunces, Georgia, serif" font-size="12" font-weight="700" fill="#E8B960" letter-spacing="2">COFFEE</text>
+        <!-- window (big) -->
+        <rect x="48" y="96" width="80" height="72" rx="2" fill="white" stroke="#8B5E3C" stroke-width="1.8"/>
+        <!-- window cross muntins -->
+        <line x1="88" y1="96" x2="88" y2="168" stroke="#8B5E3C" stroke-width="1"/>
+        <line x1="48" y1="132" x2="128" y2="132" stroke="#8B5E3C" stroke-width="1"/>
+        <!-- interior silhouettes in window -->
+        <circle cx="68" cy="118" r="6" fill="#6B3A2A" opacity="0.35"/>
+        <rect x="62" y="122" width="12" height="10" fill="#6B3A2A" opacity="0.35"/>
+        <rect x="96" y="118" width="24" height="12" rx="2" fill="#C4813D" opacity="0.5"/>
+        <!-- door -->
+        <rect x="136" y="104" width="42" height="80" rx="2" fill="#6B3A2A" stroke="#2C1810" stroke-width="2"/>
+        <!-- door window -->
+        <rect x="144" y="112" width="26" height="30" rx="1" fill="#FFF8F0" stroke="#8B5E3C" stroke-width="1.2"/>
+        <!-- doorknob -->
+        <circle cx="172" cy="148" r="2" fill="#E8B960" stroke="#2C1810" stroke-width="0.8"/>
+        <!-- OPEN sign in door window -->
+        <rect x="146" y="116" width="22" height="7" rx="1" fill="#7A8B6F"/>
+        <text x="157" y="121.8" text-anchor="middle" font-family="Inter, sans-serif" font-size="5" font-weight="700" fill="white" letter-spacing="1">OPEN</text>
+        <!-- outdoor stool -->
+        <rect x="170" y="174" width="14" height="4" rx="1" fill="#8B5E3C"/>
+        <rect x="175" y="178" width="4" height="8" fill="#8B5E3C"/>
+        <!-- small plant by door -->
+        <rect x="122" y="176" width="10" height="10" rx="1" fill="#6B3A2A"/>
+        <path d="M127 176 Q124 170 122 172" stroke="#7A8B6F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M127 176 Q130 170 132 172" stroke="#7A8B6F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <path d="M127 176 Q127 168 127 170" stroke="#7A8B6F" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        <!-- steam from window (tiny cloud) -->
+        <path d="M60 100 Q58 94 60 90 Q62 86 60 82" stroke="#93C5FD" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.55"/>
+        <path d="M72 100 Q70 94 72 90 Q74 86 72 82" stroke="#93C5FD" stroke-width="1.3" stroke-linecap="round" fill="none" opacity="0.55"/>
+      </svg>
+    </div>
+
+    <h1>Cafés, <em>coming soon</em>.</h1>
+    <p class="lede">
+      The same philosophy as beans, applied to places: 20 shops in your city worth your time, each decoded so you know what you're walking into before you arrive.
+    </p>
+    <p class="small">
+      Roaster, brewing gear, currently-served beans, vibe, hours — the stuff that tells you whether this is your spot.
+    </p>
+  </section>
+
+  <!-- Preview of what a café card will look like -->
+  <section class="preview">
+    <p class="preview-eyebrow">What a café card will look like</p>
+    <div class="preview-card">
+      <div class="preview-icon">
+        <!-- Chemex-ish icon as placeholder for brewing gear -->
+        <svg viewBox="0 0 120 120" fill="none" aria-hidden="true">
+          <path d="M25 20 L95 20 L72 60 L48 60 Z" fill="#FFF8F0" stroke="#8B5E3C" stroke-width="2"/>
+          <path d="M48 48 L72 48 L67 56 L53 56 Z" fill="#6B3A2A" opacity="0.4"/>
+          <rect x="48" y="60" width="24" height="8" rx="2" fill="#FFF8F0" stroke="#8B5E3C" stroke-width="2"/>
+          <rect x="42" y="56" width="36" height="6" rx="3" fill="#C4813D" stroke="#8B5E3C" stroke-width="1.5"/>
+          <path d="M48 68 L72 68 L80 100 Q82 108 70 108 L50 108 Q38 108 40 100 Z" fill="#FFF8F0" stroke="#8B5E3C" stroke-width="2"/>
+          <path d="M50 85 L70 85 L76 100 Q78 107 70 107 L50 107 Q42 107 44 100 Z" fill="#6B3A2A" opacity="0.3"/>
+        </svg>
+      </div>
+      <div>
+        <h3 class="preview-name">Proud Mary Coffee</h3>
+        <p class="preview-sub"><strong>Roasts in-house</strong> on a Diedrich IR-12, cups weekly.</p>
+        <p class="preview-sub"><strong>Brews</strong> Kalita Wave, V60, La Marzocco Linea PB espresso.</p>
+        <p class="preview-sub"><strong>Currently serving</strong> Ethiopia Worka Sakaro, Colombia Pink Bourbon, house blend.</p>
+        <p class="preview-sub"><strong>Vibe</strong> Bright, minimal, lots of windows. Works-from-laptop friendly until 11am, busy after.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="cta">
+    <a href="noor-diary.html" class="cta-btn">
+      Back to your diary
+      <svg viewBox="0 0 20 20" fill="none" aria-hidden="true" width="16" height="16">
+        <path d="M7 5 L13 10 L7 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+    <p class="cta-meta">We'll ping you when Portland launches.</p>
+  </div>
+
+  <footer class="foot">
+    Coffee Decoder · Noor's café moment · April 2026
+  </footer>
+</main>
+
+</body>
+</html>

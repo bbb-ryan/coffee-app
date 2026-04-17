@@ -1,0 +1,1283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coffee App — Project Skills Breakdown</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      /* Coffee app palette */
+      --cream: #FFF8F0;
+      --cream-dark: #F5EDE3;
+      --espresso: #2C1810;
+      --espresso-light: #4A3228;
+      --roast: #6B3A2A;
+      --roast-light: #8B5E3C;
+      --caramel: #C4813D;
+      --caramel-light: #D4A574;
+      --honey: #E8B960;
+      --sage: #7A8B6F;
+      --sage-light: #A1B09A;
+      --water: #93C5FD;
+
+      /* Semantic */
+      --bg: var(--cream);
+      --bg-card: #FFFEFB;
+      --bg-recessed: var(--cream-dark);
+      --text: var(--espresso);
+      --text-body: var(--espresso-light);
+      --text-dim: var(--roast);
+      --border: rgba(107, 58, 42, 0.14);
+      --border-strong: rgba(107, 58, 42, 0.28);
+
+      /* Typography */
+      --font-serif: 'Fraunces', Georgia, serif;
+      --font-body: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+      --font-size-body: 1rem;
+      --font-size-sm: 0.9375rem;
+      --font-size-xs: 0.8125rem;
+      --font-size-label: 0.75rem;
+
+      --max-content: 1080px;
+      --max-reading: 680px;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1A0F0A;
+        --bg-card: #2A1A12;
+        --bg-recessed: #1F1410;
+        --text: var(--cream);
+        --text-body: #E8DCC8;
+        --text-dim: var(--caramel-light);
+        --border: rgba(212, 165, 116, 0.18);
+        --border-strong: rgba(212, 165, 116, 0.35);
+      }
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 2rem; }
+
+    body {
+      background: var(--bg);
+      color: var(--text-body);
+      font-family: var(--font-body);
+      font-size: var(--font-size-body);
+      line-height: 1.6;
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    /* Background texture — subtle warm paper */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 15% 10%, rgba(196, 129, 61, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse at 85% 90%, rgba(122, 139, 111, 0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .page {
+      display: grid;
+      grid-template-columns: 1fr;
+      max-width: var(--max-content);
+      margin: 0 auto;
+      padding: 3rem 2rem 6rem;
+    }
+
+    @media (min-width: 1100px) {
+      .page {
+        grid-template-columns: 200px 1fr;
+        gap: 4rem;
+        padding: 4rem 3rem 6rem;
+      }
+    }
+
+    /* ═══ Sticky TOC ═══ */
+    .toc {
+      position: sticky;
+      top: 3rem;
+      align-self: start;
+      font-size: var(--font-size-xs);
+      display: none;
+    }
+
+    @media (min-width: 1100px) {
+      .toc { display: block; }
+    }
+
+    .toc__label {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 1.25rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .toc__label::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--caramel);
+    }
+
+    .toc ol {
+      list-style: none;
+      counter-reset: toc;
+      border-left: 1px solid var(--border);
+      padding-left: 0;
+    }
+
+    .toc li {
+      counter-increment: toc;
+      margin: 0;
+    }
+
+    .toc a {
+      display: block;
+      padding: 0.5rem 0 0.5rem 1.25rem;
+      margin-left: -1px;
+      border-left: 2px solid transparent;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-family: var(--font-body);
+      font-weight: 500;
+      transition: all 180ms ease;
+    }
+
+    .toc a::before {
+      content: counter(toc, decimal-leading-zero);
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      margin-right: 0.5rem;
+      color: var(--caramel);
+      font-weight: 600;
+    }
+
+    .toc a:hover {
+      color: var(--text);
+      border-left-color: var(--caramel);
+    }
+
+    /* ═══ Main column ═══ */
+    main {
+      min-width: 0;
+    }
+
+    /* ═══ Hero ═══ */
+    .hero {
+      margin-bottom: 4.5rem;
+      padding-bottom: 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero__eyebrow {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--caramel);
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .hero__eyebrow::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--caramel);
+      opacity: 0.5;
+    }
+
+    .hero__title {
+      font-family: var(--font-serif);
+      font-weight: 400;
+      font-size: clamp(2.5rem, 5.5vw, 4rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+      max-width: 14ch;
+    }
+
+    .hero__title em {
+      font-style: italic;
+      color: var(--caramel);
+      font-weight: 300;
+    }
+
+    .hero__lede {
+      font-family: var(--font-serif);
+      font-size: clamp(1.125rem, 1.6vw, 1.3125rem);
+      line-height: 1.55;
+      color: var(--text-body);
+      font-weight: 300;
+      max-width: 56ch;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero__meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem 3rem;
+      padding-top: 1.5rem;
+      border-top: 1px dashed var(--border-strong);
+    }
+
+    .meta__item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .meta__label {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 500;
+    }
+
+    .meta__value {
+      font-family: var(--font-serif);
+      font-size: 1.0625rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    /* ═══ Primer ═══ */
+    .primer {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+      margin-bottom: 5rem;
+      position: relative;
+    }
+
+    .primer::before {
+      content: '';
+      position: absolute;
+      top: -1px;
+      left: 2.5rem;
+      width: 48px;
+      height: 2px;
+      background: var(--caramel);
+    }
+
+    .primer__title {
+      font-family: var(--font-serif);
+      font-size: 1.75rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    .primer__intro {
+      color: var(--text-body);
+      margin-bottom: 2rem;
+      max-width: 60ch;
+    }
+
+    .loading-tiers {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      position: relative;
+    }
+
+    @media (min-width: 700px) {
+      .loading-tiers { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+    }
+
+    .tier {
+      padding: 1.25rem 1.25rem 1.5rem;
+      border-radius: 8px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+
+    .tier__num {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      color: var(--caramel);
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.25rem;
+    }
+
+    .tier__name {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.75rem;
+    }
+
+    .tier__desc {
+      font-size: var(--font-size-sm);
+      color: var(--text-body);
+      line-height: 1.5;
+      margin-bottom: 0.75rem;
+    }
+
+    .tier__when {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      color: var(--sage);
+      letter-spacing: 0.02em;
+      padding-top: 0.75rem;
+      border-top: 1px dashed var(--border-strong);
+    }
+
+    /* ═══ Skill section ═══ */
+    .skill {
+      margin-bottom: 5.5rem;
+      scroll-margin-top: 2rem;
+    }
+
+    .skill__header {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    @media (min-width: 700px) {
+      .skill__header {
+        grid-template-columns: 120px 1fr;
+        gap: 2rem;
+        align-items: start;
+      }
+    }
+
+    .skill__mark {
+      width: 120px;
+      height: 120px;
+      flex-shrink: 0;
+    }
+
+    .skill__mark svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .skill__head-text {
+      min-width: 0;
+    }
+
+    .skill__num {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      color: var(--caramel);
+      font-weight: 600;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill__name {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 2.75rem);
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.05;
+      letter-spacing: -0.015em;
+      margin-bottom: 0.75rem;
+    }
+
+    .skill__name em {
+      font-style: italic;
+      color: var(--caramel);
+      font-weight: 300;
+    }
+
+    .skill__tagline {
+      font-family: var(--font-serif);
+      font-size: 1.125rem;
+      color: var(--text-body);
+      font-weight: 300;
+      font-style: italic;
+      max-width: 48ch;
+    }
+
+    /* Triggers */
+    .triggers {
+      margin-bottom: 2.5rem;
+    }
+
+    .triggers__label {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
+      font-weight: 500;
+    }
+
+    .triggers__list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .trigger {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      padding: 0.3rem 0.65rem;
+      border-radius: 3px;
+      background: var(--bg-recessed);
+      color: var(--text-body);
+      border: 1px solid var(--border);
+    }
+
+    /* Skill body grid */
+    .skill__body {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 800px) {
+      .skill__body {
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+      }
+    }
+
+    .block {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.75rem;
+      min-width: 0;
+    }
+
+    .block--full { grid-column: 1 / -1; }
+
+    .block--gotchas {
+      background: var(--bg-recessed);
+      border-left: 3px solid var(--caramel);
+      border-radius: 4px 10px 10px 4px;
+    }
+
+    .block--references {
+      background: linear-gradient(180deg, var(--bg-card) 0%, var(--bg-recessed) 100%);
+    }
+
+    .block__label {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      font-weight: 600;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .block__label::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: 0.6;
+    }
+
+    .block--gotchas .block__label {
+      color: var(--caramel);
+    }
+
+    .block--gotchas .block__label::before {
+      background: var(--caramel);
+      opacity: 1;
+    }
+
+    .block__title {
+      font-family: var(--font-serif);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 0.875rem;
+      letter-spacing: -0.01em;
+    }
+
+    .block ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .block li {
+      position: relative;
+      padding-left: 1.25rem;
+      margin-bottom: 0.7rem;
+      font-size: var(--font-size-sm);
+      line-height: 1.55;
+      color: var(--text-body);
+    }
+
+    .block li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.55rem;
+      width: 8px;
+      height: 1px;
+      background: var(--caramel);
+    }
+
+    .block li:last-child { margin-bottom: 0; }
+
+    .block li strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .block code, .code-tag {
+      font-family: var(--font-mono);
+      font-size: 0.85em;
+      background: var(--bg-recessed);
+      color: var(--roast);
+      padding: 0.12em 0.45em;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      .block code, .code-tag {
+        color: var(--caramel-light);
+      }
+    }
+
+    /* Gotchas styling */
+    .gotchas-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0.875rem;
+    }
+
+    @media (min-width: 600px) {
+      .gotchas-list { grid-template-columns: 1fr 1fr; gap: 0.875rem 1.5rem; }
+    }
+
+    .gotcha {
+      padding-left: 1.5rem;
+      position: relative;
+      font-size: var(--font-size-sm);
+      line-height: 1.5;
+      color: var(--text-body);
+    }
+
+    .gotcha::before {
+      content: '!';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1.1rem;
+      height: 1.1rem;
+      border-radius: 50%;
+      background: var(--caramel);
+      color: var(--cream);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gotcha strong {
+      color: var(--text);
+      font-weight: 600;
+      display: block;
+      margin-bottom: 0.15rem;
+    }
+
+    /* References */
+    .ref-file {
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      margin-bottom: 0.875rem;
+      padding-bottom: 0.875rem;
+      border-bottom: 1px dashed var(--border);
+      font-size: var(--font-size-sm);
+    }
+
+    .ref-file:last-child {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .ref-file__name {
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+      color: var(--text);
+      font-weight: 600;
+      background: var(--bg);
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      border: 1px solid var(--border-strong);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .ref-file__desc {
+      color: var(--text-body);
+      line-height: 1.4;
+    }
+
+    /* Files footer strip */
+    .files-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.25rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--border);
+      font-family: var(--font-mono);
+      font-size: var(--font-size-label);
+    }
+
+    .files-strip__label {
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+
+    .files-strip__path {
+      color: var(--text-body);
+    }
+
+    /* ═══ Footer ═══ */
+    .footer {
+      margin-top: 5rem;
+      padding-top: 3rem;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+
+    @media (min-width: 800px) {
+      .footer { grid-template-columns: 2fr 1fr; gap: 4rem; }
+    }
+
+    .footer__title {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .footer p {
+      color: var(--text-body);
+      margin-bottom: 0.875rem;
+      font-size: var(--font-size-sm);
+      max-width: 54ch;
+    }
+
+    .footer__stats {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+    }
+
+    .stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 0.5rem 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: var(--font-size-sm);
+    }
+
+    .stat-row:last-child { border-bottom: 0; }
+
+    .stat-row__name {
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .stat-row__val {
+      font-family: var(--font-mono);
+      color: var(--text-dim);
+      font-size: var(--font-size-label);
+    }
+
+    /* ═══ Animation ═══ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .skill, .hero, .primer, .footer {
+      animation: fadeUp 600ms ease-out backwards;
+    }
+
+    .skill:nth-of-type(1) { animation-delay: 200ms; }
+    .skill:nth-of-type(2) { animation-delay: 280ms; }
+    .skill:nth-of-type(3) { animation-delay: 360ms; }
+    .skill:nth-of-type(4) { animation-delay: 440ms; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Print styles */
+    @media print {
+      body::before, .toc { display: none; }
+      .page { padding: 0; grid-template-columns: 1fr; }
+      .skill { break-inside: avoid; page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <!-- ═══ Sticky TOC ═══ -->
+    <nav class="toc" aria-label="Table of contents">
+      <div class="toc__label">Skills</div>
+      <ol>
+        <li><a href="#copywriter">Copywriter</a></li>
+        <li><a href="#designer">Designer</a></li>
+        <li><a href="#researcher">Researcher</a></li>
+        <li><a href="#qa-reviewer">QA Reviewer</a></li>
+      </ol>
+    </nav>
+
+    <main>
+      <!-- ═══ Hero ═══ -->
+      <header class="hero">
+        <div class="hero__eyebrow">Coffee App · Project skills</div>
+        <h1 class="hero__title">Four <em>specialist voices</em> for the team.</h1>
+        <p class="hero__lede">
+          Each skill is a small set of instructions that gives Claude Code a specific role — copywriter, designer, researcher, quality reviewer. When you (or a teammate) asks for something that matches the skill's description, Claude loads that role and works under its rules. Scoped to this project, not Hassan's global setup.
+        </p>
+        <div class="hero__meta">
+          <div class="meta__item">
+            <span class="meta__label">Location</span>
+            <span class="meta__value">.claude/skills/</span>
+          </div>
+          <div class="meta__item">
+            <span class="meta__label">Scope</span>
+            <span class="meta__value">Project-only</span>
+          </div>
+          <div class="meta__item">
+            <span class="meta__label">Shape</span>
+            <span class="meta__value">4 skills · 2 reference libraries</span>
+          </div>
+          <div class="meta__item">
+            <span class="meta__label">Updated</span>
+            <span class="meta__value">April 2026</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ═══ Primer: how skills load ═══ -->
+      <section class="primer" aria-labelledby="primer-title">
+        <h2 class="primer__title" id="primer-title">How skills load into Claude's memory</h2>
+        <p class="primer__intro">
+          A skill isn't always "on." Claude Code uses a three-tier loading pattern so your conversation doesn't pay for context it isn't using. Understanding this helps you (and us) design skills that stay cheap and fast.
+        </p>
+        <div class="loading-tiers">
+          <div class="tier">
+            <div class="tier__num">Tier 01</div>
+            <div class="tier__name">Description</div>
+            <p class="tier__desc">Short paragraph at the top of every skill — describes the role and the keywords that trigger it.</p>
+            <div class="tier__when">Always loaded</div>
+          </div>
+          <div class="tier">
+            <div class="tier__num">Tier 02</div>
+            <div class="tier__name">SKILL.md body</div>
+            <p class="tier__desc">The main instructions for the role — rules, process, gotchas, output format.</p>
+            <div class="tier__when">Loaded on invocation</div>
+          </div>
+          <div class="tier">
+            <div class="tier__num">Tier 03</div>
+            <div class="tier__name">references/ files</div>
+            <p class="tier__desc">Deep detail — voice guides, illustration rules, long checklists. Loaded only when the skill explicitly reads them.</p>
+            <div class="tier__when">Lazy-loaded on demand</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════ -->
+      <!-- SKILL 01 · COPYWRITER          -->
+      <!-- ═══════════════════════════════ -->
+      <section class="skill" id="copywriter">
+        <header class="skill__header">
+          <div class="skill__mark" aria-hidden="true">
+            <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+              <!-- paper -->
+              <rect x="22" y="18" width="52" height="72" rx="3" stroke="#6B3A2A" stroke-width="2" fill="#F5EDE3" fill-opacity="0.6"/>
+              <!-- text lines (dashed for "flow") -->
+              <line x1="30" y1="32" x2="65" y2="32" stroke="#8B5E3C" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 3"/>
+              <line x1="30" y1="42" x2="60" y2="42" stroke="#8B5E3C" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 3"/>
+              <line x1="30" y1="52" x2="68" y2="52" stroke="#8B5E3C" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 3"/>
+              <line x1="30" y1="62" x2="55" y2="62" stroke="#8B5E3C" stroke-width="1.5" stroke-linecap="round" stroke-dasharray="3 3"/>
+              <!-- pen -->
+              <line x1="62" y1="98" x2="96" y2="64" stroke="#2C1810" stroke-width="3" stroke-linecap="round"/>
+              <path d="M60 100 L68 92 L72 98 Z" fill="#2C1810"/>
+              <!-- ink splash -->
+              <circle cx="56" cy="102" r="2.5" fill="#C4813D"/>
+              <circle cx="50" cy="98" r="1.5" fill="#C4813D" fill-opacity="0.6"/>
+              <circle cx="100" cy="60" r="3" fill="#E8B960" fill-opacity="0.4"/>
+            </svg>
+          </div>
+          <div class="skill__head-text">
+            <div class="skill__num">Skill 01</div>
+            <h2 class="skill__name">The <em>copywriter</em></h2>
+            <p class="skill__tagline">Every word a user reads — warm, inviting, never intimidating.</p>
+          </div>
+        </header>
+
+        <div class="triggers">
+          <div class="triggers__label">Triggers on keywords</div>
+          <div class="triggers__list">
+            <span class="trigger">copy</span>
+            <span class="trigger">wording</span>
+            <span class="trigger">headline</span>
+            <span class="trigger">CTA</span>
+            <span class="trigger">empty state</span>
+            <span class="trigger">error message</span>
+            <span class="trigger">flavor description</span>
+            <span class="trigger">tone</span>
+            <span class="trigger">voice</span>
+            <span class="trigger">microcopy</span>
+            <span class="trigger">"make this sound better"</span>
+          </div>
+        </div>
+
+        <div class="skill__body">
+          <div class="block">
+            <div class="block__label">Before writing</div>
+            <ul>
+              <li>Read <code>references/brand-voice.md</code> — tone, jargon rules, do/don'ts, page voice notes, myth-busting, depth moments</li>
+              <li>Match <strong>jargon level to page depth</strong> — surface pages use plain language, deep pages use SCA vocabulary</li>
+              <li>For flavor descriptions, consult <code>src/data/flavor_taxonomy.json</code> for SCA wheel vocabulary, then translate to everyday anchors</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="block__label">What it owns</div>
+            <ul>
+              <li><strong>Headlines &amp; hero</strong> — sensory, curious, not generic</li>
+              <li><strong>CTAs, labels, microcopy</strong> — 2–4 words, specific</li>
+              <li><strong>Flavor descriptions</strong> — sensory anchor first, SCA note after</li>
+              <li><strong>Empty states &amp; errors</strong> — always paired with a next step</li>
+              <li><strong>Myth-busting copy</strong> (wedge content) — co-owned with designer</li>
+              <li><strong>Depth moments</strong> — co-owned with designer + researcher</li>
+            </ul>
+          </div>
+
+          <div class="block block--gotchas block--full">
+            <div class="block__label">Gotchas · seven project-specific traps</div>
+            <div class="gotchas-list">
+              <div class="gotcha"><strong>"Discover" / "Explore" in hero headlines.</strong>Claude defaults to these; they're generic SaaS voice.</div>
+              <div class="gotcha"><strong>Title Case headings.</strong>We use sentence case everywhere. Claude sometimes Title-Cases despite the rule.</div>
+              <div class="gotcha"><strong>"No results found."</strong>Claude's default empty state. Rewrite to active, invitational, with a CTA.</div>
+              <div class="gotcha"><strong>Em-dash drift.</strong>Claude favors em dashes in warm copy. One per paragraph max.</div>
+              <div class="gotcha"><strong>Marketing fluff.</strong>"Elevate your coffee experience," "craft your journey" — strip on sight.</div>
+              <div class="gotcha"><strong>Over-long CTAs.</strong>Claude drifts to 5+ words. Cap at 2–4.</div>
+              <div class="gotcha"><strong>Gendered or equipment-assuming copy.</strong>"Grab your V60" assumes gear. Neutral wins.</div>
+            </div>
+          </div>
+
+          <div class="block block--references block--full">
+            <div class="block__label">References · lazy-loaded</div>
+            <div class="ref-file">
+              <span class="ref-file__name">brand-voice.md</span>
+              <span class="ref-file__desc">Voice summary · tone attributes · progressive jargon table · do/don'ts · flavor patterns · page-specific notes · <em>myth-busting (new)</em> · <em>depth moments (new)</em></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="files-strip">
+          <span class="files-strip__label">Files</span>
+          <span class="files-strip__path">.claude/skills/copywriter/SKILL.md</span>
+          <span class="files-strip__path">.claude/skills/copywriter/references/brand-voice.md</span>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════ -->
+      <!-- SKILL 02 · DESIGNER            -->
+      <!-- ═══════════════════════════════ -->
+      <section class="skill" id="designer">
+        <header class="skill__header">
+          <div class="skill__mark" aria-hidden="true">
+            <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+              <!-- grid of shapes — UI layout metaphor -->
+              <rect x="20" y="20" width="34" height="28" rx="4" stroke="#6B3A2A" stroke-width="2" fill="#C4813D" fill-opacity="0.25"/>
+              <rect x="62" y="20" width="38" height="28" rx="4" stroke="#6B3A2A" stroke-width="2" fill="none"/>
+              <rect x="20" y="56" width="34" height="44" rx="4" stroke="#6B3A2A" stroke-width="2" fill="none"/>
+              <!-- circle: the "accent" element — sage for success -->
+              <circle cx="81" cy="78" r="22" stroke="#6B3A2A" stroke-width="2" fill="#7A8B6F" fill-opacity="0.35"/>
+              <!-- coffee drop inside circle -->
+              <path d="M81 68 Q74 78 81 88 Q88 78 81 68 Z" fill="#6B3A2A" fill-opacity="0.7"/>
+              <!-- dashed connector suggesting flow -->
+              <path d="M54 34 Q58 34 62 34" stroke="#C4813D" stroke-width="1.5" stroke-dasharray="2 2" fill="none"/>
+              <path d="M37 48 Q37 52 37 56" stroke="#C4813D" stroke-width="1.5" stroke-dasharray="2 2" fill="none"/>
+            </svg>
+          </div>
+          <div class="skill__head-text">
+            <div class="skill__num">Skill 02</div>
+            <h2 class="skill__name">The <em>designer</em></h2>
+            <p class="skill__tagline">Visual decisions inside our Tailwind system — tokens, layouts, illustrations.</p>
+          </div>
+        </header>
+
+        <div class="triggers">
+          <div class="triggers__label">Triggers on keywords</div>
+          <div class="triggers__list">
+            <span class="trigger">design</span>
+            <span class="trigger">layout</span>
+            <span class="trigger">component</span>
+            <span class="trigger">UI</span>
+            <span class="trigger">responsive</span>
+            <span class="trigger">mobile</span>
+            <span class="trigger">card</span>
+            <span class="trigger">grid</span>
+            <span class="trigger">spacing</span>
+            <span class="trigger">color</span>
+            <span class="trigger">Tailwind</span>
+            <span class="trigger">"make this look better"</span>
+          </div>
+        </div>
+
+        <div class="skill__body">
+          <div class="block">
+            <div class="block__label">Before designing</div>
+            <ul>
+              <li>Read <code>src/app/globals.css</code> for current theme tokens and custom utilities</li>
+              <li>Scan <code>src/components/</code> for existing patterns — reuse before inventing</li>
+              <li>For illustrated elements, read <code>references/illustration-system.md</code> — Bryan's house style</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="block__label">Decisions</div>
+            <ul>
+              <li><strong>Check what exists.</strong> Don't make a second card pattern.</li>
+              <li><strong>Stay in tokens.</strong> No hardcoded hex, no arbitrary Tailwind colors.</li>
+              <li><strong>Tailwind-only.</strong> No component-level CSS files.</li>
+              <li><strong>Show reasoning</strong> briefly so the team stays aligned.</li>
+              <li><strong>Flag copy</strong> — hand to the copywriter.</li>
+            </ul>
+          </div>
+
+          <div class="block block--full">
+            <div class="block__label">Design tokens · the palette in use</div>
+            <ul>
+              <li><strong><code>cream</code> / <code>cream-dark</code></strong> — page + card backgrounds</li>
+              <li><strong><code>espresso</code> / <code>espresso-light</code></strong> — primary text, dark UI</li>
+              <li><strong><code>roast</code> / <code>roast-light</code></strong> — secondary text, labels, link color</li>
+              <li><strong><code>caramel</code> / <code>caramel-light</code></strong> — accents, highlights, hover states</li>
+              <li><strong><code>sage</code> / <code>sage-light</code></strong> — success states, high-score indicators</li>
+              <li><strong>Typography:</strong> Inter (sans) + Georgia (serif). Moving toward Fraunces per CONCEPT-V2 — update the skill once globals.css is changed.</li>
+              <li><strong>No grays.</strong> Use <code>cream-dark</code>, <code>roast-light</code>, or <code>espresso-light</code>.</li>
+            </ul>
+          </div>
+
+          <div class="block block--gotchas block--full">
+            <div class="block__label">Gotchas · seven palette &amp; system traps</div>
+            <div class="gotchas-list">
+              <div class="gotcha"><strong><code>bg-gray-*</code> / <code>text-gray-*</code>.</strong>Our palette has no grays. Use <code>cream-dark</code>, <code>roast</code>, <code>roast-light</code>, <code>espresso-light</code>.</div>
+              <div class="gotcha"><strong>Generic blue links or buttons.</strong>No blue in UI. Links are <code>roast</code>; primary CTAs use <code>espresso</code> or <code>caramel</code>.</div>
+              <div class="gotcha"><strong><code>#93C5FD</code> (cool blue) in UI.</strong>Reserved for water/steam in illustrations only. Never a button color.</div>
+              <div class="gotcha"><strong><code>outline-none</code> on focus.</strong>Hard a11y rule — always add a visible replacement (ring or custom outline).</div>
+              <div class="gotcha"><strong>Font swap creep.</strong>Don't introduce new font families. Inter + Georgia is current.</div>
+              <div class="gotcha"><strong>Touch targets under 44px.</strong>Accessibility regression. Use <code>min-h-[44px]</code> or padding.</div>
+              <div class="gotcha"><strong>Custom CSS files.</strong>No component-level <code>.css</code>. All styling is Tailwind utilities.</div>
+            </div>
+          </div>
+
+          <div class="block block--references block--full">
+            <div class="block__label">References · lazy-loaded</div>
+            <div class="ref-file">
+              <span class="ref-file__name">illustration-system.md</span>
+              <span class="ref-file__desc">Bryan's house style · warm earth palette · 120×120 viewBox · 1.5–2.5px strokes · dashed flow lines · opacity-layered liquids (0.3–0.4) · what NOT to do · use contexts</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="files-strip">
+          <span class="files-strip__label">Files</span>
+          <span class="files-strip__path">.claude/skills/designer/SKILL.md</span>
+          <span class="files-strip__path">.claude/skills/designer/references/illustration-system.md</span>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════ -->
+      <!-- SKILL 03 · RESEARCHER          -->
+      <!-- ═══════════════════════════════ -->
+      <section class="skill" id="researcher">
+        <header class="skill__header">
+          <div class="skill__mark" aria-hidden="true">
+            <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+              <!-- stacked pages (data) -->
+              <rect x="20" y="30" width="48" height="62" rx="3" stroke="#6B3A2A" stroke-width="2" fill="#F5EDE3" fill-opacity="0.7"/>
+              <rect x="26" y="24" width="48" height="62" rx="3" stroke="#6B3A2A" stroke-width="2" fill="#FFFEFB"/>
+              <!-- data lines -->
+              <line x1="33" y1="38" x2="65" y2="38" stroke="#8B5E3C" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="33" y1="46" x2="58" y2="46" stroke="#8B5E3C" stroke-width="1.2" stroke-linecap="round"/>
+              <line x1="33" y1="54" x2="63" y2="54" stroke="#8B5E3C" stroke-width="1.2" stroke-linecap="round"/>
+              <!-- mini bar chart -->
+              <rect x="33" y="66" width="5" height="12" fill="#C4813D" fill-opacity="0.7"/>
+              <rect x="41" y="62" width="5" height="16" fill="#7A8B6F" fill-opacity="0.8"/>
+              <rect x="49" y="70" width="5" height="8" fill="#C4813D" fill-opacity="0.7"/>
+              <rect x="57" y="58" width="5" height="20" fill="#7A8B6F" fill-opacity="0.8"/>
+              <!-- magnifier -->
+              <circle cx="80" cy="82" r="17" stroke="#2C1810" stroke-width="2.5" fill="#FFF8F0" fill-opacity="0.9"/>
+              <circle cx="80" cy="82" r="17" stroke="#C4813D" stroke-width="1" stroke-dasharray="2 2" fill="none"/>
+              <line x1="92" y1="94" x2="102" y2="104" stroke="#2C1810" stroke-width="3" stroke-linecap="round"/>
+              <!-- bean shape inside magnifier -->
+              <ellipse cx="80" cy="82" rx="8" ry="6" fill="#6B3A2A" fill-opacity="0.8"/>
+              <path d="M73 82 Q80 80 87 82" stroke="#FFF8F0" stroke-width="1" fill="none"/>
+            </svg>
+          </div>
+          <div class="skill__head-text">
+            <div class="skill__num">Skill 03</div>
+            <h2 class="skill__name">The <em>researcher</em></h2>
+            <p class="skill__tagline">Coffee domain expertise + product research, grounded in our data.</p>
+          </div>
+        </header>
+
+        <div class="triggers">
+          <div class="triggers__label">Triggers on keywords</div>
+          <div class="triggers__list">
+            <span class="trigger">coffee</span>
+            <span class="trigger">origin</span>
+            <span class="trigger">process</span>
+            <span class="trigger">washed</span>
+            <span class="trigger">natural</span>
+            <span class="trigger">SCA</span>
+            <span class="trigger">Q-grader</span>
+            <span class="trigger">flavor wheel</span>
+            <span class="trigger">competitor</span>
+            <span class="trigger">data analysis</span>
+            <span class="trigger">beans dataset</span>
+          </div>
+        </div>
+
+        <div class="skill__body">
+          <div class="block">
+            <div class="block__label">Ground in the data</div>
+            <ul>
+              <li><code>src/data/beans.json</code> — 1,338 beans from CQI cupping data</li>
+              <li><code>src/data/beans_curated.json</code> — 20 hand-picked Phase 1 beans</li>
+              <li><code>src/data/flavor_taxonomy.json</code> — SCA Flavor Wheel</li>
+              <li><code>src/data/schema.md</code> — data model</li>
+              <li><strong>Rule:</strong> read the JSON before claiming a count or pattern. Show your work.</li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="block__label">What it owns</div>
+            <ul>
+              <li><strong>Coffee domain Q&amp;A</strong> — origins, processing, SCA protocol, flavor science</li>
+              <li><strong>Dataset analysis</strong> — distributions, gaps, correlations in <code>beans.json</code></li>
+              <li><strong>Competitive research</strong> — Angel's Cup, Beanhunter, Roast.World, Vivino, Untappd (adjacent)</li>
+              <li><strong>Depth moment accuracy</strong> — verify coffee is right before anything ships</li>
+            </ul>
+          </div>
+
+          <div class="block block--gotchas block--full">
+            <div class="block__label">Gotchas · six domain traps</div>
+            <div class="gotchas-list">
+              <div class="gotcha"><strong>"Washed" ≠ "clean."</strong>Washed is a processing method. Clean is a cupping descriptor (Clean Cup). Don't substitute.</div>
+              <div class="gotcha"><strong>CQI vs SCA.</strong>Our data is CQI cupping. SCA informs scoring, but they're distinct institutions.</div>
+              <div class="gotcha"><strong>Altitude ↔ acidity claims.</strong>A real correlation in specialty coffee — but verify it holds in OUR data before asserting.</div>
+              <div class="gotcha"><strong>"Specialty" threshold.</strong>80+ is the SCA line. Below 80 exists in our data — don't imply everything is specialty.</div>
+              <div class="gotcha"><strong>Natural ≠ fruity.</strong>Often are, but not a rule. Ethiopian natural ≠ every natural. Check the notes on the bean.</div>
+              <div class="gotcha"><strong>Generalizing from 20.</strong><code>beans_curated.json</code> ≠ the 1,338. Be explicit about which set you analyzed.</div>
+            </div>
+          </div>
+
+          <div class="block block--references block--full">
+            <div class="block__label">References</div>
+            <div class="ref-file">
+              <span class="ref-file__name">—</span>
+              <span class="ref-file__desc">No references folder yet. Skill is small enough to stay single-file. Add one if domain guidance grows (e.g., processing-methods.md, cupping-protocol.md).</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="files-strip">
+          <span class="files-strip__label">Files</span>
+          <span class="files-strip__path">.claude/skills/researcher/SKILL.md</span>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════ -->
+      <!-- SKILL 04 · QA REVIEWER         -->
+      <!-- ═══════════════════════════════ -->
+      <section class="skill" id="qa-reviewer">
+        <header class="skill__header">
+          <div class="skill__mark" aria-hidden="true">
+            <svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+              <!-- document -->
+              <rect x="22" y="18" width="52" height="72" rx="3" stroke="#6B3A2A" stroke-width="2" fill="#FFFEFB"/>
+              <!-- checklist lines -->
+              <circle cx="32" cy="32" r="3" stroke="#7A8B6F" stroke-width="1.5" fill="#7A8B6F" fill-opacity="0.3"/>
+              <line x1="40" y1="32" x2="66" y2="32" stroke="#8B5E3C" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="32" cy="44" r="3" stroke="#7A8B6F" stroke-width="1.5" fill="#7A8B6F" fill-opacity="0.3"/>
+              <line x1="40" y1="44" x2="62" y2="44" stroke="#8B5E3C" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="32" cy="56" r="3" stroke="#C4813D" stroke-width="1.5" fill="none"/>
+              <line x1="40" y1="56" x2="68" y2="56" stroke="#8B5E3C" stroke-width="1.5" stroke-linecap="round"/>
+              <circle cx="32" cy="68" r="3" stroke="#C4813D" stroke-width="1.5" fill="none"/>
+              <line x1="40" y1="68" x2="58" y2="68" stroke="#8B5E3C" stroke-width="1.5" stroke-linecap="round"/>
+              <!-- big sage check -->
+              <circle cx="82" cy="82" r="22" fill="#7A8B6F" fill-opacity="0.25" stroke="#7A8B6F" stroke-width="2"/>
+              <path d="M72 82 L79 89 L93 73" stroke="#7A8B6F" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          <div class="skill__head-text">
+            <div class="skill__num">Skill 04</div>
+            <h2 class="skill__name">The <em>QA reviewer</em></h2>
+            <p class="skill__tagline">Quality gate before anything ships — conventions, a11y, consistency, tone.</p>
+          </div>
+        </header>
+
+        <div class="triggers">
+          <div class="triggers__label">Triggers on keywords</div>
+          <div class="triggers__list">
+            <span class="trigger">review</span>
+            <span class="trigger">audit</span>
+            <span class="trigger">check</span>
+            <span class="trigger">QA</span>
+            <span class="trigger">accessibility</span>
+            <span class="trigger">a11y</span>
+            <span class="trigger">responsive</span>
+            <span class="trigger">convention</span>
+            <span class="trigger">TypeScript</span>
+            <span class="trigger">regression</span>
+            <span class="trigger">"does this follow our conventions"</span>
+          </div>
+        </div>
+
+        <div class="skill__body">
+          <div class="block">
+            <div class="block__label">Before reviewing</div>
+            <ul>
+              <li>Re-read <code>CLAUDE.md</code> — source of truth for conventions</li>
+              <li>Stack: Next.js 15 App Router · Tailwind v4 · TypeScript · JSON data · no database</li>
+              <li>Pull <code>references/checklist.md</code> — treat it as a <strong>menu, not a script</strong></li>
+            </ul>
+          </div>
+
+          <div class="block">
+            <div class="block__label">How it works</div>
+            <ul>
+              <li><strong>Identify what changed</strong> (new component? data shape? copy only?)</li>
+              <li><strong>Pull relevant checklist sections</strong> — not all of them</li>
+              <li><strong>Report by severity:</strong> Must fix · Should fix · Nice to have</li>
+              <li><strong>Hand off</strong> — design → designer, copy → copywriter, coffee → researcher</li>
+              <li><strong>Always run</strong> <code>npx tsc --noEmit</code> and <code>npm run build</code></li>
+            </ul>
+          </div>
+
+          <div class="block block--gotchas block--full">
+            <div class="block__label">Gotchas · nine high-signal traps</div>
+            <div class="gotchas-list">
+              <div class="gotcha"><strong><code>outline-none</code> without replacement.</strong>Always a Must Fix a11y violation.</div>
+              <div class="gotcha"><strong><code>any</code> types.</strong>Should be rare. Usually <code>Bean</code> from <code>@/lib/beans</code> fits.</div>
+              <div class="gotcha"><strong>Images without meaningful alt.</strong>Decorative needs <code>alt=""</code>; meaningful needs descriptive alt.</div>
+              <div class="gotcha"><strong>Empty states with no CTA.</strong>Both a copy and UX issue — route to copywriter.</div>
+              <div class="gotcha"><strong><code>next dev</code> passes, <code>next build</code> fails.</strong>Always run build — SSR boundary errors only show there.</div>
+              <div class="gotcha"><strong>Hardcoded hex / <code>bg-gray-*</code> / <code>blue-500</code>.</strong>Palette violations — hand to designer.</div>
+              <div class="gotcha"><strong>Raw <code>localStorage</code>.</strong>Must use <code>useLocalStorage</code> hook. Raw breaks SSR.</div>
+              <div class="gotcha"><strong>Diary state outside <code>DiaryProvider</code>.</strong>Always through the context.</div>
+              <div class="gotcha"><strong>Tone drift.</strong>If copy feels off-brand, route to copywriter — don't rewrite yourself.</div>
+            </div>
+          </div>
+
+          <div class="block block--references block--full">
+            <div class="block__label">References · lazy-loaded</div>
+            <div class="ref-file">
+              <span class="ref-file__name">checklist.md</span>
+              <span class="ref-file__desc">Full review menu — code conventions · design consistency · a11y · mobile · copy &amp; tone · performance &amp; data. Pull what's relevant; don't walk every row.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="files-strip">
+          <span class="files-strip__label">Files</span>
+          <span class="files-strip__path">.claude/skills/qa-reviewer/SKILL.md</span>
+          <span class="files-strip__path">.claude/skills/qa-reviewer/references/checklist.md</span>
+        </div>
+      </section>
+
+      <!-- ═══ Footer ═══ -->
+      <footer class="footer">
+        <div>
+          <h2 class="footer__title">Extending the system</h2>
+          <p><strong>Adding a gotcha</strong> — every time Claude trips on something new (says "Discover" again, introduces a fresh hex color), open the right SKILL.md and add a line to the Gotchas section. This is the <em>highest-signal</em> content a skill can hold.</p>
+          <p><strong>New bulk content</strong> — if a section in SKILL.md is growing past ~30 lines, split it into <code>references/some-topic.md</code> and leave a one-line pointer. Keeps the loaded context lean.</p>
+          <p><strong>Committing to git</strong> — <code>.claude/skills/</code> is project-scoped. Commit it so every teammate benefits from the same roles.</p>
+          <p><strong>Adding a fifth skill</strong> — resist unless the role is genuinely distinct. Overlapping skills dilute trigger accuracy. Four is the right shape for now.</p>
+        </div>
+
+        <aside class="footer__stats" aria-label="Shape at a glance">
+          <div class="stat-row">
+            <span class="stat-row__name">copywriter</span>
+            <span class="stat-row__val">44 lines · 1 ref</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-row__name">designer</span>
+            <span class="stat-row__val">62 lines · 1 ref</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-row__name">researcher</span>
+            <span class="stat-row__val">42 lines · 0 refs</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-row__name">qa-reviewer</span>
+            <span class="stat-row__val">58 lines · 1 ref</span>
+          </div>
+          <div class="stat-row">
+            <span class="stat-row__name">Gotchas total</span>
+            <span class="stat-row__val">29</span>
+          </div>
+        </aside>
+      </footer>
+    </main>
+  </div>
+</body>
+</html>
