@@ -23,74 +23,90 @@ export default function HomePage() {
       {/* ── HERO — Editorial masthead ─────────────────────────── */}
       <section
         className="relative overflow-hidden"
-        style={{ background: "var(--color-espresso-light)", minHeight: 480 }}
+        style={{ minHeight: 480 }}
       >
+        {/* Hero background — coffee bean world map */}
+        <div
+          className="absolute inset-0"
+          style={{
+            backgroundImage: "url('https://images.pexels.com/photos/7412006/pexels-photo-7412006.jpeg?auto=compress&cs=tinysrgb&w=1600&q=85')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
+        {/* Warm overlay so text stays readable */}
         <div
           className="absolute inset-0 pointer-events-none"
-          style={{ background: "radial-gradient(ellipse at 30% 60%, rgba(200,137,60,0.15) 0%, transparent 60%)" }}
+          style={{ background: "linear-gradient(to right, color-mix(in srgb, var(--color-cream-light) 92%, transparent) 0%, color-mix(in srgb, var(--color-cream-light) 75%, transparent) 50%, color-mix(in srgb, var(--color-cream-light) 35%, transparent) 100%)" }}
         />
 
-        <div className="relative max-w-[1280px] mx-auto px-6 md:px-10 py-20 md:py-28">
-          <div className="max-w-3xl">
-            <p
-              className="text-[0.65rem] font-bold tracking-[0.28em] uppercase mb-4"
-              style={{ color: "var(--color-caramel)" }}
-            >
-              April 2026 — Issue 52 &nbsp;·&nbsp; Grounds &amp; Glory
-            </p>
-            <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl font-bold leading-[1.0] mb-6 animate-fade-in-up" style={{ color: "var(--color-paper)" }}>
-              Discover the World<br />
-              <span style={{ color: "var(--color-caramel)" }}>Through Coffee</span>
-            </h1>
-            <p
-              className="font-serif italic text-lg md:text-xl leading-[1.7] mb-8 max-w-xl animate-fade-in-up stagger-2"
-              style={{ color: "rgba(253,250,246,0.65)", fontWeight: 300 }}
-            >
-              {stats.totalBeans.toLocaleString()} specialty-grade beans from {stats.countries} countries,
-              scored and waiting for you — plus stories, guides, and the conversation behind every cup.
-            </p>
+        <div className="relative max-w-[1280px] mx-auto px-6 md:px-10 py-16 md:py-24">
+          <div className="max-w-xl">
 
-            {/* Stats row */}
-            <div className="flex flex-wrap gap-8 mb-10 animate-fade-in-up stagger-4">
-              {[
-                { label: "Countries", value: stats.countries },
-                { label: "Beans Catalogued", value: stats.totalBeans.toLocaleString() },
-                { label: "Top Score", value: `${stats.topScore.toFixed(1)} pts` },
-              ].map(({ label, value }) => (
-                <div key={label}>
-                  <div className="font-serif text-2xl font-bold" style={{ color: "var(--color-paper)" }}>{value}</div>
-                  <div className="text-[0.72rem] font-semibold tracking-[0.06em] uppercase" style={{ color: "rgba(253,250,246,0.45)" }}>{label}</div>
-                </div>
-              ))}
+            {/* Left — text */}
+            <div>
+              <p
+                className="text-[0.65rem] font-bold tracking-[0.28em] uppercase mb-4"
+                style={{ color: "var(--color-caramel)" }}
+              >
+                April 2026 — Issue 52 &nbsp;·&nbsp; One More Cup
+              </p>
+              <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.05] mb-6 animate-fade-in-up" style={{ color: "var(--color-espresso-light)" }}>
+                Discover the World<br />
+                <span style={{ color: "var(--color-caramel)" }}>Through Coffee</span>
+              </h1>
+              <p
+                className="font-serif italic text-lg leading-[1.7] mb-8 animate-fade-in-up stagger-2"
+                style={{ color: "var(--color-roast)", fontWeight: 300 }}
+              >
+                {stats.totalBeans.toLocaleString()} specialty-grade beans from {stats.countries} countries,
+                scored and waiting for you — plus stories, guides, and the conversation behind every cup.
+              </p>
+
+              {/* Stats row */}
+              <div className="flex flex-wrap gap-8 mb-10 animate-fade-in-up stagger-4">
+                {[
+                  { label: "Countries", value: stats.countries },
+                  { label: "Beans", value: stats.totalBeans.toLocaleString() },
+                  { label: "Top Score", value: `${stats.topScore.toFixed(1)}` },
+                ].map(({ label, value }) => (
+                  <div key={label}>
+                    <div className="font-serif text-2xl font-bold" style={{ color: "var(--color-espresso-light)" }}>{value}</div>
+                    <div className="text-[0.72rem] font-semibold tracking-[0.06em] uppercase" style={{ color: "var(--color-roast-light)" }}>{label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* CTAs */}
+              <div className="flex flex-wrap gap-3 animate-fade-in-up stagger-6">
+                <a
+                  href="#catalog"
+                  className="inline-flex items-center gap-2 text-[0.82rem] font-bold tracking-[0.06em] uppercase px-6 py-3 rounded-sm transition-all"
+                  style={{ background: "var(--color-caramel)", color: "white" }}
+                >
+                  Explore Beans
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </a>
+                <Link
+                  href="/quiz"
+                  className="inline-flex items-center gap-2 text-[0.82rem] font-bold tracking-[0.06em] uppercase px-6 py-3 rounded-sm border transition-all"
+                  style={{ borderColor: "var(--color-caramel)", color: "var(--color-espresso-light)", background: "transparent" }}
+                >
+                  ✨ Flavor Profile
+                </Link>
+                <Link
+                  href="#magazine"
+                  className="inline-flex items-center gap-2 text-[0.82rem] font-bold tracking-[0.06em] uppercase px-6 py-3 rounded-sm border transition-all"
+                  style={{ borderColor: "var(--color-caramel)", color: "var(--color-espresso-light)", background: "transparent" }}
+                >
+                  📰 Magazine
+                </Link>
+              </div>
             </div>
 
-            {/* CTAs */}
-            <div className="flex flex-wrap gap-3 animate-fade-in-up stagger-6">
-              <a
-                href="#catalog"
-                className="inline-flex items-center gap-2 text-[0.82rem] font-bold tracking-[0.06em] uppercase px-6 py-3 rounded-sm transition-all"
-                style={{ background: "var(--color-caramel)", color: "white" }}
-              >
-                Explore Beans
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </a>
-              <Link
-                href="/quiz"
-                className="inline-flex items-center gap-2 text-[0.82rem] font-bold tracking-[0.06em] uppercase px-6 py-3 rounded-sm border transition-all"
-                style={{ borderColor: "rgba(253,250,246,0.3)", color: "var(--color-paper)", background: "transparent" }}
-              >
-                ✨ Find Your Flavor Profile
-              </Link>
-              <Link
-                href="#magazine"
-                className="inline-flex items-center gap-2 text-[0.82rem] font-bold tracking-[0.06em] uppercase px-6 py-3 rounded-sm border transition-all"
-                style={{ borderColor: "rgba(253,250,246,0.3)", color: "var(--color-paper)", background: "transparent" }}
-              >
-                📰 Read the Magazine
-              </Link>
-            </div>
+
           </div>
         </div>
       </section>
@@ -157,7 +173,7 @@ export default function HomePage() {
       {/* ── ABOUT ─────────────────────────────────────────────── */}
       <section
         className="py-20 text-center"
-        style={{ background: "var(--color-cream-dark)" }}
+        style={{ background: "var(--color-cream-light)" }}
       >
         <div className="max-w-xl mx-auto px-6">
           <p className="text-[0.65rem] font-bold tracking-[0.22em] uppercase mb-3" style={{ color: "var(--color-caramel)" }}>
@@ -167,7 +183,7 @@ export default function HomePage() {
             Built by coffee lovers, for coffee lovers
           </h2>
           <p className="leading-[1.8] text-[0.95rem]" style={{ color: "var(--color-roast-light)" }}>
-            Grounds &amp; Glory is built by a team of designers and researchers collaborating with Claude Code.
+            One More Cup is built by a team of designers and researchers collaborating with Claude Code.
             Every bean in our catalog is sourced from the Coffee Quality Institute&apos;s open dataset,
             scored using the SCA cupping protocol. Ask Marco the Barista — he&apos;s always standing by.
           </p>

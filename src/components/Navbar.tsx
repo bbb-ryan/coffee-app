@@ -60,7 +60,7 @@ export default function Navbar() {
               className="font-serif text-[1.55rem] font-bold tracking-[-0.01em] leading-none"
               style={{ color: "var(--color-espresso-light)" }}
             >
-              Grounds <span style={{ color: "var(--color-caramel)" }}>&amp;</span> Glory
+              One <span style={{ color: "var(--color-caramel)" }}>More</span> Cup
             </div>
             <div
               className="text-[0.55rem] tracking-[0.22em] uppercase font-semibold mt-0.5"

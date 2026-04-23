@@ -19,7 +19,7 @@ export default function Footer() {
               className="font-serif text-[1.5rem] font-bold tracking-[-0.01em] mb-4"
               style={{ color: "var(--color-paper)" }}
             >
-              Grounds <span style={{ color: "var(--color-caramel)" }}>&amp;</span> Glory
+              One <span style={{ color: "var(--color-caramel)" }}>More</span> Cup
             </div>
             <p
               className="text-[0.85rem] leading-[1.75] max-w-[260px] font-serif italic"
@@ -98,7 +98,7 @@ export default function Footer() {
           className="flex flex-col sm:flex-row justify-between items-center gap-2 py-3 text-[0.72rem]"
           style={{ color: "rgba(253,250,246,0.3)" }}
         >
-          <p>© 2026 Grounds &amp; Glory. All Rights Reserved.</p>
+          <p>© 2026 One More Cup. All Rights Reserved.</p>
           <div className="flex gap-3">
             {["𝕏", "📷", "▶", "in"].map((icon) => (
               <button

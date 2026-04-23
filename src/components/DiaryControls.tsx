@@ -58,7 +58,7 @@ export default function DiaryControls({ beanId }: { beanId: number }) {
 
   if (!hydrated) {
     return (
-      <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-8 mt-8 animate-fade-in">
+      <div className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-8 mt-8 animate-fade-in">
         <div className="skeleton h-6 w-48 mb-4" />
         <div className="flex gap-2">
           <div className="skeleton h-10 w-24 rounded-full" />
@@ -85,7 +85,7 @@ export default function DiaryControls({ beanId }: { beanId: number }) {
   }
 
   return (
-    <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-8 mt-8 animate-fade-in-up stagger-3">
+    <div className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-8 mt-8 animate-fade-in-up stagger-3">
       <h2 className="font-serif text-xl font-bold text-espresso mb-4">
         Your Coffee Diary
       </h2>
@@ -99,7 +99,7 @@ export default function DiaryControls({ beanId }: { beanId: number }) {
             className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium border transition-all ${
               entry?.status === opt.value
                 ? opt.activeClass + " shadow-sm"
-                : "bg-[#141414] text-espresso-light border-white/[0.06] hover:border-caramel hover:text-espresso"
+                : "bg-[var(--color-cream-light)] text-espresso-light border-[var(--color-border)] hover:border-caramel hover:text-espresso"
             }`}
           >
             {opt.icon}
@@ -131,7 +131,7 @@ export default function DiaryControls({ beanId }: { beanId: number }) {
                   className={`px-3 py-1.5 rounded-full text-xs font-medium border transition-all ${
                     entry.brewMethod === method
                       ? "bg-[#E8E4E0] text-[#0F0F0F] border-[#E8E4E0]"
-                      : "bg-[#141414] text-roast border-white/[0.06] hover:border-caramel"
+                      : "bg-[var(--color-cream-light)] text-roast border-[var(--color-border)] hover:border-caramel"
                   }`}
                 >
                   {method}
@@ -147,7 +147,7 @@ export default function DiaryControls({ beanId }: { beanId: number }) {
             onBlur={handleNotesBlur}
             placeholder="Add your personal notes about this coffee..."
             rows={3}
-            className="w-full rounded-lg border border-white/[0.06] px-4 py-3 text-sm text-espresso placeholder:text-roast-light/40 focus:outline-none focus:ring-2 focus:ring-caramel/30 focus:border-caramel resize-none"
+            className="w-full rounded-lg border border-[var(--color-border)] px-4 py-3 text-sm text-espresso placeholder:text-roast-light/40 focus:outline-none focus:ring-2 focus:ring-caramel/30 focus:border-caramel resize-none"
           />
 
           {/* Share toggle + meta */}
@@ -161,7 +161,7 @@ export default function DiaryControls({ beanId }: { beanId: number }) {
                   onChange={(e) => updateEntry(beanId, { isPublic: e.target.checked })}
                   className="sr-only peer"
                 />
-                <div className="w-8 h-4.5 bg-white/[0.06] rounded-full peer peer-checked:bg-caramel transition-colors relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-3.5 after:h-3.5 after:bg-[#141414] after:rounded-full after:transition-transform peer-checked:after:translate-x-3.5" />
+                <div className="w-8 h-4.5 bg-white/[0.06] rounded-full peer peer-checked:bg-caramel transition-colors relative after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:w-3.5 after:h-3.5 after:bg-[var(--color-cream-light)] after:rounded-full after:transition-transform peer-checked:after:translate-x-3.5" />
                 <span className="text-xs text-roast-light/60">Share</span>
               </label>
             </div>

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-/* ── Story data (Grounds & Glory editorial) ─────────────────── */
+/* ── Story data (One More Cup editorial) ─────────────────── */
 
 const COVER_STORY = {
   tag: "Cover Story",
@@ -13,7 +13,7 @@ const COVER_STORY = {
   author: "Lena Mbeki",
   date: "April 2026",
   readTime: "12 min read",
-  img: "https://images.unsplash.com/photo-1504627298434-2f0a5c3a3d08?w=1200&q=80",
+  img: "https://images.unsplash.com/photo-1611854779393-1b2da9d400fe?w=1200&q=80",
 };
 
 const WORLD_STORIES = [
@@ -90,7 +90,7 @@ const TRAVEL_STORIES = [
   {
     destination: "Addis Ababa, Ethiopia",
     blurb: "The original coffee ceremony meets third-wave curiosity in Africa's most caffeinated capital.",
-    img: "https://images.unsplash.com/photo-1580138822439-7d85deece2c6?w=600&q=80",
+    img: "https://images.unsplash.com/photo-1498804103079-a6351b050096?w=600&q=80",
     tag: "City Guide",
   },
   {
@@ -125,7 +125,7 @@ function SectionHeader({ title, sub }: { title: string; sub?: string }) {
     <div className="flex items-end justify-between mb-8">
       <div>
         <p className="text-[0.65rem] font-bold tracking-[0.22em] uppercase mb-1" style={{ color: "var(--color-caramel)" }}>
-          Grounds &amp; Glory
+          One More Cup
         </p>
         <h2 className="font-serif text-2xl md:text-3xl font-bold" style={{ color: "var(--color-espresso-light)" }}>
           {title}
@@ -265,7 +265,7 @@ export default function MagazineSection() {
                     <span
                       key={t}
                       className="text-[0.6rem] font-semibold tracking-[0.08em] uppercase px-2 py-0.5 rounded-full"
-                      style={{ background: "var(--color-cream-dark)", color: "var(--color-roast)" }}
+                      style={{ background: "var(--color-cream-light)", color: "var(--color-roast)" }}
                     >
                       {t}
                     </span>

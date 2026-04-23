@@ -145,7 +145,7 @@ export default function BeanCatalog({
               </div>
               <button
                 onClick={() => setVisibleCount((c) => c + PAGE_SIZE)}
-                className="px-8 py-3 bg-[#141414] border-2 border-white/[0.08] text-espresso rounded-full hover:bg-white/[0.06] transition-all text-sm font-medium"
+                className="px-8 py-3 bg-[var(--color-surface)] border-2 border-white/[0.08] text-espresso rounded-full hover:bg-white/[0.06] transition-all text-sm font-medium"
               >
                 Load more
               </button>

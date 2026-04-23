@@ -20,7 +20,7 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Grounds & Glory — The Specialty Coffee Journal",
+  title: "One More Cup — The Specialty Coffee Journal",
   description:
     "Discover 1,338 specialty-grade beans, read in-depth coffee stories, find your flavor profile, and track your coffee journey.",
 };

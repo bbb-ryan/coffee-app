@@ -81,7 +81,7 @@ export default function BrewMethodDetail({ method }: { method: BrewMethod }) {
         ].map((param) => (
           <div
             key={param.label}
-            className="bg-[#141414] border border-white/[0.06] rounded-xl p-4"
+            className="bg-[var(--color-cream-light)] border border-[var(--color-border)] rounded-xl p-4"
           >
             <div className="text-xs text-roast-light mb-1">{param.label}</div>
             <div className="text-sm font-medium text-espresso">{param.value}</div>

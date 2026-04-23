@@ -74,7 +74,7 @@ export default function DiaryView({ beans }: { beans: Bean[] }) {
             className={`px-3.5 py-1.5 rounded-full text-sm font-medium border transition-all ${
               statusFilter === opt.value
                 ? "bg-[#E8E4E0] text-[#0F0F0F] border-[#E8E4E0] shadow-sm"
-                : "bg-[#141414] text-espresso-light border-white/[0.06] hover:border-caramel hover:text-espresso"
+                : "bg-[var(--color-surface)] text-espresso-light border-[var(--color-border)] hover:border-caramel hover:text-espresso"
             }`}
           >
             {opt.label}

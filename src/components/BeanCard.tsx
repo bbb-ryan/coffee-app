@@ -107,17 +107,17 @@ export default function BeanCard({ bean }: { bean: Bean }) {
         {/* Detail pills */}
         <div className="flex flex-wrap gap-1.5 mt-3">
           {bean.variety && (
-            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--color-cream-dark)", color: "var(--color-roast)" }}>
+            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--color-cream-light)", color: "var(--color-roast)" }}>
               {bean.variety}
             </span>
           )}
           {bean.processing_method && (
-            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--color-cream-dark)", color: "var(--color-roast)" }}>
+            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--color-cream-light)", color: "var(--color-roast)" }}>
               {bean.processing_method}
             </span>
           )}
           {bean.altitude_meters && (
-            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--color-cream-dark)", color: "var(--color-roast)" }}>
+            <span className="text-xs px-2 py-0.5 rounded-full" style={{ background: "var(--color-cream-light)", color: "var(--color-roast)" }}>
               {bean.altitude_meters.toLocaleString()}m
             </span>
           )}
@@ -125,7 +125,7 @@ export default function BeanCard({ bean }: { bean: Bean }) {
 
         {/* Score bar + Quick add */}
         <div className="mt-4 flex items-center gap-2">
-          <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "var(--color-cream-dark)" }}>
+          <div className="flex-1 h-1.5 rounded-full overflow-hidden" style={{ background: "var(--color-cream-light)" }}>
             <div
               className={`h-full rounded-full ${barColor} score-bar-fill`}
               style={{ width: `${bean.scores.total}%` }}

@@ -117,18 +117,19 @@
 @theme {
   /* Grounds & Glory warm cream palette */
   --color-cream: #F7F3EE;
-  --color-cream-dark: #EDE8E1;
+  --color-cream-light: #EDE8E1;
   --color-paper: #FDFAF6;
-  --color-espresso: #1C1510;
-  --color-espresso-light: #3B2A1A;
-  --color-roast: #5A4030;
-  --color-roast-light: #7A6A5A;
-  --color-caramel: #C8893C;
-  --color-caramel-light: #D4A843;
-  --color-honey: #D4A843;
-  --color-sage: #5A8A64;
-  --color-sage-light: #6B9E78;
-  --color-border: #E8E0D5;
+  --color-espresso: #3B2C23;
+  --color-espresso-light: #5E4630;
+  --color-roast: #7A5F4E;
+  --color-roast-light: #8C7C6C;
+  --color-caramel: #D6A763;
+  --color-caramel-light: #DEBB6D;
+  --color-honey: #F0C256;
+  --color-sage: #85A88D;
+  --color-sage-light: #A5C9AE;
+  --color-border: #EDE8E1;
+  --color-surface: #FFFFFF;
 
   /* Typography */
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -263,7 +264,7 @@ a, button, input, select {
 /* ── Skeleton Loading ── */
 
 .skeleton {
-  background: linear-gradient(90deg, var(--color-cream-dark) 25%, rgba(255,255,255,0.6) 50%, var(--color-cream-dark) 75%);
+  background: linear-gradient(90deg, var(--color-cream-light) 25%, rgba(255,255,255,0.6) 50%, var(--color-cream-light) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.5s infinite;
   border-radius: 0.5rem;

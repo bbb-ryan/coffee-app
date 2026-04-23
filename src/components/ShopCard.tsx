@@ -6,10 +6,10 @@ export default function ShopCard({ shop }: { shop: Shop }) {
   return (
     <Link
       href={`/shops/${shop.id}`}
-      className="group block bg-[#141414] rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-white/[0.06] hover:border-caramel/40"
+      className="group block bg-[var(--color-cream-light)] rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1 overflow-hidden border border-[var(--color-border)] hover:border-caramel/40"
     >
       {/* Header with emoji */}
-      <div className="bg-gradient-to-r from-[#141414] via-[#1A1A1A] to-[#141414] p-5 pb-4">
+      <div className="bg-gradient-to-r from-[var(--color-cream-light)] via-[var(--color-cream-light)] to-[var(--color-cream-light)] p-5 pb-4">
         <div className="flex items-start justify-between gap-2">
           <div className="flex items-center gap-3">
             <span className="text-3xl">{shop.image}</span>
