@@ -14,7 +14,7 @@ Coffee App helps people:
 
 This project is an example of **human + AI collaboration** — not siloed roles, but coworking. Designers, researchers, and Claude Code working together in the same repo, iterating in real time.
 
-## Status: Phase 2 — Personalization (in progress)
+## Status: Phase 4 — Unified Platform
 
 We went with **Option B (Modern Web App)** from [Hassan's build proposal](docs/PROPOSAL.md) — Next.js + Tailwind + JSON data. Here's what's live:
 
@@ -36,6 +36,25 @@ We went with **Option B (Modern Web App)** from [Hassan's build proposal](docs/P
 - **Navbar search** — Expandable search input in the nav bar (desktop + mobile)
 - **Mobile navigation** — Hamburger menu with animated open/close transitions
 - **Skeleton loading states** — Placeholder UI while diary data hydrates from localStorage
+
+### Phase 3 — Personalization & Education ✅
+- **Flavor profile quiz** — Multi-question quiz at `/quiz` to discover your coffee personality and get personalized bean recommendations
+- **Brew guide** — Step-by-step brewing tutorials at `/brew-guide` for pour-over, French press, AeroPress, espresso, cold brew, and Moka pot
+- **Marco the Barista** — AI chatbot character offering brew recipes, equipment tips, and coffee advice
+- **Coffee shops explorer** — Discover specialty coffee shops at `/shops` with details and locations
+- **User profile** — Personal dashboard at `/profile` with badges, stats, and coffee drinking history
+
+### Phase 4 — Unified Platform (One More Cup) ✅
+- **World map hero** — Interactive SVG coffee bean world map highlighting coffee-growing regions
+- **Magazine section** — Editorial stories about coffee origins, farmers, and global coffee culture with article modals
+- **News ticker** — Scrolling banner in the navbar with latest coffee stories
+- **Redesigned navbar** — Unified navigation with integrated news ticker and updated branding
+- **Redesigned footer** — Full editorial-style footer with links and branding
+- **Social feed** — Community page at `/social` to see what other coffee lovers are brewing and sharing
+- **Shopping cart** — Cart drawer with quantity controls and shipping calculation
+- **Checkout flow** — Full checkout experience at `/checkout`
+- **Order history** — Track past purchases and reorder at `/orders`
+- **Add to cart controls** — Quantity selector and buy buttons on bean detail pages
 
 ### Why Option B?
 
@@ -91,22 +110,47 @@ coffee-app/
 ├── src/
 │   ├── app/                # Next.js pages (App Router)
 │   │   ├── layout.tsx      # Root layout — DiaryProvider + Navbar + Footer
-│   │   ├── page.tsx        # Homepage — hero, featured beans, catalog
+│   │   ├── page.tsx        # Homepage — world map hero, magazine, catalog
 │   │   ├── beans/[id]/     # Bean detail pages (1,338 routes)
-│   │   └── diary/          # Personal coffee diary page
+│   │   ├── brew-guide/     # Brewing method tutorials
+│   │   ├── checkout/       # Checkout flow
+│   │   ├── diary/          # Personal coffee diary
+│   │   ├── orders/         # Order history
+│   │   ├── profile/        # User profile and stats
+│   │   ├── quiz/           # Flavor profile quiz
+│   │   ├── shops/          # Coffee shop explorer
+│   │   └── social/         # Community social feed
 │   ├── components/         # Reusable UI components
-│   │   ├── Navbar.tsx      # Sticky nav with search, diary badge, mobile menu
-│   │   ├── Footer.tsx
+│   │   ├── Navbar.tsx      # Nav with search, news ticker, diary badge
+│   │   ├── Footer.tsx      # Editorial-style footer
 │   │   ├── BeanCard.tsx
 │   │   ├── BeanCatalog.tsx
 │   │   ├── SearchBar.tsx
 │   │   ├── Filters.tsx
-│   │   ├── ActiveFilters.tsx   # Removable filter pills
-│   │   ├── FeaturedBeans.tsx   # Editor's Picks carousel
-│   │   ├── ScoreRadar.tsx
-│   │   ├── DiaryProvider.tsx   # React context for diary state
-│   │   ├── DiaryControls.tsx   # Tried/Loved/Want to Try buttons + notes
-│   │   └── DiaryView.tsx       # Diary page content with status filtering
+│   │   ├── ActiveFilters.tsx      # Removable filter pills
+│   │   ├── FeaturedBeans.tsx      # Editor's Picks carousel
+│   │   ├── CoffeeBeanWorldMap.tsx # Interactive SVG world map
+│   │   ├── MagazineSection.tsx    # Editorial stories and articles
+│   │   ├── ArticleModal.tsx       # Full-article popup modal
+│   │   ├── BaristaChat.tsx        # Marco the Barista chatbot
+│   │   ├── BrewMethodCard.tsx     # Brew method selection card
+│   │   ├── BrewMethodDetail.tsx   # Step-by-step brew instructions
+│   │   ├── QuizFlow.tsx           # Quiz orchestrator
+│   │   ├── QuizQuestion.tsx       # Individual quiz question
+│   │   ├── QuizResults.tsx        # Personalized quiz results
+│   │   ├── ShopCard.tsx           # Coffee shop listing card
+│   │   ├── ShopExplorer.tsx       # Shop discovery interface
+│   │   ├── CartDrawer.tsx         # Slide-out shopping cart
+│   │   ├── CartProvider.tsx       # Cart state context
+│   │   ├── AddToCartControls.tsx  # Buy buttons on bean pages
+│   │   ├── CheckoutFlow.tsx       # Multi-step checkout
+│   │   ├── OrderHistory.tsx       # Past orders list
+│   │   ├── SocialFeed.tsx         # Community feed
+│   │   ├── ProfileView.tsx        # User profile dashboard
+│   │   ├── ScoreRadar.tsx         # Flavor radar chart
+│   │   ├── DiaryProvider.tsx      # React context for diary state
+│   │   ├── DiaryControls.tsx      # Tried/Loved/Want to Try + notes
+│   │   └── DiaryView.tsx          # Diary page with status filtering
 │   ├── data/               # Bean data and models
 │   │   ├── beans.json      # Full dataset (1,338 beans from CQI)
 │   │   ├── beans_curated.json  # 20 hand-picked standout beans
@@ -122,15 +166,13 @@ coffee-app/
 
 ## What's Next
 
-### Phase 2 — Personalization (remaining)
-- [ ] Taste profile quiz
-- [x] Personal bean journal (tried / loved / want to try)
-- [ ] Recommendations based on preferences
-
-### Phase 3 — Community
-- [ ] User reviews and ratings
-- [ ] Shared lists and recommendations
-- [ ] Brewing guides paired with beans
+- [ ] Real user authentication and accounts
+- [ ] Database backend (replace JSON files)
+- [ ] User reviews and ratings on bean pages
+- [ ] Shared lists and recommendations between users
+- [ ] Real coffee shop data integration
+- [ ] Payment processing for checkout
+- [ ] Deployment to Vercel
 
 See [docs/VISION.md](docs/VISION.md) for the full roadmap.
 

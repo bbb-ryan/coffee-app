@@ -151,6 +151,106 @@
     border-color: var(--caramel);
   }
 
+  /* Persona cards */
+  .persona-strip {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+  .persona-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+  .persona-card h4 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: var(--text);
+  }
+  .persona-card .persona-role {
+    font-size: 12px;
+    color: var(--caramel);
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .persona-card p {
+    font-size: 12px;
+    color: var(--text-mid);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .persona-card .persona-needs {
+    font-size: 11px;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+  .persona-card .persona-needs strong {
+    color: var(--text-mid);
+  }
+
+  /* Persona check in feedback form */
+  .persona-check-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+  .persona-check-item {
+    padding: 10px 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .persona-check-item:hover {
+    border-color: var(--border-hover);
+  }
+  .persona-check-item.has-input {
+    border-color: rgba(107,158,120,0.4);
+    background: rgba(107,158,120,0.05);
+  }
+  .persona-check-item .persona-check-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 2px;
+  }
+  .persona-check-item .persona-check-role {
+    font-size: 11px;
+    color: var(--caramel);
+    margin-bottom: 6px;
+  }
+  .persona-check-item textarea {
+    width: 100%;
+    min-height: 50px;
+    padding: 8px 10px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 12px;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.5;
+    resize: vertical;
+  }
+  .persona-check-item textarea:focus {
+    outline: none;
+    border-color: var(--caramel);
+  }
+  .persona-check-item textarea::placeholder {
+    color: var(--text-dim);
+  }
+
+  @media (max-width: 768px) {
+    .persona-strip { grid-template-columns: 1fr; }
+    .persona-check-grid { grid-template-columns: 1fr; }
+  }
+
   /* Screen nav sidebar */
   .screen-nav {
     position: fixed;
@@ -605,11 +705,44 @@
 <div class="container">
   <div class="intro">
     <h2>How this works</h2>
-    <p>Walk through the app screen by screen. For each screen, open the app at the route shown, then fill in your feedback here. Check any heuristics that feel violated, rate severity, route to the right skill, and add notes.</p>
+    <p>Walk through the app screen by screen. For each screen, open the app at the route shown, then fill in your feedback here. For each screen, think about how <strong>Noor</strong>, <strong>Mika</strong>, and <strong>Dev</strong> would experience it — the persona cards below are your reference. Then check heuristics, rate severity, route to the right skill, and add notes.</p>
     <p>When you're done, hit <strong>Export Feedback</strong> — it downloads a markdown file that drops straight into the UX researcher skill's references folder.</p>
     <div class="reviewer-field">
       <label>Your name</label>
       <input type="text" id="reviewerName" placeholder="e.g. Sarah" oninput="saveState()">
+    </div>
+  </div>
+
+  <div class="persona-strip">
+    <div class="persona-card">
+      <h4>Noor</h4>
+      <span class="persona-role">Curious Home Brewer</span>
+      <p>V60 owner, one bag a month from a local roaster. Liked a Kenyan but can't say why. Reads bag labels but the vocabulary doesn't connect to her experience.</p>
+      <div class="persona-needs">
+        <strong>Need:</strong> Go from "I liked that" to understanding her palate<br>
+        <strong>Risk:</strong> Feeling overwhelmed by jargon or scores she can't parse<br>
+        <strong>Lives in:</strong> All three moments — decode, purchase, depth
+      </div>
+    </div>
+    <div class="persona-card">
+      <h4>Mika</h4>
+      <span class="persona-role">Thoughtful Outsider</span>
+      <p>Doesn't drink coffee but buys it as gifts. Every roaster description sounds the same. Knows her partner "always orders the Ethiopian one" — that's all she has.</p>
+      <div class="persona-needs">
+        <strong>Need:</strong> Navigate coffee without knowing coffee<br>
+        <strong>Risk:</strong> Feeling stupid, giving up, or buying randomly<br>
+        <strong>Lives in:</strong> Purchase moment almost exclusively
+      </div>
+    </div>
+    <div class="persona-card">
+      <h4>Dev</h4>
+      <span class="persona-role">Roaster's Apprentice</span>
+      <p>Works at a roastery, learning to cup. Boss says "syrupy body and stone fruit acidity" and Dev nods but is mostly guessing. Wants professional vocabulary.</p>
+      <div class="persona-needs">
+        <strong>Need:</strong> Build tasting language and calibrate his palate<br>
+        <strong>Risk:</strong> The app feeling too shallow for his level<br>
+        <strong>Lives in:</strong> Depth moment constantly
+      </div>
     </div>
   </div>
 
@@ -744,6 +877,12 @@ const HEURISTICS = [
   { id: "help", short: "Help & docs", full: "Are complex features explained? Tooltips on technical terms? Obvious way to learn more?" }
 ];
 
+const PERSONAS = [
+  { id: "noor", name: "Noor", role: "Curious Home Brewer", prompt: "Can Noor understand this screen without coffee expertise?" },
+  { id: "mika", name: "Mika", role: "Thoughtful Outsider", prompt: "Could Mika navigate this without knowing coffee at all?" },
+  { id: "dev", name: "Dev", role: "Roaster's Apprentice", prompt: "Does this feel deep enough for Dev, or too shallow?" }
+];
+
 const SKILLS = ["Designer", "Copywriter", "QA Reviewer", "Researcher", "UX Researcher"];
 const SEVERITIES = ["No issues", "Minor", "Major", "Critical"];
 
@@ -766,7 +905,8 @@ function initState() {
       severity: null,
       skills: [],
       notes: "",
-      impression: ""
+      impression: "",
+      personas: {}
     };
   });
 }
@@ -794,7 +934,7 @@ function render() {
 
   SCREENS.forEach((screen, idx) => {
     const fb = state.screens[screen.id];
-    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean);
+    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean) || (fb.personas && Object.values(fb.personas).some(Boolean));
 
     cardsHtml += `
       <div class="screen-card ${hasFeedback ? 'has-feedback' : ''}" id="screen-${screen.id}">
@@ -823,6 +963,22 @@ function render() {
               oninput="updateField('${screen.id}', 'impression', this.value)"
               style="min-height:60px"
             >${fb.impression || ''}</textarea>
+          </div>
+
+          <div class="feedback-section">
+            <div class="feedback-section-title">Persona check — how would each person experience this screen?</div>
+            <div class="persona-check-grid">
+              ${PERSONAS.map(p => `
+                <div class="persona-check-item ${(fb.personas && fb.personas[p.id]) ? 'has-input' : ''}">
+                  <div class="persona-check-name">${p.name}</div>
+                  <div class="persona-check-role">${p.role}</div>
+                  <textarea
+                    placeholder="${p.prompt}"
+                    oninput="updatePersona('${screen.id}', '${p.id}', this.value)"
+                  >${(fb.personas && fb.personas[p.id]) || ''}</textarea>
+                </div>
+              `).join('')}
+            </div>
           </div>
 
           <div class="feedback-section">
@@ -928,6 +1084,14 @@ function updateField(screenId, field, value) {
   saveState();
 }
 
+function updatePersona(screenId, personaId, value) {
+  if (!state.screens[screenId].personas) state.screens[screenId].personas = {};
+  state.screens[screenId].personas[personaId] = value;
+  const item = event.target.closest('.persona-check-item');
+  if (item) item.classList.toggle('has-input', !!value);
+  saveState();
+}
+
 function updateStats() {
   let reviewed = 0;
   let issues = 0;
@@ -935,7 +1099,7 @@ function updateStats() {
 
   SCREENS.forEach(s => {
     const fb = state.screens[s.id];
-    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean);
+    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean) || (fb.personas && Object.values(fb.personas).some(Boolean));
     if (hasFeedback) reviewed++;
     const flagged = Object.values(fb.heuristics).filter(Boolean).length;
     issues += flagged;
@@ -953,7 +1117,7 @@ function updateStats() {
 function updateNav() {
   SCREENS.forEach(s => {
     const fb = state.screens[s.id];
-    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean);
+    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean) || (fb.personas && Object.values(fb.personas).some(Boolean));
     const navEl = document.getElementById('nav-' + s.id);
     if (navEl) navEl.classList.toggle('has-feedback', hasFeedback);
     const cardEl = document.getElementById('screen-' + s.id);
@@ -975,7 +1139,7 @@ function generateMarkdown() {
   let reviewed = 0, totalFlags = 0, critCount = 0, majCount = 0, minCount = 0;
   SCREENS.forEach(s => {
     const fb = state.screens[s.id];
-    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean);
+    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean) || (fb.personas && Object.values(fb.personas).some(Boolean));
     if (hasFeedback) reviewed++;
     totalFlags += Object.values(fb.heuristics).filter(Boolean).length;
     if (fb.severity === 'Critical') critCount++;
@@ -992,7 +1156,7 @@ function generateMarkdown() {
   // Per-screen
   SCREENS.forEach((screen, idx) => {
     const fb = state.screens[screen.id];
-    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean);
+    const hasFeedback = fb.notes || fb.impression || fb.severity || Object.values(fb.heuristics).some(Boolean) || (fb.personas && Object.values(fb.personas).some(Boolean));
     if (!hasFeedback) return;
 
     md += `## ${idx + 1}. ${screen.name} (\`${screen.route}\`)\n\n`;
@@ -1002,6 +1166,15 @@ function generateMarkdown() {
 
     if (fb.impression) {
       md += `### First impression\n\n${fb.impression}\n\n`;
+    }
+
+    const personaNotes = PERSONAS.filter(p => fb.personas && fb.personas[p.id]);
+    if (personaNotes.length) {
+      md += `### Persona check\n\n`;
+      personaNotes.forEach(p => {
+        md += `- **${p.name}** (${p.role}): ${fb.personas[p.id]}\n`;
+      });
+      md += `\n`;
     }
 
     const flagged = HEURISTICS.filter(h => fb.heuristics[h.id]);
