@@ -12,13 +12,50 @@ import type { DiaryStatus } from "@/lib/diary";
 
 const DiaryMapView = dynamic(() => import("./DiaryMapView"), { ssr: false });
 
-type ViewMode = "cards" | "map" | "rank";
+type ViewMode = "cards" | "map" | "ranking";
 
-const STATUS_FILTERS: { value: DiaryStatus | "all"; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "loved", label: "Loved" },
-  { value: "tried", label: "Tried" },
-  { value: "want-to-try", label: "Want to Try" },
+const STATUS_FILTERS: {
+  value: DiaryStatus | "all";
+  label: string;
+  icon: React.ReactNode;
+  activeClass: string;
+}[] = [
+  {
+    value: "all",
+    label: "All",
+    icon: null,
+    activeClass: "bg-espresso text-cream border-espresso",
+  },
+  {
+    value: "loved",
+    label: "Loved",
+    icon: (
+      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      </svg>
+    ),
+    activeClass: "bg-rose-500 text-white border-rose-500",
+  },
+  {
+    value: "tried",
+    label: "Tried",
+    icon: (
+      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+      </svg>
+    ),
+    activeClass: "bg-sage text-white border-sage",
+  },
+  {
+    value: "want-to-try",
+    label: "Want to Try",
+    icon: (
+      <svg className="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      </svg>
+    ),
+    activeClass: "bg-honey text-espresso border-honey",
+  },
 ];
 
 export default function DiaryView({ beans }: { beans: Bean[] }) {
@@ -101,24 +138,40 @@ export default function DiaryView({ beans }: { beans: Bean[] }) {
 
       {/* Controls row */}
       <div className="flex items-center justify-between gap-4 mb-8 flex-wrap">
-        {/* Status filter pills — hidden in rank mode */}
-        <div className={`flex gap-2 flex-wrap ${viewMode === "rank" ? "invisible" : ""}`}>
+        {/* Left: status filter pills + ranking pill */}
+        <div className="flex gap-2 flex-wrap items-center">
           {STATUS_FILTERS.map((opt) => (
             <button
               key={opt.value}
-              onClick={() => setStatusFilter(opt.value)}
-              className={`px-3.5 py-1.5 rounded-full text-sm font-medium border transition-all ${
-                statusFilter === opt.value
-                  ? "bg-espresso text-cream border-espresso shadow-sm"
+              onClick={() => { setStatusFilter(opt.value); setViewMode("cards"); }}
+              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium border transition-all ${
+                statusFilter === opt.value && viewMode !== "ranking"
+                  ? opt.activeClass + " shadow-sm"
                   : "bg-white text-espresso-light border-cream-dark hover:border-caramel hover:text-espresso"
               }`}
             >
+              {opt.icon}
               {opt.label}
             </button>
           ))}
+          {rankedBeans.length > 0 && (
+            <button
+              onClick={() => setViewMode(viewMode === "ranking" ? "cards" : "ranking")}
+              className={`inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-sm font-medium border transition-all ${
+                viewMode === "ranking"
+                  ? "bg-caramel text-espresso border-caramel shadow-sm"
+                  : "bg-white text-espresso-light border-cream-dark hover:border-caramel hover:text-espresso"
+              }`}
+            >
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 10h2V6H2v4zM6 10h2V3H6v7zm4 0h2V7h-2v3z" fill="currentColor"/>
+              </svg>
+              Ranking
+            </button>
+          )}
         </div>
 
-        {/* View toggle */}
+        {/* Right: Cards / Map segmented toggle */}
         <div className="flex items-center gap-1 bg-cream-dark rounded-lg p-1">
           <button
             onClick={() => setViewMode("cards")}
@@ -150,27 +203,14 @@ export default function DiaryView({ beans }: { beans: Bean[] }) {
             </svg>
             Map
           </button>
-          <button
-            onClick={() => setViewMode("rank")}
-            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-              viewMode === "rank"
-                ? "bg-white text-espresso shadow-sm"
-                : "text-roast-light hover:text-espresso"
-            }`}
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2 10h2V6H2v4zM6 10h2V3H6v7zm4 0h2V7h-2v3z" fill="currentColor"/>
-            </svg>
-            Rank
-          </button>
         </div>
       </div>
 
       {/* Results */}
-      {viewMode === "rank" ? (
-        <DiaryRankingView rankedBeans={rankedBeans} onReorder={handleReorder} />
-      ) : viewMode === "map" ? (
+      {viewMode === "map" ? (
         <DiaryMapView diaryBeans={diaryBeans} />
+      ) : viewMode === "ranking" ? (
+        <DiaryRankingView rankedBeans={rankedBeans} onReorder={handleReorder} />
       ) : diaryBeans.length === 0 ? (
         <div className="text-center py-20 animate-fade-in">
           <div className="text-5xl mb-4">📓</div>
