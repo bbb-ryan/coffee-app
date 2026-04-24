@@ -5,32 +5,43 @@ import Link from "next/link";
 import { useCart } from "@/components/CartProvider";
 import CartDrawer from "@/components/CartDrawer";
 
+const NAV_LINKS = [
+  { href: "/",          label: "Home" },
+  { href: "#magazine",  label: "Magazine" },
+  { href: "/beans",     label: "Beans" },
+  { href: "/shops",     label: "Shops" },
+  { href: "/brew-guide",label: "Brew Guide" },
+  { href: "/quiz",      label: "Flavor Quiz" },
+  { href: "/diary",     label: "My Diary" },
+];
+
 const TICKER_ITEMS = [
-  "☕ NEW ISSUE: 3 Days in Yirgacheffe, Ethiopia",
+  "☕ NEW: The Women Who Saved Heirloom Coffee — Ethiopia Report",
   "🌍 Exclusive: Inside Panama's Gesha Valley with Don Pachi",
   "🏆 World Barista Championship Preview — Tokyo 2025",
   "🫘 New Bean Drop: Rwanda Bourbon Peaberry — Limited Edition",
-  "📍 Just Published: The 12 Best Specialty Cafés in Oaxaca",
+  "📍 Just Published: 3 Days in Oaxaca — The Coffee Itinerary",
 ];
 
 export default function Navbar() {
   const [cartOpen, setCartOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const { cartCount, hydrated } = useCart();
-  const tickerContent = [...TICKER_ITEMS, ...TICKER_ITEMS]; // doubled for seamless loop
+  const tickerContent = [...TICKER_ITEMS, ...TICKER_ITEMS];
 
   return (
     <>
-      {/* News Ticker */}
+      {/* News Ticker — caramel accent bar */}
       <div
-        className="overflow-hidden whitespace-nowrap text-white text-[0.72rem] font-semibold tracking-[0.12em] uppercase py-2"
-        style={{ background: "#FF5C1A" }}
-        aria-label="Breaking news ticker"
+        className="overflow-hidden whitespace-nowrap text-[0.7rem] font-semibold tracking-[0.1em] uppercase py-1.5"
+        style={{ background: "var(--color-caramel)", color: "white" }}
+        aria-label="Latest stories ticker"
       >
         <div className="omc-ticker-inner inline-flex gap-0">
           {tickerContent.map((item, i) => (
             <span key={i} className="px-8 inline-flex items-center gap-4">
               {item}
-              <span className="text-white/50">◆</span>
+              <span className="opacity-50">◆</span>
             </span>
           ))}
         </div>
@@ -38,71 +49,103 @@ export default function Navbar() {
 
       {/* Masthead */}
       <header
-        className="sticky top-0 z-[200] flex items-center justify-between px-12 h-20"
-        style={{ background: "#0A0804", borderBottom: "3px solid #FF5C1A" }}
+        className="sticky top-0 z-[200] border-b"
+        style={{ background: "var(--color-paper)", borderColor: "var(--color-border)" }}
       >
-        {/* Logo */}
-        <Link href="/" className="leading-none cursor-pointer group">
-          <div
-            className="text-[2.2rem] tracking-[0.06em] text-white leading-none"
-            style={{ fontFamily: "'Bebas Neue', sans-serif" }}
-          >
-            One <span style={{ color: "#FF5C1A" }}>More</span> Cup
-          </div>
-          <div className="text-[0.55rem] tracking-[0.25em] uppercase font-medium mt-0.5" style={{ color: "#C4843A" }}>
-            The World's Coffee Lifestyle Magazine
-          </div>
-        </Link>
+        <div className="max-w-[1280px] mx-auto px-6 md:px-10 h-[68px] flex items-center gap-6">
 
-        {/* Nav Links */}
-        <nav className="hidden md:flex items-center gap-8">
-          {[
-            { href: "#destinations", label: "Destinations" },
-            { href: "#training",     label: "Training" },
-            { href: "#shop",         label: "Shop" },
-            { href: "#passport",     label: "Passport" },
-          ].map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              className="text-[0.78rem] font-medium tracking-[0.08em] uppercase transition-colors"
-              style={{ color: "rgba(250,250,245,0.65)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "#FF5C1A")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(250,250,245,0.65)")}
+          {/* Logo */}
+          <Link href="/" className="flex-shrink-0 group leading-none">
+            <div
+              className="font-serif text-[1.55rem] font-bold tracking-[-0.01em] leading-none"
+              style={{ color: "var(--color-espresso-light)" }}
             >
-              {label}
-            </a>
-          ))}
-        </nav>
+              One <span style={{ color: "var(--color-caramel)" }}>More</span> Cup
+            </div>
+            <div
+              className="text-[0.55rem] tracking-[0.22em] uppercase font-semibold mt-0.5"
+              style={{ color: "var(--color-roast-light)" }}
+            >
+              The Specialty Coffee Journal
+            </div>
+          </Link>
 
-        {/* Actions */}
-        <div className="flex items-center gap-3">
-          <button
-            className="hidden md:inline-flex text-[0.75rem] font-semibold tracking-[0.05em] uppercase px-4 py-2 rounded-full border-0 text-white cursor-pointer transition-all"
-            style={{ background: "#FF5C1A" }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "#FFD700"; e.currentTarget.style.color = "#0A0804"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "#FF5C1A"; e.currentTarget.style.color = "white"; }}
-          >
-            ✈️ My Passport
-          </button>
-
-          <button
-            onClick={() => setCartOpen(true)}
-            className="relative w-[38px] h-[38px] rounded-full flex items-center justify-center text-base text-white cursor-pointer transition-all"
-            style={{ border: "1px solid rgba(250,250,245,0.2)", background: "none" }}
-            aria-label="Open cart"
-          >
-            🛒
-            {hydrated && cartCount > 0 && (
-              <span
-                className="absolute -top-[3px] -right-[3px] w-[18px] h-[18px] rounded-full flex items-center justify-center text-[0.62rem] font-bold text-[#0A0804]"
-                style={{ background: "#FF5C1A" }}
+          {/* Desktop Nav */}
+          <nav className="hidden lg:flex items-center gap-6 ml-auto">
+            {NAV_LINKS.map(({ href, label }) => (
+              <Link
+                key={href}
+                href={href}
+                className="text-[0.78rem] font-semibold tracking-[0.04em] uppercase transition-colors"
+                style={{ color: "var(--color-roast-light)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--color-caramel)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--color-roast-light)")}
               >
-                {cartCount > 9 ? "9+" : cartCount}
-              </span>
-            )}
-          </button>
+                {label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-2 ml-auto lg:ml-4">
+            <Link
+              href="/quiz"
+              className="hidden sm:inline-flex text-[0.72rem] font-bold tracking-[0.06em] uppercase px-4 py-2 rounded-sm transition-all"
+              style={{ background: "var(--color-caramel)", color: "white" }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--color-espresso-light)"; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.background = "var(--color-caramel)"; }}
+            >
+              Take the Quiz
+            </Link>
+
+            <button
+              onClick={() => setCartOpen(true)}
+              className="relative w-[38px] h-[38px] rounded-full flex items-center justify-center text-base transition-all cursor-pointer border"
+              style={{ borderColor: "var(--color-border)", color: "var(--color-roast)", background: "transparent" }}
+              aria-label="Open cart"
+            >
+              🛒
+              {hydrated && cartCount > 0 && (
+                <span
+                  className="absolute -top-[3px] -right-[3px] w-[18px] h-[18px] rounded-full flex items-center justify-center text-[0.62rem] font-bold text-white"
+                  style={{ background: "var(--color-caramel)" }}
+                >
+                  {cartCount > 9 ? "9+" : cartCount}
+                </span>
+              )}
+            </button>
+
+            {/* Mobile hamburger */}
+            <button
+              className="lg:hidden w-[38px] h-[38px] flex flex-col justify-center items-center gap-[5px] cursor-pointer"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+            >
+              {[0, 1, 2].map((i) => (
+                <span key={i} className="block w-5 h-[2px] rounded-full" style={{ background: "var(--color-roast)" }} />
+              ))}
+            </button>
+          </div>
         </div>
+
+        {/* Mobile menu */}
+        {menuOpen && (
+          <div className="lg:hidden border-t" style={{ background: "var(--color-paper)", borderColor: "var(--color-border)" }}>
+            <nav className="max-w-[1280px] mx-auto px-6 py-4 flex flex-col gap-3">
+              {NAV_LINKS.map(({ href, label }) => (
+                <Link
+                  key={href}
+                  href={href}
+                  className="text-[0.85rem] font-semibold py-1"
+                  style={{ color: "var(--color-roast)" }}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {label}
+                </Link>
+              ))}
+            </nav>
+          </div>
+        )}
       </header>
 
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />

@@ -92,7 +92,7 @@ export default function ProfileView() {
           { label: "Avg Rating", value: stats.avgRating, icon: "⭐" },
           { label: "Orders", value: stats.ordersPlaced, icon: "📦" },
         ].map((stat) => (
-          <div key={stat.label} className="bg-[#141414] rounded-xl border border-white/[0.06] p-4 text-center">
+          <div key={stat.label} className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-4 text-center">
             <span className="text-2xl mb-1 block">{stat.icon}</span>
             <p className="font-serif text-2xl font-bold text-espresso">{stat.value}</p>
             <p className="text-xs text-roast-light">{stat.label}</p>
@@ -117,8 +117,8 @@ export default function ProfileView() {
                 key={badge.id}
                 className={`rounded-xl border p-4 text-center transition-all ${
                   earned
-                    ? "bg-[#141414] border-caramel/30 shadow-sm"
-                    : "bg-white/[0.06]/30 border-white/[0.06] opacity-50"
+                    ? "bg-[var(--color-cream-light)] border-caramel/30 shadow-sm"
+                    : "bg-white/[0.06]/30 border-[var(--color-border)] opacity-50"
                 }`}
               >
                 <span className={`text-3xl mb-2 block ${!earned ? "grayscale" : ""}`}>
@@ -139,13 +139,13 @@ export default function ProfileView() {
 
       {/* Quick Links */}
       <div className="flex flex-wrap items-center justify-center gap-3">
-        <Link href="/diary" className="px-5 py-2 rounded-full text-sm font-medium border-2 border-white/[0.06] text-espresso hover:border-caramel hover:text-caramel transition-all">
+        <Link href="/diary" className="px-5 py-2 rounded-full text-sm font-medium border-2 border-[var(--color-border)] text-espresso hover:border-caramel hover:text-caramel transition-all">
           My Diary
         </Link>
-        <Link href="/orders" className="px-5 py-2 rounded-full text-sm font-medium border-2 border-white/[0.06] text-espresso hover:border-caramel hover:text-caramel transition-all">
+        <Link href="/orders" className="px-5 py-2 rounded-full text-sm font-medium border-2 border-[var(--color-border)] text-espresso hover:border-caramel hover:text-caramel transition-all">
           Orders
         </Link>
-        <Link href="/social" className="px-5 py-2 rounded-full text-sm font-medium border-2 border-white/[0.06] text-espresso hover:border-caramel hover:text-caramel transition-all">
+        <Link href="/social" className="px-5 py-2 rounded-full text-sm font-medium border-2 border-[var(--color-border)] text-espresso hover:border-caramel hover:text-caramel transition-all">
           Social Feed
         </Link>
       </div>

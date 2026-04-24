@@ -106,7 +106,7 @@ export default function QuizQuestion({
               className={`relative flex flex-col items-center text-center p-5 rounded-xl border-2 transition-all duration-200 cursor-pointer group stagger-${(i % 6) + 1} animate-fade-in-up ${
                 isSelected
                   ? "border-caramel bg-caramel/5 shadow-md animate-select-pop"
-                  : "border-white/[0.06] bg-[#141414] hover:border-caramel/40 hover:shadow-sm"
+                  : "border-[var(--color-border)] bg-[var(--color-cream-light)] hover:border-caramel/40 hover:shadow-sm"
               }`}
             >
               {/* Selection indicator for multi-select */}
@@ -115,7 +115,7 @@ export default function QuizQuestion({
                   className={`absolute top-3 right-3 w-5 h-5 rounded-full border-2 flex items-center justify-center transition-all ${
                     isSelected
                       ? "border-caramel bg-caramel"
-                      : "border-white/[0.06] group-hover:border-caramel/40"
+                      : "border-[var(--color-border)] group-hover:border-caramel/40"
                   }`}
                 >
                   {isSelected && (

@@ -87,7 +87,7 @@ export default async function BeanDetailPage({
       </nav>
 
       {/* Header banner */}
-      <div className="bg-gradient-to-r from-[#141414] via-[#1A1A1A] to-[#141414] rounded-2xl p-8 mb-10 animate-fade-in">
+      <div className="rounded-2xl p-8 mb-10 animate-fade-in border" style={{ background: "var(--color-cream-light)", borderColor: "var(--color-border)" }}>
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <div className="text-3xl mb-2">{flag}</div>
@@ -112,7 +112,7 @@ export default async function BeanDetailPage({
 
       <div className="grid md:grid-cols-2 gap-8">
         {/* Left: Details */}
-        <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-8 animate-fade-in-up">
+        <div className="rounded-xl border p-8 animate-fade-in-up" style={{ background: "var(--color-paper)", borderColor: "var(--color-border)" }}>
           <h2 className="font-serif text-xl font-bold text-espresso mb-5">
             Bean Details
           </h2>
@@ -128,7 +128,7 @@ export default async function BeanDetailPage({
           </dl>
 
           {/* Defects */}
-          <div className="mt-8 pt-6 border-t border-white/[0.06]">
+          <div className="mt-8 pt-6 border-t">
             <h3 className="text-sm font-medium text-roast-light mb-3">Defects</h3>
             <div className="flex gap-8">
               <div>
@@ -148,7 +148,7 @@ export default async function BeanDetailPage({
         </div>
 
         {/* Right: Cupping Scores */}
-        <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-8 animate-fade-in-up stagger-2">
+        <div className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-8 animate-fade-in-up stagger-2">
           <h2 className="font-serif text-xl font-bold text-espresso mb-5">
             Cupping Scores
           </h2>
@@ -167,12 +167,12 @@ export default async function BeanDetailPage({
                     {s.label}
                     {/* CSS tooltip */}
                     {explanation && (
-                      <span className="invisible group-hover/score:visible absolute bottom-full left-0 mb-2 w-52 p-2.5 bg-[#1A1A1A] text-[#E8E4E0] text-xs rounded-lg shadow-lg z-10 leading-relaxed font-normal no-underline">
+                      <span className="invisible group-hover/score:visible absolute bottom-full left-0 mb-2 w-52 p-2.5 text-xs rounded-lg shadow-lg z-10 leading-relaxed font-normal no-underline" style={{ background: "var(--color-espresso-light)", color: "var(--color-paper)" }}>
                         {explanation}
                       </span>
                     )}
                   </span>
-                  <div className="flex-1 h-2 bg-white/[0.06] rounded-full overflow-hidden">
+                  <div className="flex-1 h-2 bg-cream-light rounded-full overflow-hidden">
                     <div
                       className="h-full bg-sage rounded-full score-bar-fill"
                       style={{
@@ -208,14 +208,14 @@ export default async function BeanDetailPage({
         <section className="mt-10 animate-fade-in-up stagger-4">
           <div className="flex items-center gap-3 mb-5">
             <h2 className="font-serif text-lg font-bold text-espresso">Find This Bean Near You</h2>
-            <div className="flex-1 h-px bg-white/[0.06]" />
+            <div className="flex-1 h-px bg-cream-light" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {nearbyShops.map((shop) => (
               <Link
                 key={shop.id}
                 href={`/shops/${shop.id}`}
-                className="bg-[#141414] rounded-xl border border-white/[0.06] p-4 hover:border-caramel/40 hover:shadow-sm transition-all group"
+                className="rounded-xl border p-4 hover:shadow-sm transition-all group" style={{ background: "var(--color-paper)", borderColor: "var(--color-border)" }}
               >
                 <div className="flex items-center gap-3 mb-2">
                   <span className="text-2xl">{shop.image}</span>
@@ -243,7 +243,7 @@ export default async function BeanDetailPage({
         <section className="mt-14">
           <div className="flex items-center gap-3 mb-6">
             <h2 className="font-serif text-xl font-bold text-espresso">You Might Also Like</h2>
-            <div className="flex-1 h-px bg-white/[0.06]" />
+            <div className="flex-1 h-px bg-cream-light" />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {similarBeans.map((similar, i) => (

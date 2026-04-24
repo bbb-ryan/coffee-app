@@ -326,13 +326,13 @@ function SteamCup({ drinkName }: { drinkName: string }) {
         <path d="M98 58 Q114 58 114 72 Q114 86 98 86" stroke="#5A3010" strokeWidth="4" strokeLinecap="round" fill="none"/>
         <defs>
           <linearGradient id="cupGrad" x1="22" y1="48" x2="98" y2="86" gradientUnits="userSpaceOnUse">
-            <stop offset="0%" stopColor="#FF5C1A" stopOpacity="0.15"/>
-            <stop offset="100%" stopColor="#FF5C1A" stopOpacity="0"/>
+            <stop offset="0%" stopColor="var(--color-caramel)" stopOpacity="0.15"/>
+            <stop offset="100%" stopColor="var(--color-caramel)" stopOpacity="0"/>
           </linearGradient>
         </defs>
       </svg>
 
-      <p className="mt-4 text-[0.8rem] font-semibold tracking-[0.12em] uppercase" style={{ color: "#FF5C1A" }}>
+      <p className="mt-4 text-[0.8rem] font-semibold tracking-[0.12em] uppercase" style={{ color: "var(--color-caramel)" }}>
         Brewing your {drinkName}…
       </p>
       <p className="mt-1 text-[0.72rem]" style={{ color: "rgba(250,250,245,0.45)", fontFamily: "'Fraunces', serif", fontStyle: "italic" }}>
@@ -347,7 +347,7 @@ function SteamCup({ drinkName }: { drinkName: string }) {
 function TypingIndicator() {
   return (
     <div className="flex items-end gap-2 mb-3">
-      <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm flex-shrink-0" style={{ background: "#FF5C1A" }}>
+      <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm flex-shrink-0" style={{ background: "var(--color-caramel)" }}>
         👨‍🍳
       </div>
       <div className="px-4 py-3 rounded-2xl rounded-bl-sm flex items-center gap-1.5" style={{ background: "#1E1208" }}>
@@ -381,23 +381,23 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
           ["Time",     recipe.brewTime],
         ].map(([label, val]) => (
           <div key={label} className="px-4 py-2.5" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
-            <p className="text-[0.62rem] uppercase tracking-[0.1em] mb-0.5" style={{ color: "#FF5C1A" }}>{label}</p>
+            <p className="text-[0.62rem] uppercase tracking-[0.1em] mb-0.5" style={{ color: "var(--color-caramel)" }}>{label}</p>
             <p className="text-white font-medium leading-tight text-[0.78rem]">{val}</p>
           </div>
         ))}
       </div>
       {/* Steps */}
       <div className="px-4 py-3">
-        <p className="text-[0.62rem] uppercase tracking-[0.1em] mb-2" style={{ color: "#FF5C1A" }}>Method</p>
+        <p className="text-[0.62rem] uppercase tracking-[0.1em] mb-2" style={{ color: "var(--color-caramel)" }}>Method</p>
         <ol className="space-y-2">
           {recipe.steps.map((step, i) => (
             <li key={i} className="flex gap-2.5 leading-snug" style={{ color: "rgba(250,250,245,0.75)" }}>
-              <span className="flex-shrink-0 w-4 h-4 rounded-full text-[0.6rem] flex items-center justify-center font-bold mt-0.5" style={{ background: "#FF5C1A", color: "#0A0804" }}>{i + 1}</span>
+              <span className="flex-shrink-0 w-4 h-4 rounded-full text-[0.6rem] flex items-center justify-center font-bold mt-0.5" style={{ background: "var(--color-caramel)", color: "#0A0804" }}>{i + 1}</span>
               <span>{step}</span>
             </li>
           ))}
         </ol>
-        <div className="mt-3 px-3 py-2 rounded-lg text-[0.75rem] leading-snug" style={{ background: "rgba(255,92,26,0.1)", color: "rgba(250,250,245,0.7)", fontFamily: "'Fraunces', serif", fontStyle: "italic", borderLeft: "2px solid #FF5C1A" }}>
+        <div className="mt-3 px-3 py-2 rounded-lg text-[0.75rem] leading-snug" style={{ background: "rgba(255,92,26,0.1)", color: "rgba(250,250,245,0.7)", fontFamily: "'Fraunces', serif", fontStyle: "italic", borderLeft: "2px solid var(--color-caramel)" }}>
           💬 Marco's tip: {recipe.tip}
         </div>
       </div>
@@ -410,7 +410,7 @@ function RecipeCard({ recipe }: { recipe: Recipe }) {
 function IngredientCard({ recipe }: { recipe: Recipe }) {
   return (
     <div className="mt-2 rounded-xl overflow-hidden text-[0.8rem]" style={{ background: "#120A03", border: "1px solid rgba(255,255,255,0.08)" }}>
-      <div className="px-4 py-2.5 text-[0.62rem] uppercase tracking-[0.1em]" style={{ background: "rgba(255,255,255,0.04)", color: "#FF5C1A", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="px-4 py-2.5 text-[0.62rem] uppercase tracking-[0.1em]" style={{ background: "rgba(255,255,255,0.04)", color: "var(--color-caramel)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         Ingredients &amp; Equipment
       </div>
       <div className="px-4 pt-3 pb-1">
@@ -418,7 +418,7 @@ function IngredientCard({ recipe }: { recipe: Recipe }) {
         {recipe.ingredients.map((ing, i) => (
           <div key={i} className="flex justify-between items-center py-1.5" style={{ borderBottom: "1px solid rgba(255,255,255,0.05)" }}>
             <span style={{ color: "rgba(250,250,245,0.8)" }}>{ing.item}</span>
-            <span className="ml-3 flex-shrink-0 text-[0.75rem] font-semibold" style={{ color: "#FF5C1A" }}>{ing.amount}</span>
+            <span className="ml-3 flex-shrink-0 text-[0.75rem] font-semibold" style={{ color: "var(--color-caramel)" }}>{ing.amount}</span>
           </div>
         ))}
       </div>
@@ -426,7 +426,7 @@ function IngredientCard({ recipe }: { recipe: Recipe }) {
         <p className="text-[0.68rem] uppercase tracking-[0.08em] mb-2" style={{ color: "rgba(250,250,245,0.4)" }}>Equipment</p>
         {recipe.equipment.map((eq, i) => (
           <div key={i} className="flex items-center gap-2 py-1" style={{ color: "rgba(250,250,245,0.65)" }}>
-            <span style={{ color: "#FF5C1A" }}>·</span> {eq}
+            <span style={{ color: "var(--color-caramel)" }}>·</span> {eq}
           </div>
         ))}
       </div>
@@ -439,7 +439,7 @@ function IngredientCard({ recipe }: { recipe: Recipe }) {
 function ShopCard({ recipe }: { recipe: Recipe }) {
   return (
     <div className="mt-2 rounded-xl overflow-hidden text-[0.8rem]" style={{ background: "#120A03", border: "1px solid rgba(255,92,26,0.2)" }}>
-      <div className="px-4 py-2.5 text-[0.62rem] uppercase tracking-[0.1em]" style={{ background: "rgba(255,92,26,0.1)", color: "#FF5C1A", borderBottom: "1px solid rgba(255,92,26,0.15)" }}>
+      <div className="px-4 py-2.5 text-[0.62rem] uppercase tracking-[0.1em]" style={{ background: "rgba(255,92,26,0.1)", color: "var(--color-caramel)", borderBottom: "1px solid rgba(255,92,26,0.15)" }}>
         Grab the supplies
       </div>
       <div className="px-4 py-3 flex flex-col gap-2">
@@ -453,7 +453,7 @@ function ShopCard({ recipe }: { recipe: Recipe }) {
             onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.background = "rgba(255,92,26,0.08)"; (e.currentTarget as HTMLAnchorElement).style.color = "rgba(250,250,245,0.85)"; }}
           >
             <span>{item.name}</span>
-            <span className="text-[0.7rem]" style={{ color: "#FF5C1A" }}>Shop →</span>
+            <span className="text-[0.7rem]" style={{ color: "var(--color-caramel)" }}>Shop →</span>
           </a>
         ))}
       </div>
@@ -707,19 +707,19 @@ export default function BaristaChat() {
         aria-label={open ? "Close barista chat" : "Open barista chat"}
         className="fixed bottom-6 right-6 z-[900] w-14 h-14 rounded-full flex items-center justify-center text-2xl shadow-2xl transition-all"
         style={{
-          background: open ? "#0A0804" : "#FF5C1A",
-          border: open ? "2px solid #FF5C1A" : "none",
+          background: open ? "#0A0804" : "var(--color-caramel)",
+          border: open ? "2px solid var(--color-caramel)" : "none",
           boxShadow: "0 4px 24px rgba(255,92,26,0.4)",
           transform: open ? "scale(0.95)" : "scale(1)",
         }}
-        onMouseEnter={e => { if (!open) (e.currentTarget as HTMLButtonElement).style.background = "#FFD700"; }}
-        onMouseLeave={e => { if (!open) (e.currentTarget as HTMLButtonElement).style.background = "#FF5C1A"; }}
+        onMouseEnter={e => { if (!open) (e.currentTarget as HTMLButtonElement).style.background = "var(--color-caramel-light)"; }}
+        onMouseLeave={e => { if (!open) (e.currentTarget as HTMLButtonElement).style.background = "var(--color-caramel)"; }}
       >
         {open ? "✕" : "☕"}
         {!open && unread > 0 && (
           <span
             className="absolute -top-1 -right-1 w-5 h-5 rounded-full text-[0.65rem] font-bold flex items-center justify-center"
-            style={{ background: "#FFD700", color: "#0A0804" }}
+            style={{ background: "var(--color-caramel-light)", color: "#0A0804" }}
           >
             {unread}
           </span>
@@ -742,15 +742,15 @@ export default function BaristaChat() {
             className="flex items-center gap-3 px-4 py-3 flex-shrink-0"
             style={{ background: "#110900", borderBottom: "1px solid rgba(255,92,26,0.2)" }}
           >
-            <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0" style={{ background: "#FF5C1A" }}>
+            <div className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0" style={{ background: "var(--color-caramel)" }}>
               👨‍🍳
             </div>
             <div className="flex-1 min-w-0">
               <p className="text-white font-bold text-[0.9rem] leading-none" style={{ fontFamily: "'Bebas Neue', sans-serif", letterSpacing: "0.06em" }}>
-                Marco <span style={{ color: "#FF5C1A" }}>· Barista</span>
+                Marco <span style={{ color: "var(--color-caramel)" }}>· Barista</span>
               </p>
               <div className="flex items-center gap-1.5 mt-0.5">
-                <span className="w-1.5 h-1.5 rounded-full" style={{ background: isBrewing ? "#FFD700" : "#22C55E" }} />
+                <span className="w-1.5 h-1.5 rounded-full" style={{ background: isBrewing ? "var(--color-caramel-light)" : "#22C55E" }} />
                 <span className="text-[0.65rem] tracking-[0.08em]" style={{ color: "rgba(250,250,245,0.45)" }}>
                   {isBrewing ? "Brewing…" : "Online · One More Cup Café"}
                 </span>
@@ -775,7 +775,7 @@ export default function BaristaChat() {
                     className={`omc-msg-in flex ${msg.from === "user" ? "justify-end" : "items-end gap-2"} mb-2`}
                   >
                     {msg.from === "barista" && (
-                      <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm flex-shrink-0 self-end mb-0.5" style={{ background: "#FF5C1A" }}>
+                      <div className="w-7 h-7 rounded-full flex items-center justify-center text-sm flex-shrink-0 self-end mb-0.5" style={{ background: "var(--color-caramel)" }}>
                         👨‍🍳
                       </div>
                     )}
@@ -786,7 +786,7 @@ export default function BaristaChat() {
                         style={
                           msg.from === "barista"
                             ? { background: "#1E1208", color: "rgba(250,250,245,0.88)", borderBottomLeftRadius: "4px" }
-                            : { background: "#FF5C1A", color: "#0A0804", fontWeight: 600, borderBottomRightRadius: "4px" }
+                            : { background: "var(--color-caramel)", color: "#0A0804", fontWeight: 600, borderBottomRightRadius: "4px" }
                         }
                       >
                         {msg.text}
@@ -823,12 +823,12 @@ export default function BaristaChat() {
                   className={`omc-chip-in flex-shrink-0 px-3 py-1.5 rounded-full text-[0.75rem] font-semibold transition-all cursor-pointer`}
                   style={{
                     background: "rgba(255,92,26,0.1)",
-                    color: "#FF5C1A",
+                    color: "var(--color-caramel)",
                     border: "1px solid rgba(255,92,26,0.3)",
                     animationDelay: `${i * 60}ms`,
                   }}
-                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "#FF5C1A"; (e.currentTarget as HTMLButtonElement).style.color = "#0A0804"; }}
-                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,92,26,0.1)"; (e.currentTarget as HTMLButtonElement).style.color = "#FF5C1A"; }}
+                  onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = "var(--color-caramel)"; (e.currentTarget as HTMLButtonElement).style.color = "#0A0804"; }}
+                  onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = "rgba(255,92,26,0.1)"; (e.currentTarget as HTMLButtonElement).style.color = "var(--color-caramel)"; }}
                 >
                   {chip}
                 </button>
@@ -852,7 +852,7 @@ export default function BaristaChat() {
               className="flex-1 bg-transparent text-[0.83rem] outline-none placeholder-white/20"
               style={{
                 color: "rgba(250,250,245,0.88)",
-                caretColor: "#FF5C1A",
+                caretColor: "var(--color-caramel)",
                 padding: "0.5rem 0.75rem",
                 background: "rgba(255,255,255,0.04)",
                 borderRadius: "999px",
@@ -864,7 +864,7 @@ export default function BaristaChat() {
               disabled={isBrewing || !input.trim()}
               className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 transition-all"
               style={{
-                background: input.trim() && !isBrewing ? "#FF5C1A" : "rgba(255,92,26,0.2)",
+                background: input.trim() && !isBrewing ? "var(--color-caramel)" : "rgba(255,92,26,0.2)",
                 color: input.trim() && !isBrewing ? "#0A0804" : "rgba(255,92,26,0.4)",
               }}
               aria-label="Send message"

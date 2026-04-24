@@ -20,9 +20,9 @@ const fraunces = Fraunces({
 });
 
 export const metadata: Metadata = {
-  title: "Coffee App — Discover Amazing Beans",
+  title: "One More Cup — The Specialty Coffee Journal",
   description:
-    "A friendly app to help you discover, learn about, and enjoy coffee beans from around the world.",
+    "Discover 1,338 specialty-grade beans, read in-depth coffee stories, find your flavor profile, and track your coffee journey.",
 };
 
 export default function RootLayout({

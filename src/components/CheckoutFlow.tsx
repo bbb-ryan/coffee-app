@@ -124,7 +124,7 @@ export default function CheckoutFlow() {
               const bean = getBeanById(item.beanId);
               if (!bean) return null;
               return (
-                <div key={key} className="bg-[#141414] rounded-xl border border-white/[0.06] p-4 flex items-center gap-4">
+                <div key={key} className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-4 flex items-center gap-4">
                   <div className="flex-1 min-w-0">
                     <p className="font-medium text-espresso text-sm">
                       {getCountryFlag(bean.country)} {bean.country} — {bean.region}
@@ -137,14 +137,14 @@ export default function CheckoutFlow() {
                     <div className="flex items-center gap-1">
                       <button
                         onClick={() => updateQuantity(key, item.quantity - 1)}
-                        className="w-6 h-6 rounded-full border border-white/[0.06] flex items-center justify-center text-xs hover:border-caramel transition-colors"
+                        className="w-6 h-6 rounded-full border border-[var(--color-border)] flex items-center justify-center text-xs hover:border-caramel transition-colors"
                       >
                         -
                       </button>
                       <span className="text-sm w-5 text-center">{item.quantity}</span>
                       <button
                         onClick={() => updateQuantity(key, item.quantity + 1)}
-                        className="w-6 h-6 rounded-full border border-white/[0.06] flex items-center justify-center text-xs hover:border-caramel transition-colors"
+                        className="w-6 h-6 rounded-full border border-[var(--color-border)] flex items-center justify-center text-xs hover:border-caramel transition-colors"
                       >
                         +
                       </button>
@@ -167,7 +167,7 @@ export default function CheckoutFlow() {
             })}
           </div>
 
-          <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-5 mb-6">
+          <div className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-5 mb-6">
             <div className="flex justify-between text-sm mb-2">
               <span className="text-roast">Subtotal</span>
               <span className="text-espresso">${cartTotal.toFixed(2)}</span>
@@ -176,7 +176,7 @@ export default function CheckoutFlow() {
               <span className="text-roast">Shipping</span>
               <span className="text-espresso">{shippingCost === 0 ? <span className="text-sage font-medium">Free</span> : `$${shippingCost.toFixed(2)}`}</span>
             </div>
-            <div className="flex justify-between text-base font-bold text-espresso pt-3 border-t border-white/[0.06]">
+            <div className="flex justify-between text-base font-bold text-espresso pt-3 border-t border-[var(--color-border)]">
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
             </div>
@@ -195,14 +195,14 @@ export default function CheckoutFlow() {
       {step === "shipping" && (
         <div className="animate-fade-in-up">
           <h1 className="font-serif text-2xl font-bold text-espresso mb-6">Shipping Address</h1>
-          <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-6 space-y-4 mb-6">
+          <div className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-6 space-y-4 mb-6">
             <div>
               <label className="text-sm font-medium text-espresso block mb-1.5">Full Name</label>
               <input
                 type="text"
                 value={shipping.name}
                 onChange={(e) => setShipping((s) => ({ ...s, name: e.target.value }))}
-                className="w-full border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
+                className="w-full border border-[var(--color-border)] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
                 placeholder="Jane Doe"
               />
             </div>
@@ -212,7 +212,7 @@ export default function CheckoutFlow() {
                 type="text"
                 value={shipping.address}
                 onChange={(e) => setShipping((s) => ({ ...s, address: e.target.value }))}
-                className="w-full border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
+                className="w-full border border-[var(--color-border)] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
                 placeholder="123 Coffee Lane"
               />
             </div>
@@ -223,7 +223,7 @@ export default function CheckoutFlow() {
                   type="text"
                   value={shipping.city}
                   onChange={(e) => setShipping((s) => ({ ...s, city: e.target.value }))}
-                  className="w-full border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
+                  className="w-full border border-[var(--color-border)] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
                   placeholder="Portland"
                 />
               </div>
@@ -234,7 +234,7 @@ export default function CheckoutFlow() {
                     type="text"
                     value={shipping.state}
                     onChange={(e) => setShipping((s) => ({ ...s, state: e.target.value }))}
-                    className="w-full border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
+                    className="w-full border border-[var(--color-border)] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
                     placeholder="OR"
                     maxLength={2}
                   />
@@ -245,7 +245,7 @@ export default function CheckoutFlow() {
                     type="text"
                     value={shipping.zip}
                     onChange={(e) => setShipping((s) => ({ ...s, zip: e.target.value }))}
-                    className="w-full border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
+                    className="w-full border border-[var(--color-border)] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
                     placeholder="97201"
                     maxLength={10}
                   />
@@ -257,7 +257,7 @@ export default function CheckoutFlow() {
           <div className="flex gap-3">
             <button
               onClick={() => setStep("review")}
-              className="px-6 py-3 rounded-full text-sm font-medium border-2 border-white/[0.06] text-espresso hover:border-caramel transition-all"
+              className="px-6 py-3 rounded-full text-sm font-medium border-2 border-[var(--color-border)] text-espresso hover:border-caramel transition-all"
             >
               Back
             </button>
@@ -281,12 +281,12 @@ export default function CheckoutFlow() {
         <div className="animate-fade-in-up">
           <h1 className="font-serif text-2xl font-bold text-espresso mb-6">Payment</h1>
 
-          <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-6 space-y-4 mb-6">
+          <div className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-6 space-y-4 mb-6">
             <div>
               <label className="text-sm font-medium text-espresso block mb-1.5">Card Number</label>
               <input
                 type="text"
-                className="w-full border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
+                className="w-full border border-[var(--color-border)] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
                 placeholder="4242 4242 4242 4242"
                 defaultValue="4242 4242 4242 4242"
               />
@@ -296,7 +296,7 @@ export default function CheckoutFlow() {
                 <label className="text-sm font-medium text-espresso block mb-1.5">Expiry</label>
                 <input
                   type="text"
-                  className="w-full border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
+                  className="w-full border border-[var(--color-border)] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
                   placeholder="12/28"
                   defaultValue="12/28"
                 />
@@ -305,7 +305,7 @@ export default function CheckoutFlow() {
                 <label className="text-sm font-medium text-espresso block mb-1.5">CVV</label>
                 <input
                   type="text"
-                  className="w-full border border-white/[0.06] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
+                  className="w-full border border-[var(--color-border)] rounded-lg px-4 py-2.5 text-sm text-espresso focus:outline-none focus:border-caramel"
                   placeholder="123"
                   defaultValue="123"
                 />
@@ -327,7 +327,7 @@ export default function CheckoutFlow() {
               <span className="text-roast">Shipping</span>
               <span className="text-espresso">{shippingCost === 0 ? "Free" : `$${shippingCost.toFixed(2)}`}</span>
             </div>
-            <div className="flex justify-between text-base font-bold text-espresso pt-2 border-t border-white/[0.06]">
+            <div className="flex justify-between text-base font-bold text-espresso pt-2 border-t border-[var(--color-border)]">
               <span>Total</span>
               <span>${total.toFixed(2)}</span>
             </div>
@@ -336,7 +336,7 @@ export default function CheckoutFlow() {
           <div className="flex gap-3">
             <button
               onClick={() => setStep("shipping")}
-              className="px-6 py-3 rounded-full text-sm font-medium border-2 border-white/[0.06] text-espresso hover:border-caramel transition-all"
+              className="px-6 py-3 rounded-full text-sm font-medium border-2 border-[var(--color-border)] text-espresso hover:border-caramel transition-all"
             >
               Back
             </button>
@@ -359,7 +359,7 @@ export default function CheckoutFlow() {
             Your order <span className="font-mono font-bold text-espresso">{completedOrder.id}</span> has been placed.
           </p>
 
-          <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-6 text-left mb-8 max-w-md mx-auto">
+          <div className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-6 text-left mb-8 max-w-md mx-auto">
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-roast-light">Order ID</span>
@@ -391,7 +391,7 @@ export default function CheckoutFlow() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/orders"
-              className="px-6 py-2.5 rounded-full text-sm font-medium border-2 border-white/[0.06] text-espresso hover:border-caramel hover:text-caramel transition-all"
+              className="px-6 py-2.5 rounded-full text-sm font-medium border-2 border-[var(--color-border)] text-espresso hover:border-caramel hover:text-caramel transition-all"
             >
               View Orders
             </Link>

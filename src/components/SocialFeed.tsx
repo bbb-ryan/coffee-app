@@ -91,7 +91,7 @@ export default function SocialFeed() {
           return (
             <div
               key={item.id}
-              className="bg-[#141414] rounded-xl border border-white/[0.06] p-5 animate-fade-in-up"
+              className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-5 animate-fade-in-up"
             >
               {/* User header */}
               <div className="flex items-center gap-3 mb-3">
@@ -143,7 +143,7 @@ export default function SocialFeed() {
                       </p>
                       <p className="text-xs text-roast-light">{bean.processing_method}</p>
                     </div>
-                    <span className="text-xs font-bold text-espresso bg-[#141414] px-2 py-1 rounded-full">
+                    <span className="text-xs font-bold text-espresso bg-[var(--color-cream-light)] px-2 py-1 rounded-full">
                       {bean.scores.total.toFixed(1)}
                     </span>
                   </div>
@@ -162,7 +162,7 @@ export default function SocialFeed() {
               )}
 
               {/* Toast button */}
-              <div className="flex items-center justify-between pt-2 border-t border-white/[0.06]/50">
+              <div className="flex items-center justify-between pt-2 border-t border-[var(--color-border)]/50">
                 <button
                   onClick={() => handleToast(item.id)}
                   className="flex items-center gap-1.5 text-sm text-roast-light hover:text-caramel transition-colors group"

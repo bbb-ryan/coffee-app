@@ -60,7 +60,7 @@ export default function QuizResults({ result, onRetake }: QuizResultsProps) {
       </div>
 
       {/* Description */}
-      <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-6 md:p-8 mb-10 animate-fade-in-up stagger-2">
+      <div className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-6 md:p-8 mb-10 animate-fade-in-up stagger-2">
         <p className="text-roast leading-relaxed text-base">
           {profile.description}
         </p>
@@ -108,7 +108,7 @@ export default function QuizResults({ result, onRetake }: QuizResultsProps) {
       <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in-up stagger-4">
         <button
           onClick={onRetake}
-          className="px-6 py-2.5 rounded-full text-sm font-medium border-2 border-white/[0.06] text-espresso hover:border-caramel hover:text-caramel transition-all"
+          className="px-6 py-2.5 rounded-full text-sm font-medium border-2 border-[var(--color-border)] text-espresso hover:border-caramel hover:text-caramel transition-all"
         >
           Retake Quiz
         </button>

@@ -9,7 +9,7 @@ export default function FeaturedBeans({ beans }: { beans: Bean[] }) {
     <section className="mb-14">
       <div className="flex items-center gap-3 mb-6">
         <h2 className="font-serif text-2xl font-bold text-espresso">Editor&apos;s Picks</h2>
-        <div className="flex-1 h-px bg-white/[0.06]" />
+        <div className="flex-1 h-px" style={{ background: "var(--color-border)" }} />
       </div>
 
       <div className="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 -mx-4 px-4 scrollbar-hide">
@@ -25,7 +25,8 @@ export default function FeaturedBeans({ beans }: { beans: Bean[] }) {
             <Link
               key={bean.id}
               href={`/beans/${bean.id}`}
-              className="snap-start shrink-0 w-[260px] rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(0,0,0,0.4)] hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] transition-all duration-300 hover:-translate-y-1 bg-[#141414] border border-white/[0.06] group"
+              className="snap-start shrink-0 w-[260px] rounded-xl overflow-hidden shadow-[0_2px_8px_rgba(28,21,16,0.08)] hover:shadow-[0_8px_24px_rgba(28,21,16,0.15)] transition-all duration-300 hover:-translate-y-1 border group"
+              style={{ background: "var(--color-paper)", borderColor: "var(--color-border)" }}
             >
               {/* Gradient header */}
               <div className={`bg-gradient-to-br ${gradientClass} px-5 pt-5 pb-8 relative`}>
@@ -37,7 +38,7 @@ export default function FeaturedBeans({ beans }: { beans: Bean[] }) {
                   <p className="text-sm text-white/70 capitalize mt-0.5">{bean.region}</p>
                 )}
                 {/* Overlapping score badge */}
-                <div className="absolute -bottom-5 right-5 w-12 h-12 rounded-full bg-[#141414] shadow-md flex items-center justify-center border-2 border-white/[0.06] group-hover:scale-110 transition-transform">
+                <div className="absolute -bottom-5 right-5 w-12 h-12 rounded-full shadow-md flex items-center justify-center border-2 group-hover:scale-110 transition-transform" style={{ background: "var(--color-paper)", borderColor: "var(--color-border)" }}>
                   <span className="text-sm font-bold text-espresso">{bean.scores.total.toFixed(1)}</span>
                 </div>
               </div>

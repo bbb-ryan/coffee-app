@@ -47,7 +47,7 @@ export default function AddToCartControls({
   }
 
   return (
-    <div className="bg-[#141414] rounded-xl border border-white/[0.06] p-6 md:p-8 mt-8 animate-fade-in-up stagger-3">
+    <div className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-6 md:p-8 mt-8 animate-fade-in-up stagger-3">
       <div className="flex items-start justify-between gap-4 mb-6">
         <div>
           <h2 className="font-serif text-xl font-bold text-espresso">Purchase</h2>
@@ -105,7 +105,7 @@ export default function AddToCartControls({
                 className={`flex-1 py-2.5 rounded-xl text-sm font-medium transition-all border-2 ${
                   size === s.value
                     ? "border-caramel bg-caramel/5 text-espresso shadow-sm"
-                    : "border-white/[0.06] text-roast hover:border-caramel/40"
+                    : "border-[var(--color-border)] text-roast hover:border-caramel/40"
                 }`}
               >
                 <span className="block">{s.label}</span>

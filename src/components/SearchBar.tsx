@@ -37,7 +37,7 @@ export default function SearchBar({ value, onChange }: SearchBarProps) {
         onFocus={() => setFocused(true)}
         onBlur={() => setTimeout(() => setFocused(false), 200)}
         placeholder="Search by country, region, variety..."
-        className="w-full pl-11 pr-10 py-3 rounded-full border border-white/[0.06] bg-[#141414] text-espresso placeholder:text-roast-light/40 focus:outline-none focus:ring-2 focus:ring-caramel/30 focus:border-caramel focus:shadow-md"
+        className="w-full pl-11 pr-10 py-3 rounded-full border border-[var(--color-border)] bg-[var(--color-surface)] text-espresso placeholder:text-roast-light/40 focus:outline-none focus:ring-2 focus:ring-caramel/30 focus:border-caramel focus:shadow-md"
       />
 
       {/* Clear button */}

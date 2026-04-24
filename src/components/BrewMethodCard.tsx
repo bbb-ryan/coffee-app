@@ -4,7 +4,7 @@
   BrewMethodCard — Card component for the brew guide listing page.
 
   Design decisions:
-  - Matches existing card pattern: rounded-xl, bg-[#141414], border-white/[0.06],
+  - Matches existing card pattern: rounded-xl, bg-[var(--color-cream-light)], border-[var(--color-border)],
     hover elevation with -translate-y-1 and border glow (caramel)
   - Difficulty badge uses the score badge color logic:
     Beginner = sage, Intermediate = caramel, Advanced = espresso-light
@@ -33,7 +33,7 @@ const METHOD_ICONS: Record<string, string> = {
 export default function BrewMethodCard({ method }: { method: BrewMethod }) {
   return (
     <Link href={`/brew-guide/${method.id}`}>
-      <div className="group bg-[#141414] border border-white/[0.06] rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] hover:border-caramel/40 cursor-pointer">
+      <div className="group bg-[var(--color-cream-light)] border border-[var(--color-border)] rounded-xl p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_8px_24px_rgba(0,0,0,0.5)] hover:border-caramel/40 cursor-pointer">
         {/* Icon + difficulty row */}
         <div className="flex items-start justify-between mb-4">
           <span className="text-4xl" role="img" aria-label={method.name}>

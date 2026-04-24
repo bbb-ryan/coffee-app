@@ -58,7 +58,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-5 border-b border-white/[0.06]">
+        <div className="flex items-center justify-between p-5 border-b border-[var(--color-border)]">
           <h2 className="font-serif text-xl font-bold text-espresso flex items-center gap-2">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 100 4 2 2 0 000-4z" />
@@ -110,7 +110,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                 return (
                   <div
                     key={key}
-                    className="bg-[#141414] rounded-xl border border-white/[0.06] p-4 animate-fade-in"
+                    className="bg-[var(--color-cream-light)] rounded-xl border border-[var(--color-border)] p-4 animate-fade-in"
                   >
                     <div className="flex items-start gap-3">
                       {/* Bean info */}
@@ -144,11 +144,11 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                     </div>
 
                     {/* Quantity + price */}
-                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/[0.06]">
+                    <div className="flex items-center justify-between mt-3 pt-3 border-t border-[var(--color-border)]">
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => updateQuantity(key, item.quantity - 1)}
-                          className="w-7 h-7 rounded-full border border-white/[0.06] flex items-center justify-center text-sm hover:border-caramel hover:text-caramel transition-colors"
+                          className="w-7 h-7 rounded-full border border-[var(--color-border)] flex items-center justify-center text-sm hover:border-caramel hover:text-caramel transition-colors"
                           aria-label="Decrease quantity"
                         >
                           -
@@ -158,7 +158,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                         </span>
                         <button
                           onClick={() => updateQuantity(key, item.quantity + 1)}
-                          className="w-7 h-7 rounded-full border border-white/[0.06] flex items-center justify-center text-sm hover:border-caramel hover:text-caramel transition-colors"
+                          className="w-7 h-7 rounded-full border border-[var(--color-border)] flex items-center justify-center text-sm hover:border-caramel hover:text-caramel transition-colors"
                           aria-label="Increase quantity"
                         >
                           +
@@ -185,7 +185,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
 
         {/* Footer with totals */}
         {hydrated && itemEntries.length > 0 && (
-          <div className="border-t border-white/[0.06] p-5 bg-[#141414]/50">
+          <div className="border-t border-[var(--color-border)] p-5 bg-[var(--color-cream-light)]/80">
             <div className="space-y-2 mb-4">
               <div className="flex justify-between text-sm text-roast">
                 <span>Subtotal</span>
@@ -200,7 +200,7 @@ export default function CartDrawer({ open, onClose }: CartDrawerProps) {
                   Free shipping on orders over $40
                 </p>
               )}
-              <div className="flex justify-between text-base font-bold text-espresso pt-2 border-t border-white/[0.06]">
+              <div className="flex justify-between text-base font-bold text-espresso pt-2 border-t border-[var(--color-border)]">
                 <span>Total</span>
                 <span>${(cartTotal + shippingCost).toFixed(2)}</span>
               </div>
