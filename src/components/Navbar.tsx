@@ -7,7 +7,7 @@ import CartDrawer from "@/components/CartDrawer";
 
 const NAV_LINKS = [
   { href: "/",          label: "Home" },
-  { href: "#magazine",  label: "Magazine" },
+  { href: "/#magazine", label: "Magazine" },
   { href: "/beans",     label: "Beans" },
   { href: "/shops",     label: "Shops" },
   { href: "/brew-guide",label: "Brew Guide" },
