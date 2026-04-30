@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brew's Coffee App Story - Animated Presentation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Calibri', 'Arial', sans-serif;
+      background: linear-gradient(135deg, #1A1A1A 0%, #2D2D2D 100%);
+      color: #E8E8E8;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1000px;
+      width: 100%;
+      background: rgba(45, 45, 45, 0.8);
+      border: 3px solid #D4A574;
+      border-radius: 15px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+      border-bottom: 2px solid #D4A574;
+      padding-bottom: 20px;
+    }
+
+    .header h1 {
+      font-family: 'Georgia', serif;
+      font-size: 2em;
+      color: #D4A574;
+      margin-bottom: 10px;
+    }
+
+    .slide-number {
+      color: #B8B8B8;
+      font-size: 0.95em;
+    }
+
+    .presentation-area {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 40px;
+      align-items: flex-start;
+      margin-bottom: 30px;
+    }
+
+    /* Brew Avatar Section */
+    .brew-container {
+      text-align: center;
+      position: relative;
+    }
+
+    .brew-svg {
+      width: 100%;
+      max-width: 220px;
+      margin: 0 auto 20px;
+      filter: drop-shadow(0 5px 15px rgba(212, 165, 116, 0.3));
+    }
+
+    .brew-status {
+      background: rgba(212, 165, 116, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #D4A574;
+      margin-top: 15px;
+      font-size: 0.9em;
+    }
+
+    .brew-status.speaking {
+      background: rgba(212, 165, 116, 0.2);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.8; }
+    }
+
+    /* Content Section */
+    .content {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .content h2 {
+      font-family: 'Georgia', serif;
+      font-size: 1.8em;
+      color: #D4A574;
+      margin-bottom: 15px;
+    }
+
+    .content-text {
+      background: rgba(111, 78, 55, 0.2);
+      padding: 20px;
+      border-radius: 8px;
+      border-left: 4px solid #D4A574;
+      font-size: 1em;
+      line-height: 1.7;
+      margin-bottom: 15px;
+      min-height: 150px;
+      color: #E8E8E8;
+    }
+
+    .content-text strong {
+      color: #D4A574;
+    }
+
+    .content-text ul {
+      margin-left: 20px;
+      margin-top: 10px;
+    }
+
+    .content-text li {
+      margin-bottom: 8px;
+    }
+
+    /* Controls Section */
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      background: #D4A574;
+      color: #1A1A1A;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 0.95em;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #E8C4A0;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(212, 165, 116, 0.4);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    button.disabled {
+      background: #555;
+      color: #999;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    button.disabled:hover {
+      background: #555;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .nav-buttons button {
+      flex: 1;
+    }
+
+    /* Progress Bar */
+    .progress-bar {
+      background: rgba(111, 78, 55, 0.3);
+      height: 6px;
+      border-radius: 3px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #D4A574, #FF6B35);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    /* Animation Keyframes */
+    @keyframes blink {
+      0%, 90%, 100% { opacity: 1; }
+      95% { opacity: 0; }
+    }
+
+    @keyframes nod {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(20deg); }
+      75% { transform: rotate(-20deg); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+
+    .animate-blink {
+      animation: blink 3s infinite;
+    }
+
+    .animate-nod {
+      animation: nod 1s ease-in-out;
+    }
+
+    .animate-wave {
+      animation: wave 0.5s ease-in-out;
+      transform-origin: 160px 100px;
+    }
+
+    .animate-bounce {
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .presentation-area {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .content-text {
+        min-height: auto;
+      }
+
+      .controls {
+        flex-direction: column;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+
+    .speaker-icon {
+      display: inline-block;
+      margin-right: 8px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>☕ Brew's Coffee App Story</h1>
+      <p class="slide-number">Slide <span id="currentSlide">1</span> of 5 - Animated Presentation</p>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressBar"></div>
+    </div>
+
+    <div class="presentation-area">
+      <!-- Brew Avatar -->
+      <div class="brew-container">
+        <svg id="brewAvatar" class="brew-svg" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg">
+          <!-- Coffee cup body -->
+          <path d="M 60 80 L 70 180 Q 70 200 85 210 L 115 210 Q 130 200 130 180 L 140 80 Z" fill="#D4A574" stroke="#1A1A1A" stroke-width="2"/>
+          <!-- Cup handle -->
+          <path d="M 135 110 Q 160 110 160 140 Q 160 170 135 170" fill="none" stroke="#D4A574" stroke-width="3" stroke-linecap="round"/>
+          <!-- Cup rim -->
+          <ellipse cx="100" cy="80" rx="40" ry="12" fill="#B89968"/>
+          <ellipse cx="100" cy="78" rx="40" ry="10" fill="#D4A574"/>
+          <!-- Liquid -->
+          <path d="M 68 130 Q 68 145 75 160 Q 82 170 100 172 Q 118 170 125 160 Q 132 145 132 130 Z" fill="#6F4E37" opacity="0.3"/>
+          <!-- Foam -->
+          <path d="M 70 85 Q 75 75 80 80 Q 85 72 90 82 Q 95 75 100 83 Q 105 74 110 82 Q 115 72 120 80 Q 125 75 130 85" fill="#F5F1E8" opacity="0.8"/>
+          <!-- Left eye (blink) -->
+          <g id="leftEye">
+            <circle cx="85" cy="95" r="6" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.5"/>
+            <circle cx="85" cy="95" r="3.5" fill="#1A1A1A"/>
+            <circle cx="86" cy="93" r="1.5" fill="#FFFFFF"/>
+          </g>
+          <!-- Right eye (blink) -->
+          <g id="rightEye">
+            <circle cx="115" cy="95" r="6" fill="#FFFFFF" stroke="#1A1A1A" stroke-width="1.5"/>
+            <circle cx="115" cy="95" r="3.5" fill="#1A1A1A"/>
+            <circle cx="116" cy="93" r="1.5" fill="#FFFFFF"/>
+          </g>
+          <!-- Smile -->
+          <path id="mouth" d="M 90 110 Q 100 118 110 110" stroke="#1A1A1A" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <!-- Blush -->
+          <circle cx="70" cy="105" r="4" fill="#FF6B35" opacity="0.3"/>
+          <circle cx="130" cy="105" r="4" fill="#FF6B35" opacity="0.3"/>
+          <!-- Left antenna -->
+          <g id="leftAntenna">
+            <line x1="75" y1="55" x2="60" y2="30" stroke="#D4A574" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="60" cy="30" r="3.5" fill="#D4A574"/>
+          </g>
+          <!-- Right antenna -->
+          <g id="rightAntenna">
+            <line x1="125" y1="55" x2="140" y2="30" stroke="#D4A574" stroke-width="2.5" stroke-linecap="round"/>
+            <circle cx="140" cy="30" r="3.5" fill="#D4A574"/>
+          </g>
+          <!-- Coffee bean -->
+          <g transform="translate(100, 240)">
+            <ellipse cx="0" cy="0" rx="8" ry="12" fill="#6F4E37" stroke="#1A1A1A" stroke-width="1.5"/>
+          </g>
+          <!-- Name -->
+          <text x="100" y="270" font-family="Georgia, serif" font-size="18" font-weight="bold" text-anchor="middle" fill="#D4A574">Brew</text>
+        </svg>
+
+        <div class="brew-status" id="brewStatus">Ready to speak! 🎤</div>
+      </div>
+
+      <!-- Content -->
+      <div class="content">
+        <h2 id="slideTitle">Welcome!</h2>
+        <div class="content-text" id="contentText">
+          Hi there! I'm Brew, and I'm here to walk you through an exciting journey—one that our team just wrapped up...
+        </div>
+      </div>
+    </div>
+
+    <!-- Controls -->
+    <div class="controls">
+      <button id="speakBtn" onclick="speakSlide()">
+        <span class="speaker-icon">🔊</span> Brew, Speak This!
+      </button>
+      <button id="pauseBtn" onclick="pauseSpeech()" class="disabled">⏸ Pause</button>
+      <button id="resumeBtn" onclick="resumeSpeech()" class="disabled">▶ Resume</button>
+      <button onclick="stopSpeech()">⏹ Stop</button>
+    </div>
+
+    <div class="nav-buttons">
+      <button onclick="previousSlide()" id="prevBtn">← Previous</button>
+      <button onclick="nextSlide()" id="nextBtn">Next →</button>
+    </div>
+  </div>
+
+  <script>
+    // Presentation Data
+    const slides = [
+      {
+        title: "Welcome! 👋",
+        content: `Hi there! I'm Brew, and I'm here to walk you through an exciting journey—one that our team just wrapped up. Over the next few minutes, I'll share what Steve, Emily, Hassan, Bryan, Andra, and I discovered while building a coffee app together. This wasn't about theory or perfect execution. It was about learning, experimenting, and understanding how AI can actually change the way we work together. Ready? Let's dig in.`
+      },
+      {
+        title: "Team, Goals & Guardrails",
+        content: `First things first—who we are and how we worked. Our team had mixed AI experience levels. Some people were AI veterans, others were discovering it for the first time. And you know what? We made a bold call: titles left at the door. Nobody was "the expert." Everyone brought their perspective equally.
+
+Our shared goal: Build a real, working app using AI across every phase—from concept through code to design.
+
+The guardrails kept us safe and focused: Personal devices and accounts only—no enterprise risk. No proprietary data or ML models—keep it open and ethical. Core tools: Claude Code, VS Code, GitHub, Figma, Slack, and Google Suite.
+
+Simple constraints. Powerful clarity.`
+      },
+      {
+        title: "How We Built It",
+        content: `Here's where it gets fun. We adopted collaborative experimentation as our approach. Every week, we'd create individually—everyone working on their part. Share openly—no gatekeeping, no perfectionism. Learn together—we documented everything: setups, prompts, workflows, the whole thing.
+
+And within a few weeks, we aligned on a coffee-bean sourcing app. Sounds specific, right? That's because it was—a real use case that let us explore everything: a personalized quiz, a passport system tracking tasting notes, ratings, articles, store locations, recipes and brewing guides, an e-commerce store, even a barista chatbot and sustainability info.
+
+We didn't plan all of this. It emerged because we were building collaboratively and letting ideas build on each other.`
+      },
+      {
+        title: "Timeline & What We Learned",
+        content: `So how long did this take? About one point five months. On paper, that's not much time: one point five hours together each week for team sync. One to three hours of individual work per person per week. That's it. And we shipped a real app with thirteen plus features.
+
+But here's what mattered more than timeline:
+
+Blended roles worked. When titles disappear, so do silos. AI is fast—but refinement takes time. We could generate code in minutes. Making it good, making it ours? That took intention.
+
+Visual and brand precision need strong guidance. AI doesn't intuitively understand vibe. You do.
+
+Token usage and source management matter. Small decisions about prompts and data add up fast.
+
+Git branching enables collaboration. When everyone's working in parallel, good version control is essential.
+
+These aren't sexy insights, but they're real.`
+      },
+      {
+        title: "What's Next",
+        content: `We didn't finish everything—and that's okay. The site isn't live or hosted yet, and accessibility isn't explored. Those are genuine gaps. But we also see them as opportunities for the next phase, especially using AI skills to tackle accessibility systematically.
+
+Here's what I'm most proud of: This team proved something important. You don't need a massive timeline, a massive budget, or a massive process to explore AI meaningfully. You need: Curiosity—genuine want to understand how this works. Collaboration—titles aside, working as peers. Experimentation—willingness to try, fail, iterate. Transparency—sharing learnings openly.
+
+That's it. You validated a new way of working—one that's collaborative, experimental, and idea-led. And that? That's the real win here. Thanks for letting me be part of this journey.`
+      }
+    ];
+
+    let currentSlide = 0;
+    let utterance = null;
+    let isPaused = false;
+
+    // Initialize
+    function init() {
+      showSlide(0);
+      setupSpeechSynthesis();
+    }
+
+    // Setup Speech Synthesis
+    function setupSpeechSynthesis() {
+      const synth = window.speechSynthesis;
+
+      // Check if synthesis is available
+      if (!synth) {
+        alert("Speech synthesis not supported in your browser. Please use Chrome, Edge, or Firefox.");
+      }
+    }
+
+    // Show Slide
+    function showSlide(index) {
+      if (index < 0 || index >= slides.length) return;
+
+      currentSlide = index;
+      const slide = slides[index];
+
+      document.getElementById('slideTitle').textContent = slide.title;
+      document.getElementById('contentText').textContent = slide.content;
+      document.getElementById('currentSlide').textContent = index + 1;
+
+      // Update progress bar
+      const progress = ((index + 1) / slides.length) * 100;
+      document.getElementById('progressBar').style.width = progress + '%';
+
+      // Update button states
+      document.getElementById('prevBtn').classList.toggle('disabled', index === 0);
+      document.getElementById('nextBtn').classList.toggle('disabled', index === slides.length - 1);
+
+      // Reset speech
+      stopSpeech();
+    }
+
+    // Speak Slide
+    function speakSlide() {
+      if (!window.speechSynthesis) {
+        alert("Speech synthesis not supported in your browser.");
+        return;
+      }
+
+      const synth = window.speechSynthesis;
+      const slide = slides[currentSlide];
+      const text = slide.content;
+
+      // Cancel any existing utterance
+      synth.cancel();
+
+      // Create new utterance
+      utterance = new SpeechSynthesisUtterance(text);
+
+      // Set Australian accent (female voice)
+      utterance.rate = 0.9; // Slightly slower for clarity
+      utterance.pitch = 1.0;
+      utterance.volume = 1.0;
+
+      // Try to select Australian English voice
+      const voices = synth.getVoices();
+      const australianVoice = voices.find(voice =>
+        voice.lang.includes('en-AU') && voice.name.includes('female')
+      ) || voices.find(voice =>
+        voice.lang.includes('en-AU')
+      ) || voices.find(voice =>
+        voice.lang.includes('en') && voice.name.toLowerCase().includes('female')
+      ) || voices[0];
+
+      if (australianVoice) {
+        utterance.voice = australianVoice;
+      }
+
+      // Animation callbacks
+      utterance.onstart = () => {
+        document.getElementById('brewStatus').textContent = "Speaking... 🎙️";
+        document.getElementById('brewStatus').classList.add('speaking');
+        document.getElementById('speakBtn').disabled = true;
+        document.getElementById('pauseBtn').classList.remove('disabled');
+        document.getElementById('pauseBtn').disabled = false;
+        startBrewAnimations();
+      };
+
+      utterance.onend = () => {
+        document.getElementById('brewStatus').textContent = "Done speaking! ✨";
+        document.getElementById('brewStatus').classList.remove('speaking');
+        document.getElementById('speakBtn').disabled = false;
+        document.getElementById('pauseBtn').classList.add('disabled');
+        document.getElementById('pauseBtn').disabled = true;
+        document.getElementById('resumeBtn').classList.add('disabled');
+        document.getElementById('resumeBtn').disabled = true;
+        stopBrewAnimations();
+        isPaused = false;
+      };
+
+      utterance.onerror = (event) => {
+        console.error('Speech error:', event.error);
+        document.getElementById('brewStatus').textContent = "Speech error ❌";
+      };
+
+      // Speak!
+      synth.speak(utterance);
+    }
+
+    // Control Functions
+    function pauseSpeech() {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.pause();
+        isPaused = true;
+        document.getElementById('brewStatus').textContent = "Paused ⏸";
+        document.getElementById('pauseBtn').classList.add('disabled');
+        document.getElementById('resumeBtn').classList.remove('disabled');
+        document.getElementById('resumeBtn').disabled = false;
+        stopBrewAnimations();
+      }
+    }
+
+    function resumeSpeech() {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.resume();
+        isPaused = false;
+        document.getElementById('brewStatus').textContent = "Speaking... 🎙️";
+        document.getElementById('pauseBtn').classList.remove('disabled');
+        document.getElementById('pauseBtn').disabled = false;
+        document.getElementById('resumeBtn').classList.add('disabled');
+        document.getElementById('resumeBtn').disabled = true;
+        startBrewAnimations();
+      }
+    }
+
+    function stopSpeech() {
+      if (window.speechSynthesis) {
+        window.speechSynthesis.cancel();
+        document.getElementById('brewStatus').textContent = "Ready to speak! 🎤";
+        document.getElementById('brewStatus').classList.remove('speaking');
+        document.getElementById('speakBtn').disabled = false;
+        document.getElementById('pauseBtn').classList.add('disabled');
+        document.getElementById('pauseBtn').disabled = true;
+        document.getElementById('resumeBtn').classList.add('disabled');
+        document.getElementById('resumeBtn').disabled = true;
+        stopBrewAnimations();
+        isPaused = false;
+      }
+    }
+
+    // Navigation
+    function previousSlide() {
+      if (currentSlide > 0) {
+        showSlide(currentSlide - 1);
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < slides.length - 1) {
+        showSlide(currentSlide + 1);
+      }
+    }
+
+    // Animations
+    function startBrewAnimations() {
+      const leftEye = document.getElementById('leftEye');
+      const rightEye = document.getElementById('rightEye');
+      const avatar = document.getElementById('brewAvatar');
+
+      // Blinking
+      setInterval(() => {
+        if (!isPaused) {
+          leftEye.style.animation = 'blink 3s infinite';
+          rightEye.style.animation = 'blink 3s infinite';
+        }
+      }, 100);
+
+      // Nodding
+      let nodCount = 0;
+      const nodInterval = setInterval(() => {
+        if (!isPaused && nodCount < 5) {
+          avatar.style.animation = 'nod 1s ease-in-out';
+          nodCount++;
+        } else {
+          clearInterval(nodInterval);
+        }
+      }, 4000);
+
+      // Bouncing (subtle)
+      avatar.style.animation = 'bounce 1.5s ease-in-out infinite';
+    }
+
+    function stopBrewAnimations() {
+      const avatar = document.getElementById('brewAvatar');
+      avatar.style.animation = 'none';
+    }
+
+    // Load voices when they're available
+    window.speechSynthesis.onvoiceschanged = () => {
+      setupSpeechSynthesis();
+    };
+
+    // Start when page loads
+    window.addEventListener('load', init);
+  </script>
+</body>
+</html>
