@@ -1,5 +1,8 @@
 # Coffee App — Claude Code Guidelines
 
+## Current phase
+We are in **Phase 5 — Personalized Coffee** (kicked off 2026-05-06). Every change should serve personalization or maintenance. Read `docs/PHASE_5_VISION.md` for the direction and `docs/WORKFLOW.md` for the team SOPs (branching, PRs, file structure). **Both are required reading before non-trivial work.**
+
 ## Project Overview
 A coffee discovery web app built with Next.js 15, Tailwind CSS v4, and TypeScript. We're a team of designers and researchers using Claude Code to build collaboratively.
 
@@ -12,16 +15,24 @@ A coffee discovery web app built with Next.js 15, Tailwind CSS v4, and TypeScrip
 
 ## Project Structure
 ```
-src/
-├── app/              # Next.js pages (App Router)
-│   ├── layout.tsx    # Root layout with DiaryProvider + Navbar + Footer
-│   ├── page.tsx      # Homepage — hero, featured beans, catalog
-│   ├── beans/[id]/   # Bean detail pages
-│   └── diary/        # Personal coffee diary page
-├── components/       # Reusable UI components
-├── data/             # JSON data files (beans, flavors)
-└── lib/              # Utility functions and types
+coffee-app/
+├── src/                # Production app code
+│   ├── app/            # Next.js pages (App Router)
+│   │   ├── layout.tsx  # Root layout with DiaryProvider + Navbar + Footer
+│   │   ├── page.tsx    # Homepage — hero, featured beans, catalog
+│   │   ├── beans/[id]/ # Bean detail pages
+│   │   └── diary/      # Personal coffee diary page
+│   ├── components/     # Reusable UI components
+│   ├── data/           # JSON data files (beans, flavors)
+│   └── lib/            # Utility functions and types
+├── docs/               # Strategic docs (PHASE_5_VISION, WORKFLOW, meeting notes)
+├── prototypes/         # Active design exploration (short-lived, see WORKFLOW.md)
+├── archive/            # Old presentations, prototypes, data exports
+├── reviews/            # Design review feedback + workflow
+└── .claude/skills/     # Project-specific Claude skills
 ```
+
+**Do not put loose files at the repo root.** Per `docs/WORKFLOW.md` § 4, the only things at the root are config files, lockfiles, `README.md`, and `CLAUDE.md`. Anything else goes in `docs/`, `prototypes/`, or `archive/`.
 
 ## Key Files
 - `src/lib/beans.ts` — Bean type definitions, data loading, filtering logic
@@ -59,6 +70,14 @@ src/
 - **Add a component:** Create `src/components/YourComponent.tsx`
 - **Modify bean data:** Edit `src/data/beans.json` or `src/data/beans_curated.json`
 - **Update the theme:** Edit the `@theme` block in `src/app/globals.css`
+- **Start a design exploration:** Create `prototypes/<name>/` with a `README.md` (see `docs/WORKFLOW.md` § 4)
+- **Archive old work:** Move to `archive/<YYYY-MM>-<name>/` with a `README.md` explaining why
+
+## Workflow rules (in brief — full version in docs/WORKFLOW.md)
+- Branch names: `your-name/short-description`
+- Open a PR for every change, even tiny. At least one teammate reviews before merge.
+- Branches live <7 days. Long-running personal branches are an anti-pattern now.
+- Decisions go in `docs/`. If it's not written down, it didn't happen.
 
 ## Running Locally
 ```bash

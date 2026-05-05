@@ -14,9 +14,13 @@ Coffee App helps people:
 
 This project is an example of **human + AI collaboration** — not siloed roles, but coworking. Designers, researchers, and Claude Code working together in the same repo, iterating in real time.
 
-## Status: Phase 4 — Unified Platform
+## Status: Phase 5 — Personalized Coffee (kickoff 2026-05-06)
 
-We went with **Option B (Modern Web App)** from [Hassan's build proposal](docs/PROPOSAL.md) — Next.js + Tailwind + JSON data. Here's what's live:
+**The new direction:** make the coffee experience personal. Same homepage, different surfaces for different people, driven by a taste profile blended from metadata, declared preferences, and behavioral signals. See **[docs/PHASE_5_VISION.md](docs/PHASE_5_VISION.md)**.
+
+**How we work now:** short-lived branches, PR-reviewed merges, no loose files at the repo root, decisions live in `docs/`. Read **[docs/WORKFLOW.md](docs/WORKFLOW.md)** before opening a PR.
+
+Phases 1–4 (below) were exploratory. They built the foundation we now personalize. We went with **Option B (Modern Web App)** from [Hassan's original build proposal](docs/archive/PROPOSAL.md) — Next.js + Tailwind + JSON data. Here's what's live:
 
 ### Phase 1 — Foundation ✅
 - **Bean catalog** — Browse all 1,338 beans in a searchable, filterable grid
@@ -103,10 +107,14 @@ npm run lint    # Run the linter
 coffee-app/
 ├── CLAUDE.md               # Guidelines for Claude Code (read this first)
 ├── docs/
-│   ├── VISION.md           # Product vision, principles, roadmap
-│   ├── PROPOSAL.md         # Hassan's build proposal (4 options)
-│   ├── Kickoff_Guide.md    # First team meeting agenda
-│   └── First_Run_Guide.md  # How to collaborate with Claude Code
+│   ├── PHASE_5_VISION.md   # Current direction — personalized coffee
+│   ├── WORKFLOW.md         # Branching, PRs, file structure, SOPs
+│   ├── MEETING_2026-05-06.md # Phase 5 kickoff agenda
+│   ├── VISION.md           # Original product principles (still relevant)
+│   └── archive/            # Phase 1–4 docs (PROPOSAL, Kickoff_Guide, etc.)
+├── prototypes/             # Active design exploration (short-lived)
+├── archive/                # Old presentations, prototypes, data exports
+├── reviews/                # Design review feedback + workflow
 ├── src/
 │   ├── app/                # Next.js pages (App Router)
 │   │   ├── layout.tsx      # Root layout — DiaryProvider + Navbar + Footer
@@ -164,17 +172,16 @@ coffee-app/
 └── tests/                  # Test files
 ```
 
-## What's Next
+## What's Next — Phase 5
 
-- [ ] Real user authentication and accounts
-- [ ] Database backend (replace JSON files)
-- [ ] User reviews and ratings on bean pages
-- [ ] Shared lists and recommendations between users
-- [ ] Real coffee shop data integration
-- [ ] Payment processing for checkout
-- [ ] Deployment to Vercel
+Phase 5 is focused on personalization. Milestones:
 
-See [docs/VISION.md](docs/VISION.md) for the full roadmap.
+- **M1 — Profile foundation** (2 wks): `TasteProfile` data model, provider, debug inspector
+- **M2 — Personalize three surfaces** (3 wks): homepage hero, bean detail "why this for you," diary depth prompts
+- **M3 — Recommend with teeth** (3 wks): content-based engine, "why this" reasoning on every rec
+- **M4 — Account + persistence** (later): real auth, server-side profile, cross-device
+
+See **[docs/PHASE_5_VISION.md](docs/PHASE_5_VISION.md)** for the full picture and **[docs/MEETING_2026-05-06.md](docs/MEETING_2026-05-06.md)** for the kickoff agenda.
 
 ## Data
 
@@ -184,15 +191,12 @@ All bean data comes from the [Coffee Quality Institute](https://github.com/jldbc
 
 This is a collaborative project. Whether you're a designer, researcher, or just a coffee lover — open an issue, suggest a feature, or pair with Claude Code to build something.
 
-**Before you start:** Read [CLAUDE.md](CLAUDE.md) for project conventions and [docs/First_Run_Guide.md](docs/First_Run_Guide.md) for how we work together.
+**Before you start:**
+1. Read [CLAUDE.md](CLAUDE.md) for project conventions
+2. Read [docs/WORKFLOW.md](docs/WORKFLOW.md) for branching, PR, and file-structure SOPs
+3. Read [docs/PHASE_5_VISION.md](docs/PHASE_5_VISION.md) so you know what we're building toward
 
-### Branch naming
-```
-your-name/feature-name
-```
-
-### PR workflow
-At least one teammate reviews before merging to `main`.
+Quick version of the rules: short-lived branches named `your-name/feature-name`, every change goes through a PR, at least one teammate reviews before merge to `main`.
 
 ## License
 
