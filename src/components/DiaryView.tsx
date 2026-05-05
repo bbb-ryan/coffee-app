@@ -5,18 +5,23 @@ import Link from "next/link";
 import { Bean } from "@/lib/beans";
 import { useDiary } from "@/components/DiaryProvider";
 import BeanCard from "./BeanCard";
+import DiaryMapView from "./DiaryMapView";
+import DiaryRankingView from "./DiaryRankingView";
 import type { DiaryStatus } from "@/lib/diary";
 
-const STATUS_FILTERS: { value: DiaryStatus | "all"; label: string }[] = [
+const STATUS_FILTERS: { value: DiaryStatus | "all" | "rank"; label: string }[] = [
   { value: "all", label: "All" },
   { value: "loved", label: "Loved" },
   { value: "tried", label: "Tried" },
   { value: "want-to-try", label: "Want to Try" },
+  { value: "rank", label: "Rank" },
 ];
 
 export default function DiaryView({ beans }: { beans: Bean[] }) {
   const { entries, hydrated } = useDiary();
-  const [statusFilter, setStatusFilter] = useState<DiaryStatus | "all">("all");
+  const [statusFilter, setStatusFilter] = useState<DiaryStatus | "all" | "rank">("all");
+  const [showMap, setShowMap] = useState(false);
+  const [rankOrder, setRankOrder] = useState<number[]>([]);
 
   const beanMap = useMemo(() => {
     const map = new Map<number, Bean>();
@@ -24,16 +29,35 @@ export default function DiaryView({ beans }: { beans: Bean[] }) {
     return map;
   }, [beans]);
 
-  const diaryBeans = useMemo(() => {
+  const allDiaryBeans = useMemo(() => {
     return Object.values(entries)
-      .filter((entry) => statusFilter === "all" || entry.status === statusFilter)
       .sort((a, b) => b.date.localeCompare(a.date))
-      .map((entry) => ({
-        entry,
-        bean: beanMap.get(entry.beanId),
-      }))
+      .map((entry) => ({ entry, bean: beanMap.get(entry.beanId) }))
       .filter((item): item is { entry: typeof item.entry; bean: Bean } => item.bean !== undefined);
-  }, [entries, statusFilter, beanMap]);
+  }, [entries, beanMap]);
+
+  const diaryBeans = useMemo(() => {
+    const filter = statusFilter === "rank" ? "all" : statusFilter;
+    return allDiaryBeans.filter((item) => filter === "all" || item.entry.status === filter);
+  }, [allDiaryBeans, statusFilter]);
+
+  const rankedBeans = useMemo(() => {
+    const base = allDiaryBeans.filter((i) => i.entry.status !== "want-to-try");
+    if (rankOrder.length === 0) return base;
+    return [...base].sort((a, b) => {
+      const ai = rankOrder.indexOf(a.bean.id);
+      const bi = rankOrder.indexOf(b.bean.id);
+      return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
+    });
+  }, [allDiaryBeans, rankOrder]);
+
+  function handleReorder(from: number, to: number) {
+    const ids = rankedBeans.map((i) => i.bean.id);
+    const next = [...ids];
+    const [moved] = next.splice(from, 1);
+    next.splice(to, 0, moved);
+    setRankOrder(next);
+  }
 
   const entryCount = Object.keys(entries).length;
 
@@ -65,14 +89,15 @@ export default function DiaryView({ beans }: { beans: Bean[] }) {
         Your personal coffee tasting journal.
       </p>
 
-      {/* Status filter pills */}
-      <div className="flex gap-2 flex-wrap mb-8">
+      {/* Controls row */}
+      <div className="flex items-center gap-2 flex-wrap mb-8">
+        {/* Status filter pills + Rank pill */}
         {STATUS_FILTERS.map((opt) => (
           <button
             key={opt.value}
-            onClick={() => setStatusFilter(opt.value)}
+            onClick={() => { setStatusFilter(opt.value); setShowMap(false); }}
             className={`px-3.5 py-1.5 rounded-full text-sm font-medium border transition-all ${
-              statusFilter === opt.value
+              statusFilter === opt.value && !showMap
                 ? "bg-[#E8E4E0] text-[#0F0F0F] border-[#E8E4E0] shadow-sm"
                 : "bg-[var(--color-surface)] text-espresso-light border-[var(--color-border)] hover:border-caramel hover:text-espresso"
             }`}
@@ -80,10 +105,34 @@ export default function DiaryView({ beans }: { beans: Bean[] }) {
             {opt.label}
           </button>
         ))}
+
+        {/* Map toggle */}
+        <div className="ml-auto flex gap-1 bg-cream-dark rounded-xl p-1">
+          <button
+            onClick={() => setShowMap(false)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+              !showMap ? "bg-white text-espresso shadow-sm" : "text-roast-light hover:text-espresso"
+            }`}
+          >
+            Cards
+          </button>
+          <button
+            onClick={() => setShowMap(true)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+              showMap ? "bg-white text-espresso shadow-sm" : "text-roast-light hover:text-espresso"
+            }`}
+          >
+            Map
+          </button>
+        </div>
       </div>
 
       {/* Results */}
-      {diaryBeans.length === 0 ? (
+      {showMap ? (
+        <DiaryMapView diaryBeans={allDiaryBeans} />
+      ) : statusFilter === "rank" ? (
+        <DiaryRankingView rankedBeans={rankedBeans} onReorder={handleReorder} />
+      ) : diaryBeans.length === 0 ? (
         <div className="text-center py-20 animate-fade-in">
           <div className="text-5xl mb-4">📓</div>
           <p className="text-xl font-serif text-espresso mb-2">
